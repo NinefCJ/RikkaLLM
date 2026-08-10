@@ -309,4 +309,28 @@ val DEFAULT_PROVIDERS = listOf(
             )
         }
     ),
+    ProviderSetting.OpenAI(
+        id = Uuid.parse("9b2f8c41-6d3e-4a57-b8f2-1e5d9c7a3b64"),
+        name = "MNN 本地模型",
+        baseUrl = "http://127.0.0.1:8080/v1",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
+        description = {
+            Text(
+                text = "通过 MNN Chat 的 OpenAI 兼容 API 在本机运行离线模型。" +
+                    "需先在 MNN Chat 中开启本地 API 服务（默认 8080 端口），再启用本供应商。"
+            )
+        },
+        models = listOf(
+            Model(
+                id = Uuid.parse("4e7a1f2c-8b93-46d5-a0c1-2f6e8d4b9a73"),
+                modelId = "mnn-local",
+                displayName = "MNN Local",
+                inputModalities = listOf(Modality.TEXT),
+                outputModalities = listOf(Modality.TEXT),
+                abilities = emptyList(),
+            )
+        )
+    ),
 )
