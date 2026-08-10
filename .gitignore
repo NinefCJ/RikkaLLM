@@ -13,3 +13,6 @@ local.properties
 .kotlin
 vendor/
 mnn-prebuilt/
+.mnn-cmake-verify/
+mnn-build.log
+mnn-kotlin-build.log
