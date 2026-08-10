@@ -43,6 +43,15 @@ dependencies {
     // kotlinx
     implementation(libs.kotlinx.coroutines.core)
 
+    // ktor server (local OpenAI-compatible API, Phase 2)
+    api(libs.ktor.server.core)
+    implementation(libs.ktor.server.cio)
+    implementation(libs.ktor.server.host.common)
+
+    // koin (LocalMnnManager registration / service injection)
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.android)
+
     // tests
     testImplementation(libs.junit)
 }
