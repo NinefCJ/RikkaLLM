@@ -136,6 +136,14 @@
         android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
         android:value="local web server for LLM chat UI" />
     </service>
+    <service
+      android:name="com.alibaba.mnnllm.android.server.MnnServerService"
+      android:exported="false"
+      android:foregroundServiceType="specialUse">
+      <property
+        android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+        android:value="local OpenAI-compatible model server bound to loopback" />
+    </service>
 
     <provider
       android:name="androidx.core.content.FileProvider"
