@@ -27,6 +27,7 @@ Phase 1 依赖 MNN Chat 官方 App 内置的 OpenAI 兼容 HTTP API（默认监�
 
 - 本仓库继承 RikkaHub 的 **AGPL-3.0** 许可证（见根目录 `LICENSE`）；对本项目的任何修改在分发/提供网络服务时需按 AGPL-3.0 开源。
 - MNN 引擎采用 **Apache-2.0** 许可证；Phase 2 内嵌 MNN 时需遵守其条款（保留版权声明与 NOTICE）。
+- **prebuilt SO 与移植代码归属**：`mnn-prebuilt/arm64-v8a/libMNN.so` 由 [alibaba/MNN](https://github.com/alibaba/MNN)（固定 commit `1d535d7`）源码编译而来，`:mnn` 中 `com.alibaba.mnnllm.android.*` 移植代码源自其 `apps/Android/MnnLlmChat`；两者均属 Apache-2.0 上游作品，完整许可证与归属/修改说明见 `mnn/LICENSE-APACHE-2.0` 与 `mnn/NOTICE`，分发 APK 时需随附。
 - AGPL-3.0 与 Apache-2.0 兼容，可在同一发行版中共存。
 
 ## 路线图

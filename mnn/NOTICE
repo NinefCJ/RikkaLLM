@@ -1,0 +1,31 @@
+RikkaLLM :mnn module
+Copyright 2026 RikkaLLM contributors
+
+This product includes software and binary artifacts developed by the
+MNN project, Copyright 2018 Alibaba Group:
+
+- Source code under mnn/src/main/java/com/alibaba/mnnllm/android/
+  (LlmSession, ChatSession, ChatService, model utilities, FileSplitter,
+  MmapUtils and related classes) is ported from the MNN Chat Android app,
+  originally located at apps/Android/MnnLlmChat in the upstream repository:
+      https://github.com/alibaba/MNN
+
+- The prebuilt shared library mnn-prebuilt/arm64-v8a/libMNN.so is compiled
+  from the MNN runtime sources of the same upstream repository (pinned
+  commit 1d535d7; see scripts/setup-mnn.ps1 / scripts/setup-mnn.sh), built
+  with the LLM-only flag set documented in scripts/build-mnn-android.ps1.
+
+Both are licensed under the Apache License, Version 2.0; a copy of the
+license is provided in LICENSE-APACHE-2.0 alongside this NOTICE.
+
+Porting modifications relative to upstream:
+
+- Trimmed to text-only LLM inference: vision, audio, diffusion and OpenCL
+  support are disabled at build time; the JNI surface is reduced to what
+  LlmSession needs.
+- Kotlin port replaces the Java UI/ViewModel layers; classes were stripped
+  of Android UI dependencies and re-wired for in-process use.
+- Additions by RikkaLLM (not derived from upstream app code): the local
+  OpenAI-compatible server stack (server/, including ChatOrchestrator,
+  MnnOpenAiRoutes, OpenAiResponses, RequestTranslator, LocalMnnManager,
+  MnnServerService) and its tool-calling prompt/parser layer (server/tools/).
