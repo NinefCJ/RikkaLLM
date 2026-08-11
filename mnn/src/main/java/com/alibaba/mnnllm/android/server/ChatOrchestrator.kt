@@ -42,7 +42,13 @@ class ChatOrchestrator(private val engine: MnnEngine) {
                 false
             }
         }
-        parser.finish().forEach(emit)
+        // The native engine does not report a truncation reason; approximate
+        // finish_reason=length by comparing the produced token count against the
+        // requested max_tokens budget (streaming and non-streaming stay consistent).
+        val reachedTokenLimit = request.maxTokens != null && stats.completionTokens >= request.maxTokens
+        parser.finish().forEach { event ->
+            emit(if (reachedTokenLimit && event is ToolStreamEvent.Finish.Stop) ToolStreamEvent.Finish.Length else event)
+        }
         return stats
     }
 
@@ -53,6 +59,7 @@ class ChatOrchestrator(private val engine: MnnEngine) {
     ): CompletedResult {
         val content = StringBuilder()
         val calls = mutableListOf<ParsedToolCall>()
+        var finishReason = "stop"
         val stats = stream(request, { event ->
             when (event) {
                 is ToolStreamEvent.Text -> content.append(event.text)
@@ -60,13 +67,17 @@ class ChatOrchestrator(private val engine: MnnEngine) {
                     ParsedToolCall(id = event.id, name = event.name, argumentsJson = event.arguments)
                 )
 
-                is ToolStreamEvent.Finish -> Unit
+                is ToolStreamEvent.Finish.ToolCalls -> finishReason = "tool_calls"
+                is ToolStreamEvent.Finish.Length -> if (finishReason != "tool_calls") finishReason = "length"
+                is ToolStreamEvent.Finish.Stop -> Unit
             }
         }, isCancelled)
         return CompletedResult(
-            content = content.toString().trim().ifEmpty { null },
+            // No trim(): leading/trailing whitespace of a completion is meaningful
+            // output (e.g. when the caller concatenates chunks) and must survive.
+            content = content.toString().ifEmpty { null },
             toolCalls = calls,
-            finishReason = if (calls.isNotEmpty()) "tool_calls" else "stop",
+            finishReason = finishReason,
             stats = stats,
         )
     }

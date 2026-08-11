@@ -56,5 +56,8 @@ sealed class ToolStreamEvent {
     sealed class Finish : ToolStreamEvent() {
         data object Stop : Finish()
         data object ToolCalls : Finish()
+
+        /** The engine stopped because the requested max_tokens budget was reached. */
+        data object Length : Finish()
     }
 }

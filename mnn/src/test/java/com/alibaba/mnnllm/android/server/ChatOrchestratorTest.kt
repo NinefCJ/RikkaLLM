@@ -34,6 +34,12 @@ private fun simpleRequest(stream: Boolean = false) = RequestTranslator.parse(
     ).asJsonObject
 )
 
+private fun requestWithMaxTokens(maxTokens: Int, stream: Boolean = false) = RequestTranslator.parse(
+    JsonParser.parseString(
+        """{"model":"mnn-local","stream":$stream,"max_tokens":$maxTokens,"messages":[{"role":"user","content":"hi"}]}"""
+    ).asJsonObject
+)
+
 class ChatOrchestratorTest {
 
     @Test
@@ -93,5 +99,34 @@ class ChatOrchestratorTest {
         }, { stopAfterFirst })
         val text = events.filterIsInstance<ToolStreamEvent.Text>().joinToString("") { it.text }
         assertEquals("a", text)
+    }
+
+    @Test
+    fun `completion reports length when max_tokens budget is reached`() {
+        val engine = FakeEngine(output = listOf("one ", "two ", "three"))
+        val result = ChatOrchestrator(engine).complete(requestWithMaxTokens(maxTokens = 2))
+        assertEquals("length", result.finishReason)
+    }
+
+    @Test
+    fun `streaming reports length consistently with non-streaming`() {
+        val engine = FakeEngine(output = listOf("one ", "two ", "three"))
+        val events = mutableListOf<ToolStreamEvent>()
+        ChatOrchestrator(engine).stream(requestWithMaxTokens(maxTokens = 3, stream = true), { events.add(it) })
+        assertTrue(events.last() is ToolStreamEvent.Finish.Length)
+    }
+
+    @Test
+    fun `unlimited budget keeps stop finish reason`() {
+        val engine = FakeEngine(output = listOf("one ", "two"))
+        val result = ChatOrchestrator(engine).complete(simpleRequest())
+        assertEquals("stop", result.finishReason)
+    }
+
+    @Test
+    fun `content whitespace is not trimmed`() {
+        val engine = FakeEngine(output = listOf("  padded  "))
+        val result = ChatOrchestrator(engine).complete(simpleRequest())
+        assertEquals("  padded  ", result.content)
     }
 }

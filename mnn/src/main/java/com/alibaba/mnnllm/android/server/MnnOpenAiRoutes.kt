@@ -189,6 +189,7 @@ private suspend fun io.ktor.server.routing.RoutingContext.handleStream(
                                 )
 
                             is ToolStreamEvent.Finish.ToolCalls -> finishReason = "tool_calls"
+                            is ToolStreamEvent.Finish.Length -> finishReason = "length"
                             is ToolStreamEvent.Finish.Stop -> Unit
                         }
 
