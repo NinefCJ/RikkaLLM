@@ -3,6 +3,7 @@
 
 package com.alibaba.mnnllm.android.server
 
+import android.util.Log
 import com.alibaba.mnnllm.android.server.tools.ToolStreamEvent
 import com.google.gson.JsonParser
 import io.ktor.http.ContentType
@@ -12,6 +13,7 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.call
 import io.ktor.server.request.header
 import io.ktor.server.request.receiveText
+import io.ktor.server.response.header
 import io.ktor.server.response.respondText
 import io.ktor.server.response.respondBytesWriter
 import io.ktor.server.routing.get
@@ -19,12 +21,15 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import io.ktor.utils.io.writeStringUtf8
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
+private const val TAG = "MnnOpenAiRoutes"
 
 /** Everything the HTTP layer needs from the host app / engine manager. */
 interface MnnServerBackend {
@@ -48,7 +53,7 @@ fun Application.mnnOpenAiRoutes(backend: MnnServerBackend) {
     routing {
         get("/v1/models") {
             if (!call.isAuthorized(backend)) {
-                call.respondError(HttpStatusCode.Unauthorized, "Invalid or missing bearer token", "authentication_error")
+                call.respondUnauthorized()
                 return@get
             }
             call.respondText(
@@ -59,7 +64,7 @@ fun Application.mnnOpenAiRoutes(backend: MnnServerBackend) {
 
         post("/v1/chat/completions") {
             if (!call.isAuthorized(backend)) {
-                call.respondError(HttpStatusCode.Unauthorized, "Invalid or missing bearer token", "authentication_error")
+                call.respondUnauthorized()
                 return@post
             }
 
@@ -97,7 +102,26 @@ private suspend fun io.ktor.server.routing.RoutingContext.handleFull(
     backend: MnnServerBackend,
     request: ChatCompletionRequest,
 ) {
-    val result = withContext(Dispatchers.IO) { orchestrator.complete(request) }
+    // Engine exceptions must surface as an OpenAI error envelope, never as a bare
+    // 500 text/plain response escaping from the route.
+    val result = try {
+        withContext(Dispatchers.IO) { orchestrator.complete(request) }
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: Exception) {
+        Log.e(TAG, "non-stream generation failed", e)
+        when (e) {
+            is ModelNotLoadedException ->
+                call.respondError(HttpStatusCode.ServiceUnavailable, "No local model is loaded", "model_not_loaded")
+
+            is EngineBusyException ->
+                call.respondError(HttpStatusCode.TooManyRequests, "The local model engine is busy with another request", "engine_busy")
+
+            else ->
+                call.respondError(HttpStatusCode.InternalServerError, "Engine generation failed: ${e.message}", "engine_error")
+        }
+        return
+    }
     call.respondText(
         OpenAiResponses.fullCompletion(
             id = OpenAiResponses.completionId(),
@@ -110,6 +134,12 @@ private suspend fun io.ktor.server.routing.RoutingContext.handleFull(
         ),
         contentType = ContentType.Application.Json,
     )
+}
+
+/** Signals flowing from the engine producer coroutine to the SSE writer. */
+private sealed class StreamSignal {
+    class Event(val event: ToolStreamEvent) : StreamSignal()
+    class Failed(val error: Throwable) : StreamSignal()
 }
 
 private suspend fun io.ktor.server.routing.RoutingContext.handleStream(
@@ -125,36 +155,58 @@ private suspend fun io.ktor.server.routing.RoutingContext.handleStream(
         writeStringUtf8("data: ${OpenAiResponses.roleChunk(completionId, model, created)}\n\n")
 
         val aborted = AtomicBoolean(false)
-        val events = Channel<ToolStreamEvent>(Channel.UNLIMITED)
+        val signals = Channel<StreamSignal>(Channel.UNLIMITED)
         var finishReason = "stop"
+        var engineError: Throwable? = null
         coroutineScope {
             val producer = launch(Dispatchers.IO) {
-                runCatching {
-                    orchestrator.stream(request, { events.trySend(it) }, { aborted.get() })
+                try {
+                    orchestrator.stream(request, { signals.trySend(StreamSignal.Event(it)) }, { aborted.get() })
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    // Engine failures must not be swallowed into a fake "successful
+                    // empty" stream: forward them as an explicit failure signal.
+                    Log.e(TAG, "stream generation failed", e)
+                    signals.trySend(StreamSignal.Failed(e))
+                } finally {
+                    signals.close()
                 }
-                events.close()
             }
 
             try {
-                for (event in events) {
-                    when (event) {
-                        is ToolStreamEvent.Text ->
-                            writeStringUtf8("data: ${OpenAiResponses.contentChunk(completionId, model, created, event.text)}\n\n")
+                for (signal in signals) {
+                    when (signal) {
+                        is StreamSignal.Event -> when (signal.event) {
+                            is ToolStreamEvent.Text ->
+                                writeStringUtf8("data: ${OpenAiResponses.contentChunk(completionId, model, created, signal.event.text)}\n\n")
 
-                        is ToolStreamEvent.ToolCall ->
-                            writeStringUtf8(
-                                "data: ${
-                                    OpenAiResponses.toolCallChunk(completionId, model, created, event.index, event.id, event.name, event.arguments)
-                                }\n\n"
-                            )
+                            is ToolStreamEvent.ToolCall ->
+                                writeStringUtf8(
+                                    "data: ${
+                                        OpenAiResponses.toolCallChunk(completionId, model, created, signal.event.index, signal.event.id, signal.event.name, signal.event.arguments)
+                                    }\n\n"
+                                )
 
-                        is ToolStreamEvent.Finish.ToolCalls -> finishReason = "tool_calls"
-                        is ToolStreamEvent.Finish.Stop -> Unit
+                            is ToolStreamEvent.Finish.ToolCalls -> finishReason = "tool_calls"
+                            is ToolStreamEvent.Finish.Stop -> Unit
+                        }
+
+                        is StreamSignal.Failed -> engineError = signal.error
                     }
                 }
-                writeStringUtf8("data: ${OpenAiResponses.finishChunk(completionId, model, created, finishReason)}\n\n")
-                writeStringUtf8("data: [DONE]\n\n")
-            } catch (e: kotlinx.coroutines.CancellationException) {
+                if (engineError == null) {
+                    writeStringUtf8("data: ${OpenAiResponses.finishChunk(completionId, model, created, finishReason)}\n\n")
+                    writeStringUtf8("data: [DONE]\n\n")
+                } else {
+                    // Chunks already produced stay as-is; the stream terminates with an
+                    // error event instead of pretending to finish_reason=stop.
+                    writeStringUtf8(
+                        "data: ${OpenAiResponses.errorBody("Engine generation failed: ${engineError!!.message}", "engine_error")}\n\n"
+                    )
+                    writeStringUtf8("data: [DONE]\n\n")
+                }
+            } catch (e: CancellationException) {
                 // Client disconnected: stop the engine as soon as possible.
                 aborted.set(true)
                 producer.cancel()
@@ -169,7 +221,8 @@ private suspend fun io.ktor.server.routing.RoutingContext.handleStream(
 
 private fun io.ktor.server.application.ApplicationCall.isAuthorized(backend: MnnServerBackend): Boolean {
     val header = request.header(HttpHeaders.Authorization) ?: return false
-    if (!header.startsWith("Bearer ")) return false
+    // RFC 7235: auth-schemes are case-insensitive ("bearer <token>" must work too).
+    if (!header.startsWith("Bearer ", ignoreCase = true)) return false
     return constantTimeEquals(header.substring("Bearer ".length).trim(), backend.token)
 }
 
@@ -181,6 +234,15 @@ private fun constantTimeEquals(a: String, b: String): Boolean {
         diff = diff or (a[i].code xor b[i].code)
     }
     return diff == 0
+}
+
+private suspend fun io.ktor.server.application.ApplicationCall.respondUnauthorized() {
+    response.header(HttpHeaders.WWWAuthenticate, "Bearer")
+    respondText(
+        OpenAiResponses.errorBody("Invalid or missing bearer token", "authentication_error"),
+        contentType = ContentType.Application.Json,
+        status = HttpStatusCode.Unauthorized,
+    )
 }
 
 private suspend fun io.ktor.server.application.ApplicationCall.respondError(
