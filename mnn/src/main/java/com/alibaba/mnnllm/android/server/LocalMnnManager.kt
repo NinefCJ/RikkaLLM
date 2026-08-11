@@ -40,7 +40,9 @@ data class MnnServerState(
 class LocalMnnManager(private val context: Context) : MnnServerBackend {
 
     companion object {
-        const val DEFAULT_PORT = 8080
+        // 8090 (not 8080): the app's own WebServerService defaults to 8080 and the
+        // two loopback servers must not fight over the same port.
+        const val DEFAULT_PORT = 8090
         const val MODEL_ID = "mnn-local"
 
         private const val PREFS = "mnn_local_server"

@@ -37,6 +37,7 @@ class MnnServerService : Service() {
     private val manager: LocalMnnManager by inject()
 
     private var server: EmbeddedServer<*, *>? = null
+    private var serverPort: Int = -1
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -81,8 +82,13 @@ class MnnServerService : Service() {
 
     private fun startHttpServer(port: Int) {
         if (server != null) {
-            manager.onServerStarted(port)
-            return
+            if (serverPort == port) {
+                manager.onServerStarted(port)
+                return
+            }
+            // Port changed while running (settings page applied a new port):
+            // rebind on the new port instead of keeping the old listener.
+            stopHttpServer()
         }
         try {
             val created = embeddedServer(CIO, port = port, host = "127.0.0.1") {
@@ -90,6 +96,7 @@ class MnnServerService : Service() {
             }
             created.start(wait = false)
             server = created
+            serverPort = port
             manager.onServerStarted(port)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to start HTTP server on port $port", e)
@@ -102,6 +109,7 @@ class MnnServerService : Service() {
     private fun stopHttpServer() {
         val current = server ?: return
         server = null
+        serverPort = -1
         runCatching { current.stop(200, 1000) }
             .onFailure { Log.w(TAG, "Server stop failed", it) }
     }

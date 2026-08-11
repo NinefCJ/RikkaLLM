@@ -2,20 +2,25 @@ package me.rerere.rikkahub.ui.pages.setting
 
 import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alibaba.mnnllm.android.server.LocalMnnManager
@@ -58,8 +64,15 @@ fun SettingLocalEnginePage() {
     val clipboardManager = LocalClipboardManager.current
     val toaster = LocalToaster.current
 
-    var pendingStart by remember { mutableStateOf(false) }
+    var pendingStartPort by remember { mutableStateOf<Int?>(null) }
     var tokenVisible by remember { mutableStateOf(false) }
+    var portText by remember { mutableStateOf(state.port.toString()) }
+    var modelDirText by remember { mutableStateOf(state.modelDir.orEmpty()) }
+
+    // Keep the port field in sync when the manager adopts a new port (service start).
+    LaunchedEffect(state.port) {
+        portText = state.port.toString()
+    }
 
     val permissionState = rememberPermissionState(
         permissions = buildSet {
@@ -71,9 +84,20 @@ fun SettingLocalEnginePage() {
     PermissionManager(permissionState = permissionState)
 
     LaunchedEffect(permissionState.allPermissionsGranted) {
-        if (pendingStart && permissionState.allPermissionsGranted) {
-            pendingStart = false
-            manager.startServer()
+        val port = pendingStartPort
+        if (port != null && permissionState.allPermissionsGranted) {
+            pendingStartPort = null
+            manager.startServer(port)
+        }
+    }
+
+    /** Starts (or restarts on a new port) the server, requesting permissions first. */
+    fun startOnPort(port: Int) {
+        if (state.running || permissionState.allPermissionsGranted) {
+            manager.startServer(port)
+        } else {
+            pendingStartPort = port
+            permissionState.requestPermissions()
         }
     }
 
@@ -96,12 +120,7 @@ fun SettingLocalEnginePage() {
                 onClick = {
                     if (state.starting) return@ExtendedFloatingActionButton
                     if (!state.running) {
-                        if (permissionState.allPermissionsGranted) {
-                            manager.startServer()
-                        } else {
-                            pendingStart = true
-                            permissionState.requestPermissions()
-                        }
+                        startOnPort(portText.toIntOrNull() ?: state.port)
                     } else {
                         manager.stopServer()
                     }
@@ -214,6 +233,102 @@ fun SettingLocalEnginePage() {
                             },
                         )
                     }
+                }
+            }
+            item {
+                CardGroup(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    title = { Text("引擎设置") },
+                ) {
+                    item(
+                        headlineContent = { Text("服务端口") },
+                        supportingContent = {
+                            Column {
+                                Text("默认 8090（避免与内置网页服务的 8080 冲突），修改后点击「应用」生效")
+                                OutlinedTextField(
+                                    value = portText,
+                                    onValueChange = { portText = it.filter(Char::isDigit).take(5) },
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    modifier = Modifier.fillMaxWidth(),
+                                )
+                            }
+                        },
+                        trailingContent = {
+                            TextButton(
+                                onClick = {
+                                    val port = portText.toIntOrNull()
+                                    if (port == null || port !in 1..65535) {
+                                        toaster.show("端口需在 1 到 65535 之间")
+                                        return@TextButton
+                                    }
+                                    startOnPort(port)
+                                },
+                                enabled = !state.starting,
+                            ) {
+                                Text("应用")
+                            }
+                        },
+                    )
+                }
+            }
+            item {
+                CardGroup(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    title = { Text("模型管理") },
+                ) {
+                    item(
+                        headlineContent = { Text("模型目录") },
+                        supportingContent = {
+                            Column {
+                                Text("填写包含 MNN 模型 config.json 的本地目录路径")
+                                OutlinedTextField(
+                                    value = modelDirText,
+                                    onValueChange = { modelDirText = it },
+                                    singleLine = true,
+                                    modifier = Modifier.fillMaxWidth(),
+                                )
+                            }
+                        },
+                    )
+                    item(
+                        headlineContent = { Text("加载 / 卸载模型") },
+                        supportingContent = {
+                            Text(
+                                when {
+                                    state.modelLoading -> "正在加载模型…"
+                                    state.currentModel != null -> "当前模型：${state.currentModel}"
+                                    else -> "尚未加载模型"
+                                }
+                            )
+                        },
+                        trailingContent = {
+                            Row {
+                                TextButton(
+                                    onClick = {
+                                        if (modelDirText.isBlank()) {
+                                            toaster.show("请先填写模型目录")
+                                            return@TextButton
+                                        }
+                                        manager.loadModel(modelDirText)
+                                    },
+                                    enabled = !state.modelLoading,
+                                ) {
+                                    Text("加载")
+                                }
+                                TextButton(
+                                    onClick = { manager.unloadModel() },
+                                    enabled = !state.modelLoading && state.currentModel != null,
+                                ) {
+                                    Text("卸载")
+                                }
+                            }
+                        },
+                    )
                 }
             }
         }
