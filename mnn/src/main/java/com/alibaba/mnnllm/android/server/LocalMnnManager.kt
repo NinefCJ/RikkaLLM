@@ -46,6 +46,12 @@ class LocalMnnManager(private val context: Context) : MnnServerBackend {
         private const val PREFS = "mnn_local_server"
         private const val KEY_PORT = "port"
         private const val KEY_MODEL_DIR = "model_dir"
+
+        // Marks whether the app's "MNN 本地模型" provider entry currently reflects
+        // state written by the Phase 2 sync bridge (MnnLocalProviderSync). Only
+        // entries carrying this marker may be reset when the local server stops,
+        // so manually configured Phase 1 entries are never clobbered.
+        private const val KEY_PROVIDER_MANAGED = "provider_entry_managed"
     }
 
     init {
@@ -65,6 +71,13 @@ class LocalMnnManager(private val context: Context) : MnnServerBackend {
         )
     )
     val state: StateFlow<MnnServerState> = _state
+
+    /** Persisted marker: the provider entry currently holds Phase 2 sync-managed values. */
+    var providerEntryManaged: Boolean
+        get() = prefs.getBoolean(KEY_PROVIDER_MANAGED, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_PROVIDER_MANAGED, value).apply()
+        }
 
     // ------------------------------------------------------------------
     // MnnServerBackend (consumed by the Ktor routes)
