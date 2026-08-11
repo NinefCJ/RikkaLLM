@@ -84,6 +84,13 @@ jobs:
           # 写入签名配置到local.properties
           echo "${{ secrets.SIGNING_CONFIG }}" > local.properties
 
+      # :mnn 依赖 gitignore 掉的 vendor/MNN（源码/头文件）与 mnn-prebuilt/libMNN.so，
+      # 必须在 Gradle 构建前准备好，否则 :mnn 配置阶段会 fail fast
+      - name: Set up MNN vendor source and prebuilt libMNN.so
+        run: |
+          chmod +x scripts/setup-mnn.sh
+          ./scripts/setup-mnn.sh
+
       - name: Gradle Build
         run: |
           chmod +x gradlew

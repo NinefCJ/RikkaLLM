@@ -16,6 +16,25 @@
 Firebase 已于本 fork 移除，构建无需 `google-services.json`。
 `web` 模块会在 `preBuild` 阶段构建 `web-ui/` 并复制静态资源，需要本地可用 `pnpm`。
 
+### MNN 本地引擎前置步骤（`:mnn` 模块）
+
+`:mnn` 模块硬依赖两个被 gitignore 的产物，fresh clone 后必须先准备，否则 Gradle 配置阶段会直接报错（fail fast）：
+
+- `vendor/MNN`：alibaba/MNN 源码树（固定 commit `1d535d7`，提供头文件与 CMake 工程）
+- `mnn-prebuilt/arm64-v8a/libMNN.so`：预编译运行时（链接 + 打包进 APK）
+
+运行对应的 setup 脚本即可自动完成浅克隆（固定 commit）与构建（需要 NDK 25.x 与 Android SDK CMake）：
+
+```powershell
+powershell -File scripts/setup-mnn.ps1   # Windows，内部复用 scripts/build-mnn-android.ps1
+```
+
+```bash
+./scripts/setup-mnn.sh                   # Linux/macOS（CI 的 daily-build 也用它）
+```
+
+脚本具备幂等性：`vendor/MNN` 已处于固定 commit 时跳过克隆，仅校验。
+
 ## Coding Style & Naming Conventions
 
 本仓库使用 `.editorconfig` 统一格式：

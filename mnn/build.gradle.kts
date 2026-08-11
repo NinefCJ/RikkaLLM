@@ -2,6 +2,25 @@ plugins {
     id("rikkahub.android.library")
 }
 
+// Fail fast when the gitignored MNN prerequisites are missing (fresh clone / CI):
+// native sources + headers come from vendor/MNN, the prebuilt runtime from
+// mnn-prebuilt/arm64-v8a/libMNN.so. Without them the CMake build and packaging
+// would fail deep inside the native toolchain with cryptic errors.
+val mnnSourceMarker = rootProject.file("vendor/MNN/CMakeLists.txt")
+val mnnPrebuiltSo = rootProject.file("mnn-prebuilt/arm64-v8a/libMNN.so")
+if (!mnnSourceMarker.exists() || !mnnPrebuiltSo.exists()) {
+    throw GradleException(
+        buildString {
+            appendLine(":mnn is missing gitignored MNN prerequisites:")
+            if (!mnnSourceMarker.exists()) appendLine("  - vendor/MNN (MNN source tree, commit 1d535d7)")
+            if (!mnnPrebuiltSo.exists()) appendLine("  - mnn-prebuilt/arm64-v8a/libMNN.so (prebuilt runtime)")
+            appendLine("Run the setup script first to fetch/build them:")
+            appendLine("  Windows:  powershell -File scripts/setup-mnn.ps1")
+            appendLine("  Linux:  ./scripts/setup-mnn.sh")
+        }
+    )
+}
+
 android {
     namespace = "me.rerere.rikkallm.mnn"
 

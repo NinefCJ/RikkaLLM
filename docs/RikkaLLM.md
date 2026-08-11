@@ -41,6 +41,15 @@ Phase 1 依赖 MNN Chat 官方 App 内置的 OpenAI 兼容 HTTP API（默认监�
 
 Phase 2 已在单 App 内嵌 MNN 推理引擎，并在其上实现了一个本地 OpenAI 兼容服务：启动后 App 自身监听 `127.0.0.1` 上的 `/v1/chat/completions`，预置的「MNN 本地模型」供应商会自动指向该服务，本地推理不再依赖独立的 MNN Chat 应用。
 
+### 构建前置
+
+`:mnn` 模块硬依赖两个被 gitignore 的产物，fresh clone 后需先运行 setup 脚本（幂等：已存在时校验固定 commit `1d535d7`）：
+
+- Windows：`powershell -File scripts/setup-mnn.ps1`（内部复用 `scripts/build-mnn-android.ps1`）
+- Linux/macOS（含 CI daily-build）：`./scripts/setup-mnn.sh`
+
+脚本会浅克隆 alibaba/MNN 到 `vendor/MNN`（头文件与 CMake 工程）并构建 arm64-v8a 的 `libMNN.so` 发布到 `mnn-prebuilt/`；两者缺失时 Gradle 配置阶段会以明确指引报错（fail fast）。
+
 ### 四层架构
 
 | 层 | 位置 | 职责 |
