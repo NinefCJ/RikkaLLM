@@ -33,6 +33,11 @@ class ToolCallStreamParser(
     // Full raw output, kept for the end-of-stream bare-JSON fallback.
     private val raw = StringBuilder()
 
+    // First non-whitespace character of [raw]. Once decided it tells us cheaply
+    // whether the whole output still looks like a bare JSON payload, avoiding a
+    // full raw.toString().trim() copy on every fed token (was O(n^2) per stream).
+    private var rawStartsAsJson: Boolean? = null
+
     private var nextIndex = 0
     private var emittedText = false
 
@@ -48,9 +53,25 @@ class ToolCallStreamParser(
 
     fun feed(chunk: String): List<ToolStreamEvent> {
         if (chunk.isEmpty()) return emptyList()
-        raw.append(chunk)
+        if (rawStartsAsJson == null) {
+            for (c in chunk) {
+                if (!c.isWhitespace()) {
+                    rawStartsAsJson = (c == '{' || c == '[')
+                    break
+                }
+            }
+        }
+        // raw is only consumed by the end-of-stream bare-JSON fallback, which only runs
+        // while we are still "holding" (nothing emitted yet). Once holding is abandoned,
+        // stop retaining it so long plain-text generations don't keep a duplicate of the
+        // entire output in memory.
+        if (!emittedText && !sawToolCall) {
+            raw.append(chunk)
+        }
         buffer.append(chunk)
-        return drain()
+        val events = drain()
+        if (emittedText || sawToolCall) raw.setLength(0)
+        return events
     }
 
     fun finish(): List<ToolStreamEvent> {
@@ -85,8 +106,7 @@ class ToolCallStreamParser(
             // Holding strategy: nothing emitted yet and the whole output still looks
             // like a bare JSON payload -> keep holding for the finish() fallback.
             if (!emittedText && !sawToolCall) {
-                val t = raw.toString().trim()
-                if (t.startsWith("{") || t.startsWith("[")) {
+                if (rawStartsAsJson == true) {
                     if (buffer.length <= MAX_JSON_HOLD) break
                     emittedText = true // too large to be a call payload, give up holding
                 }

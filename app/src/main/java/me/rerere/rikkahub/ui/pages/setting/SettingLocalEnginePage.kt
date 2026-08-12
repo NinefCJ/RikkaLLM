@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +18,7 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFlexibleTopAppBar
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -36,6 +39,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alibaba.mnnllm.android.server.LocalMnnManager
+import me.rerere.rikkahub.data.mnn.DownloadState
+import me.rerere.rikkahub.data.mnn.LocalModelManager
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Cpu
 import me.rerere.hugeicons.stroke.Play
@@ -68,6 +73,15 @@ fun SettingLocalEnginePage() {
     var tokenVisible by remember { mutableStateOf(false) }
     var portText by remember { mutableStateOf(state.port.toString()) }
     var modelDirText by remember { mutableStateOf(state.modelDir.orEmpty()) }
+
+    val modelManager: LocalModelManager = koinInject()
+    val installed by modelManager.installed.collectAsStateWithLifecycle()
+    val downloadState by modelManager.downloadState.collectAsStateWithLifecycle()
+
+    // Populate the installed-models list from disk when the page opens.
+    LaunchedEffect(Unit) {
+        modelManager.refresh()
+    }
 
     // Keep the port field in sync when the manager adopts a new port (service start).
     LaunchedEffect(state.port) {
@@ -279,7 +293,7 @@ fun SettingLocalEnginePage() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp),
-                    title = { Text("模型管理") },
+                    title = { Text("手动加载模型（高级）") },
                 ) {
                     item(
                         headlineContent = { Text("模型目录") },
@@ -315,13 +329,17 @@ fun SettingLocalEnginePage() {
                                             return@TextButton
                                         }
                                         manager.loadModel(modelDirText)
+                                        modelManager.refresh()
                                     },
                                     enabled = !state.modelLoading,
                                 ) {
                                     Text("加载")
                                 }
                                 TextButton(
-                                    onClick = { manager.unloadModel() },
+                                    onClick = {
+                                        manager.unloadModel()
+                                        modelManager.refresh()
+                                    },
                                     enabled = !state.modelLoading && state.currentModel != null,
                                 ) {
                                     Text("卸载")
@@ -331,6 +349,173 @@ fun SettingLocalEnginePage() {
                     )
                 }
             }
+            item {
+                CardGroup(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    title = { Text("已安装模型") },
+                ) {
+                    if (installed.isEmpty()) {
+                        item(
+                            headlineContent = { Text("暂无已安装模型") },
+                            supportingContent = {
+                                Text("在下方「模型市场」下载，或到「手动加载模型」指定目录")
+                            },
+                        )
+                    }
+                    installed.forEach { info ->
+                        item(
+                            headlineContent = { Text(info.catalogEntry?.name ?: info.id) },
+                            supportingContent = {
+                                Column {
+                                    Text(
+                                        "版本 ${info.version ?: "未知"} · " +
+                                            if (info.sizeBytes > 0) {
+                                                info.sizeBytes.humanSize()
+                                            } else {
+                                                "未知大小"
+                                            },
+                                    )
+                                    if (info.isLoaded) {
+                                        Text(
+                                            "已加载并运行",
+                                            color = MaterialTheme.colorScheme.primary,
+                                        )
+                                    }
+                                }
+                            },
+                            trailingContent = {
+                                Row {
+                                    TextButton(
+                                        onClick = {
+                                            manager.loadModel(
+                                                manager.modelsRoot().resolve(info.id).absolutePath,
+                                            )
+                                            modelManager.refresh()
+                                        },
+                                        enabled = !state.modelLoading && !info.isLoaded,
+                                    ) {
+                                        Text("加载")
+                                    }
+                                    TextButton(
+                                        onClick = {
+                                            manager.unloadModel()
+                                            modelManager.refresh()
+                                        },
+                                        enabled = !state.modelLoading && info.isLoaded,
+                                    ) {
+                                        Text("卸载")
+                                    }
+                                    TextButton(
+                                        onClick = {
+                                            if (info.isLoaded) manager.unloadModel()
+                                            modelManager.delete(info.id)
+                                            modelManager.refresh()
+                                        },
+                                    ) {
+                                        Text("删除", color = MaterialTheme.colorScheme.error)
+                                    }
+                                }
+                            },
+                        )
+                    }
+                }
+            }
+            item {
+                CardGroup(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    title = { Text("模型市场（下载 / 更新）") },
+                ) {
+                    val ds = downloadState
+                    modelManager.catalog.forEach { model ->
+                        val isInstalled = installed.any { it.id == model.id }
+                        val updating = modelManager.needsUpdate(model.id)
+                        val progress =
+                            if (ds is DownloadState.Progress && ds.modelId == model.id) {
+                                ds.progress
+                            } else {
+                                null
+                            }
+                        val isDownloading = progress != null
+                        item(
+                            headlineContent = { Text(model.name) },
+                            supportingContent = {
+                                Column {
+                                    Text(model.description)
+                                    val approx = model.fileSizes.values.sum()
+                                    Text(
+                                        buildString {
+                                            append("版本 ${model.version}")
+                                            if (approx > 0) append(" · 约 ${approx.humanSize()}")
+                                            model.minRamMb?.let { append(" · 建议内存 ≥ ${it}MB") }
+                                        },
+                                    )
+                                    if (progress != null) {
+                                        val p = progress
+                                        Spacer(Modifier.height(8.dp))
+                                        if (p.overallTotal > 0) {
+                                            val frac = (p.overallBytes.toFloat() / p.overallTotal)
+                                                .coerceIn(0f, 1f)
+                                            LinearProgressIndicator(
+                                                progress = { frac },
+                                                modifier = Modifier.fillMaxWidth(),
+                                            )
+                                        } else {
+                                            LinearProgressIndicator(
+                                                modifier = Modifier.fillMaxWidth(),
+                                            )
+                                        }
+                                        Text(
+                                            "下载中：文件 ${p.fileIndex + 1}/${p.fileCount} · " +
+                                                "${p.overallBytes.humanSize()}/" +
+                                                (if (p.overallTotal > 0) p.overallTotal.humanSize() else "?") +
+                                                " · ${p.speedBytesPerSec.humanSize()}/s",
+                                        )
+                                    }
+                                    if (ds is DownloadState.Error && ds.modelId == model.id) {
+                                        Text(
+                                            "下载失败：${ds.message}",
+                                            color = MaterialTheme.colorScheme.error,
+                                        )
+                                    }
+                                }
+                            },
+                            trailingContent = {
+                                Row {
+                                    if (isDownloading) {
+                                        TextButton(onClick = { modelManager.cancel() }) {
+                                            Text("取消")
+                                        }
+                                    } else if (isInstalled && !updating) {
+                                        TextButton(onClick = { }, enabled = false) {
+                                            Text("已安装")
+                                        }
+                                    } else {
+                                        TextButton(onClick = { modelManager.download(model) }) {
+                                            Text(if (updating) "更新" else "下载")
+                                        }
+                                    }
+                                }
+                            },
+                        )
+                    }
+                }
+            }
         }
     }
+}
+
+private fun Long.humanSize(): String {
+    if (this <= 0) return "0 B"
+    val units = arrayOf("B", "KB", "MB", "GB", "TB")
+    var size = this.toDouble()
+    var i = 0
+    while (size >= 1024 && i < units.lastIndex) {
+        size /= 1024
+        i++
+    }
+    return "%.1f %s".format(size, units[i])
 }

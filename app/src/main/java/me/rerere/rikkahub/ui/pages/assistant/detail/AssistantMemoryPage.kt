@@ -45,6 +45,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.rerere.rikkahub.R
 import me.rerere.rikkahub.data.model.Assistant
 import me.rerere.rikkahub.data.model.AssistantMemory
+import me.rerere.rikkahub.data.db.entity.MemoryItemEntity
 import me.rerere.rikkahub.ui.components.nav.BackButton
 import me.rerere.rikkahub.ui.components.ui.CardGroup
 import me.rerere.rikkahub.ui.components.ui.RikkaConfirmDialog
@@ -83,6 +84,7 @@ fun AssistantMemoryPage(id: String) {
     ) { innerPadding ->
         AssistantMemoryContent(
             innerPadding = innerPadding,
+            vm = vm,
             assistant = assistant,
             memories = memories,
             onUpdateAssistant = { vm.update(it) },
@@ -96,6 +98,7 @@ fun AssistantMemoryPage(id: String) {
 @Composable
 private fun AssistantMemoryContent(
     innerPadding: PaddingValues,
+    vm: AssistantDetailVM,
     assistant: Assistant,
     memories: List<AssistantMemory>,
     onUpdateAssistant: (Assistant) -> Unit,
@@ -287,6 +290,12 @@ private fun AssistantMemoryContent(
                 )
             }
         }
+
+        RagMemorySection(
+            vm = vm,
+            assistant = assistant,
+            onUpdateAssistant = onUpdateAssistant,
+        )
     }
 
     RikkaConfirmDialog(
@@ -350,6 +359,116 @@ private fun MemoryItem(
             IconButton(
                 onClick = { onDeleteMemory(memory) }
             ) {
+                Icon(
+                    HugeIcons.Delete01,
+                    stringResource(R.string.assistant_page_delete)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun RagMemorySection(
+    vm: AssistantDetailVM,
+    assistant: Assistant,
+    onUpdateAssistant: (Assistant) -> Unit,
+) {
+    var newRagText by remember { mutableStateOf("") }
+    var ragQuery by remember { mutableStateOf("") }
+
+    val ragItems by vm.ragMemoryItems.collectAsStateWithLifecycle()
+    val ragSearchResults by vm.ragSearchResults.collectAsStateWithLifecycle()
+    val displayItems = if (ragQuery.isNotBlank()) ragSearchResults else ragItems
+
+    CardGroup {
+        item(
+            headlineContent = { Text(stringResource(R.string.assistant_page_rag_memory_title)) },
+            supportingContent = { Text(stringResource(R.string.assistant_page_rag_memory_desc)) },
+            trailingContent = {
+                Switch(
+                    checked = assistant.enableRagMemory,
+                    onCheckedChange = { onUpdateAssistant(assistant.copy(enableRagMemory = it)) }
+                )
+            }
+        )
+    }
+
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            TextField(
+                value = newRagText,
+                onValueChange = { newRagText = it },
+                label = { Text(stringResource(R.string.assistant_page_rag_add_hint)) },
+                modifier = Modifier.weight(1f),
+                minLines = 2,
+                maxLines = 6
+            )
+            TextButton(onClick = {
+                vm.addRagMemory(newRagText)
+                newRagText = ""
+            }) { Text(stringResource(R.string.assistant_page_rag_add)) }
+        }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            TextField(
+                value = ragQuery,
+                onValueChange = { ragQuery = it },
+                label = { Text(stringResource(R.string.assistant_page_rag_search_hint)) },
+                modifier = Modifier.weight(1f),
+                singleLine = true
+            )
+            TextButton(onClick = { vm.searchRagMemory(ragQuery) }) {
+                Text(stringResource(R.string.assistant_page_rag_search))
+            }
+            TextButton(onClick = { vm.consolidateRagMemory() }) {
+                Text(stringResource(R.string.assistant_page_rag_consolidate))
+            }
+        }
+
+        displayItems.fastForEach { item ->
+            key(item.id) {
+                RagMemoryItem(item = item, onDelete = { vm.deleteRagMemory(item) })
+            }
+        }
+    }
+}
+
+@Composable
+private fun RagMemoryItem(item: MemoryItemEntity, onDelete: () -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CustomColors.cardColorsOnSurfaceContainer
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = "#${item.id}",
+                    style = MaterialTheme.typography.titleSmall,
+                )
+                Text(
+                    text = item.content,
+                    maxLines = 5,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+            IconButton(onClick = onDelete) {
                 Icon(
                     HugeIcons.Delete01,
                     stringResource(R.string.assistant_page_delete)

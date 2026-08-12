@@ -23,8 +23,10 @@ import me.rerere.rikkahub.data.model.Assistant
 import me.rerere.rikkahub.data.model.AssistantMemory
 import me.rerere.rikkahub.data.model.Avatar
 import me.rerere.rikkahub.data.model.Tag
+import me.rerere.rikkahub.data.db.entity.MemoryItemEntity
 import me.rerere.rikkahub.data.repository.MemoryRepository
 import me.rerere.rikkahub.data.repository.WorkspaceRepository
+import me.rerere.rikkahub.util.parseMemorySearchTimeRange
 import kotlin.uuid.Uuid
 
 private const val TAG = "AssistantDetailVM"
@@ -77,6 +79,22 @@ class AssistantDetailVM(
         .stateIn(
             scope = viewModelScope, started = SharingStarted.Eagerly, initialValue = emptyList()
         )
+
+    val ragMemoryItems = assistant
+        .flatMapLatest { a -> memoryRepository.getMemoryItemsFlow(a.id.toString()) }
+        .stateIn(
+            scope = viewModelScope, started = SharingStarted.Eagerly, initialValue = emptyList()
+        )
+
+    private val _ragSearchResults = MutableStateFlow<List<MemoryItemEntity>>(emptyList())
+    val ragSearchResults = _ragSearchResults.asStateFlow()
+
+    fun searchRagMemory(query: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val tr = parseMemorySearchTimeRange(query)
+            _ragSearchResults.value = memoryRepository.searchMemoryItems(assistantId.toString(), query, tr)
+        }
+    }
 
     val providers = settingsStore
         .settingsFlow
@@ -201,6 +219,26 @@ class AssistantDetailVM(
     fun deleteMemory(memory: AssistantMemory) {
         viewModelScope.launch {
             memoryRepository.deleteMemory(id = memory.id)
+        }
+    }
+
+    fun addRagMemory(text: String) {
+        viewModelScope.launch {
+            if (text.isBlank()) return@launch
+            memoryRepository.addMemoryItems(assistantId.toString(), listOf(text))
+        }
+    }
+
+    fun deleteRagMemory(item: MemoryItemEntity) {
+        viewModelScope.launch {
+            memoryRepository.deleteMemoryItem(item.id)
+        }
+    }
+
+    fun consolidateRagMemory() {
+        viewModelScope.launch(Dispatchers.IO) {
+            memoryRepository.consolidate(assistantId.toString())
+            searchRagMemory("") // 刷新
         }
     }
 

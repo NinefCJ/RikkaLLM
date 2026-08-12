@@ -21,6 +21,7 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import io.ktor.utils.io.writeStringUtf8
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicReference
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -155,13 +156,15 @@ private suspend fun io.ktor.server.routing.RoutingContext.handleStream(
         writeStringUtf8("data: ${OpenAiResponses.roleChunk(completionId, model, created)}\n\n")
 
         val aborted = AtomicBoolean(false)
+        val statsRef = AtomicReference<GenerationStats?>(null)
         val signals = Channel<StreamSignal>(Channel.UNLIMITED)
         var finishReason = "stop"
         var engineError: Throwable? = null
         coroutineScope {
             val producer = launch(Dispatchers.IO) {
                 try {
-                    orchestrator.stream(request, { signals.trySend(StreamSignal.Event(it)) }, { aborted.get() })
+                    val stats = orchestrator.stream(request, { signals.trySend(StreamSignal.Event(it)) }, { aborted.get() })
+                    statsRef.set(stats)
                 } catch (e: CancellationException) {
                     throw e
                 } catch (e: Exception) {
@@ -198,6 +201,12 @@ private suspend fun io.ktor.server.routing.RoutingContext.handleStream(
                 }
                 if (engineError == null) {
                     writeStringUtf8("data: ${OpenAiResponses.finishChunk(completionId, model, created, finishReason)}\n\n")
+                    // Local-engine extension: surface prefill/decode timing in a dedicated
+                    // usage chunk so SSE clients can render the per-message performance
+                    // indicator (Prefill/Decode duration + tokens/s).
+                    statsRef.get()?.let { stats ->
+                        writeStringUtf8("data: ${OpenAiResponses.usageChunk(completionId, model, created, stats)}\n\n")
+                    }
                     writeStringUtf8("data: [DONE]\n\n")
                 } else {
                     // Chunks already produced stay as-is; the stream terminates with an

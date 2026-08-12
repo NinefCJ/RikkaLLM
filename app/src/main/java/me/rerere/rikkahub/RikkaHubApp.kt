@@ -23,6 +23,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.first
 import me.rerere.common.android.appTempFolder
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import me.rerere.rikkahub.service.MemoryConsolidationWorker
+import java.util.concurrent.TimeUnit
 import com.whl.quickjs.android.QuickJSLoader
 import me.rerere.rikkahub.di.appModule
 import me.rerere.rikkahub.di.dataSourceModule
@@ -85,6 +91,9 @@ class RikkaHubApp : Application() {
 
         // Start WebServer if enabled in settings
         startWebServerIfEnabled()
+
+        // 后台周期性巩固 RAG 长期记忆（去重 + 裁剪）
+        scheduleMemoryConsolidation()
 
         // Increment launch count
         incrementLaunchCount()
@@ -191,6 +200,21 @@ class RikkaHubApp : Application() {
                 Log.e(TAG, "startWebServerIfEnabled failed", it)
             }
         }
+    }
+
+    private fun scheduleMemoryConsolidation() {
+        val request = PeriodicWorkRequestBuilder<MemoryConsolidationWorker>(24, TimeUnit.HOURS)
+            .setConstraints(
+                Constraints.Builder()
+                    .setRequiresBatteryNotLow(true)
+                    .build()
+            )
+            .build()
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            MemoryConsolidationWorker.UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            request,
+        )
     }
 
     private fun createNotificationChannel() {

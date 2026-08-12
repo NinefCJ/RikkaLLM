@@ -7,6 +7,9 @@ sealed class AppEvent {
     data class Speak(val text: String) : AppEvent()
     data object OpenUsageAccessSettings : AppEvent()
 
+    /** 轻量提示（toast），由 RouteActivity 消费。 */
+    data class Toast(val message: String) : AppEvent()
+
     /** MCP OAuth 授权完成后经 deep link 回传的结果。 */
     data class McpOAuthCallback(
         val state: String?,

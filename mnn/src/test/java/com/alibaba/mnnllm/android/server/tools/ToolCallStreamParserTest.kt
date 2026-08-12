@@ -172,4 +172,37 @@ class ToolCallStreamParserTest {
         val none = ToolCallStreamParser.tryParseCalls("hello world")
         assertTrue(none.isEmpty())
     }
+
+    @Test
+    fun `bare json without tool shape passes through as text when holding`() {
+        // Starts with '{' so the parser holds during streaming, then the end-of-stream
+        // bare-JSON fallback must reject it (no "name"/"tool_calls") and emit as text.
+        val parser = fixedIds()
+        val events = parser.feed("""{"foo": 1}""") + parser.finish()
+        assertTrue(events.calls().isEmpty())
+        assertEquals("""{"foo": 1}""", events.texts().trim())
+    }
+
+    @Test
+    fun `long object-like stream gives up holding and passes through as text`() {
+        // Starts with '{' but is prose longer than the hold budget, so the parser must
+        // stop holding and emit it as text rather than keeping everything buffered.
+        // Regression guard for the streaming hot path (no per-token raw copy).
+        val parser = fixedIds()
+        val big = "{" + "a".repeat(20000) + " not json"
+        val events = parser.feed(big) + parser.finish()
+        assertTrue(events.calls().isEmpty())
+        assertTrue(events.texts().contains("not json"))
+    }
+
+    @Test
+    fun `large plain stream is preserved exactly`() {
+        // Smoke test: streaming many small chunks must not lose or reorder content.
+        val parser = fixedIds()
+        val big = "x".repeat(20000) + " final"
+        var events: List<ToolStreamEvent> = emptyList()
+        big.forEach { ch -> events = events + parser.feed(ch.toString()) }
+        events = events + parser.finish()
+        assertEquals(big, events.texts())
+    }
 }

@@ -49,6 +49,10 @@ class LlmSession (
 
     private var keepHistory = false
 
+    // Cache for getConfig(): the engine-level merged config is read once and reused
+    // across generations (it does not change between requests). Cleared by reloadConfig().
+    private var cachedConfig: ModelConfig? = null
+
     override fun getHistory(): List<ChatDataItem>?{
         return savedHistory
     }
@@ -71,21 +75,6 @@ class LlmSession (
                     .map { obj: String? -> obj!! }
                     .collect(Collectors.toList())
         }
-        val config = if (useCustomConfig) {
-            ModelConfig.loadMergedConfig(configPath, getExtraConfigFile(modelId))!!
-        } else {
-            ModelConfig.loadDefaultConfig(configPath)!!
-        }
-        var rootCacheDir: String? = ""
-        if (config.useMmap == true) {
-            rootCacheDir = MmapUtils.getMmapDir(modelId)
-            File(rootCacheDir).mkdirs()
-        }
-        val configMap = HashMap<String, Any>().apply {
-            put("is_r1", ModelTypeUtils.isR1Model(modelId))
-            put("mmap_dir", rootCacheDir ?: "")
-            put("keep_history", keepHistory)
-        }
         val llmConfig = if (useCustomConfig) {
             ModelConfig.loadMergedConfig(configPath, getExtraConfigFile(modelId))!!
         } else {
@@ -94,6 +83,16 @@ class LlmSession (
         // Override backend type from constructor only if not null
         if (backendType != null) {
             llmConfig.backendType = backendType
+        }
+        var rootCacheDir: String? = ""
+        if (llmConfig.useMmap == true) {
+            rootCacheDir = MmapUtils.getMmapDir(modelId)
+            File(rootCacheDir).mkdirs()
+        }
+        val configMap = HashMap<String, Any>().apply {
+            put("is_r1", ModelTypeUtils.isR1Model(modelId))
+            put("mmap_dir", rootCacheDir ?: "")
+            put("keep_history", keepHistory)
         }
         Log.d(TAG, "MNN_DEBUG load initNative")
         nativePtr = initNative(
@@ -155,7 +154,19 @@ class LlmSession (
     }
 
     fun getConfig(): ModelConfig? {
-        return ModelConfig.loadMergedConfig(configPath, getExtraConfigFile(modelId))
+        if (cachedConfig == null) {
+            cachedConfig = ModelConfig.loadMergedConfig(configPath, getExtraConfigFile(modelId))
+        }
+        return cachedConfig
+    }
+
+    /**
+     * Drops the cached merged config so the next [getConfig] re-reads from disk.
+     * Call after [updateThinking] (or any custom_config.json edit) so a subsequent
+     * generation picks up the change instead of a stale in-memory copy.
+     */
+    fun reloadConfig() {
+        cachedConfig = null
     }
 
     private fun generateNewSessionId(): String {
@@ -262,6 +273,7 @@ class LlmSession (
         loadedConfig?.let {
             loadedConfig.jinja = Jinja(context = JinjaContext(enableThinking = thinking))
             ModelConfig.saveConfig(getExtraConfigFile(modelId), loadedConfig)
+            reloadConfig()
             updateConfig(Gson().toJson(loadedConfig))
         }
     }

@@ -92,6 +92,10 @@ class MnnEngineAdapter : MnnEngine {
         val current = session ?: throw ModelNotLoadedException()
         if (!current.isModelLoaded()) throw ModelNotLoadedException()
 
+        // Best-effort memory telemetry: sample RSS before and after the (blocking)
+        // submitFullHistory call. The KV cache grows monotonically during decode, so the
+        // post-generation RSS is effectively the peak memory used by this generation.
+        val memBefore = MemoryStats.residentMemoryKb()
         val result = current.submitFullHistory(
             messages.map { android.util.Pair(it.first, it.second) },
             object : GenerateProgressListener {
@@ -101,14 +105,23 @@ class MnnEngineAdapter : MnnEngine {
                 return onToken(progress)
             }
         })
+        val memAfter = MemoryStats.residentMemoryKb()
 
         (result["error"] as? String)?.let { error ->
             throw IllegalStateException("Engine generation failed: $error")
         }
 
+        // Peak resident set over the generation window (null-safe: keep 0 when unavailable).
+        val peakKb = listOfNotNull(memBefore, memAfter).maxOrNull() ?: 0L
+
         return GenerationStats(
             promptTokens = (result["prompt_len"] as? Number)?.toLong() ?: 0L,
             completionTokens = (result["decode_len"] as? Number)?.toLong() ?: 0L,
+            // MNN returns microseconds for prefill_time / decode_time; convert to ms
+            // so the OpenAI usage extension below stays in human-readable units.
+            prefillMs = ((result["prefill_time"] as? Number)?.toLong() ?: 0L) / 1000L,
+            decodeMs = ((result["decode_time"] as? Number)?.toLong() ?: 0L) / 1000L,
+            memoryKb = peakKb,
         )
     }
 }

@@ -145,6 +145,13 @@
   <string name="assistant_page_thinking_budget">思考预算</string>
   <string name="assistant_page_time_reminder">时间提醒</string>
   <string name="assistant_page_time_reminder_desc">在间隔较大的消息前自动插入时间提醒，帮助 AI 理解对话间隔</string>
+  <string name="assistant_page_rag_memory_title">RAG 长期记忆</string>
+  <string name="assistant_page_rag_memory_desc">将对话分块，并通过全文检索 + 时间范围检索回忆。无需嵌入模型即可工作。</string>
+  <string name="assistant_page_rag_add_hint">新增记忆（将自动分块）</string>
+  <string name="assistant_page_rag_search_hint">搜索（如 “上周”“本月”）</string>
+  <string name="assistant_page_rag_add">添加</string>
+  <string name="assistant_page_rag_search">搜索</string>
+  <string name="assistant_page_rag_consolidate">巩固记忆</string>
   <string name="assistant_page_title">助手设置</string>
   <string name="assistant_page_top_p">Top P</string>
   <string name="assistant_page_top_p_value">Top P: %s</string>
@@ -677,6 +684,8 @@
   <string name="setting_display_page_enable_blur_effect_title">启用模糊效果</string>
   <string name="setting_display_page_enable_latex_rendering_desc">使用 LaTeX 语法渲染数学表达式和公式</string>
   <string name="setting_display_page_enable_latex_rendering_title">启用 LaTeX 渲染</string>
+  <string name="setting_display_page_enable_diagram_rendering_desc">通过工作区 LaTeX（pdflatex + pdftocairo）渲染 TikZ / PGFPlots 图表。未安装 LaTeX 时自动降级为代码块。</string>
+  <string name="setting_display_page_enable_diagram_rendering_title">启用 TikZ 图表渲染</string>
   <string name="setting_display_page_enable_message_generation_haptic_effect_desc">消息生成时启用触觉反馈效果</string>
   <string name="setting_display_page_enable_message_generation_haptic_effect_title">消息生成触觉反馈</string>
   <string name="setting_display_page_font_size_preview">凌晨四点钟，看到海棠花未眠。我常常这样，在无人的夜里独自醒着，想，若有人此刻也在想我，那就好了。</string>
@@ -1094,6 +1103,7 @@ mDNS 地址：使用 .local 主机名，同一网络中的其他设备可通过�
   <string name="theme_name_ocean">海湾蓝</string>
   <string name="theme_name_sakura">樱花粉</string>
   <string name="theme_name_spring">原野绿</string>
+  <string name="theme_name_expressive">表现力</string>
   <string name="title_activity_safe_mode">安全模式</string>
   <string name="tools_warning">当前模型未开启工具调用，请在设置内启用模型的工具能力，再使用搜索/MCP等功能</string>
   <string name="translate">翻译</string>

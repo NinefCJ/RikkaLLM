@@ -145,6 +145,13 @@
   <string name="assistant_page_thinking_budget">Thinking Budget</string>
   <string name="assistant_page_time_reminder">Time Reminder</string>
   <string name="assistant_page_time_reminder_desc">Automatically inject time reminders before messages with large time gaps to help AI understand conversation intervals</string>
+  <string name="assistant_page_rag_memory_title">RAG Long-term Memory</string>
+  <string name="assistant_page_rag_memory_desc">Chunk conversations and recall via full-text + time-range search. Works without an embedding model.</string>
+  <string name="assistant_page_rag_add_hint">Add memory (auto-chunked)</string>
+  <string name="assistant_page_rag_search_hint">Search (e.g. \"last week\", \"本月\")</string>
+  <string name="assistant_page_rag_add">Add</string>
+  <string name="assistant_page_rag_search">Search</string>
+  <string name="assistant_page_rag_consolidate">Consolidate</string>
   <string name="assistant_page_title">Assistant Settings</string>
   <string name="assistant_page_top_p">Top P</string>
   <string name="assistant_page_top_p_value">Top P: %s</string>
@@ -683,6 +690,8 @@
   <string name="setting_display_page_enable_blur_effect_title">Enable Blur Effect</string>
   <string name="setting_display_page_enable_latex_rendering_desc">Render mathematical expressions and formulas using LaTeX syntax</string>
   <string name="setting_display_page_enable_latex_rendering_title">Enable LaTeX Rendering</string>
+  <string name="setting_display_page_enable_diagram_rendering_desc">Render TikZ / PGFPlots diagrams via workspace LaTeX (pdflatex + pdftocairo). Falls back to a code block when LaTeX is unavailable.</string>
+  <string name="setting_display_page_enable_diagram_rendering_title">Enable TikZ Diagram Rendering</string>
   <string name="setting_display_page_enable_message_generation_haptic_effect_desc">Enable haptic feedback when messages are being generated</string>
   <string name="setting_display_page_enable_message_generation_haptic_effect_title">Message Generation Haptic Effect</string>
   <string name="setting_display_page_font_size_preview">At four in the morning, I saw the begonia flowers still awake. I am often like this — lying awake alone in the quiet night, thinking: if someone is thinking of me at this moment, that would be wonderful.</string>
@@ -1113,6 +1122,7 @@
   <string name="theme_name_autumn">Autumn Yellow</string>
   <string name="theme_name_black">Neutral Black</string>
   <string name="theme_name_claude">Claude</string>
+  <string name="theme_name_expressive">Expressive</string>
   <string name="theme_name_minimal">Minimal White</string>
   <string name="theme_name_ocean">Ocean Blue</string>
   <string name="theme_name_sakura">Sakura Pink</string>

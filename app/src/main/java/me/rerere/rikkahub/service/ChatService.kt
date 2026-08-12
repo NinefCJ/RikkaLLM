@@ -73,6 +73,7 @@ import me.rerere.rikkahub.data.datastore.getCurrentChatModel
 import me.rerere.rikkahub.data.files.FilesManager
 import me.rerere.rikkahub.data.model.Conversation
 import me.rerere.rikkahub.data.model.Assistant
+import me.rerere.rikkahub.data.model.AssistantMemory
 import me.rerere.rikkahub.data.model.AssistantAffectScope
 import me.rerere.rikkahub.data.model.replaceRegexes
 import me.rerere.rikkahub.data.model.toMessageNode
@@ -90,6 +91,28 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.uuid.Uuid
 
 private const val TAG = "ChatService"
+
+// ---- Phase 3：异常重复输出检测 ----
+// 连续相同字符阈值（模型陷入重复循环的典型特征）。移植自 Bubble-RikkaHub 的 hasDuplicateRun。
+internal const val DUPLICATE_RUN_THRESHOLD = 50
+
+/**
+ * 检测文本中是否存在长度 >= [threshold] 的连续相同字符（模型陷入重复循环的典型特征）。
+ * 移植自 Bubble-RikkaHub 的 hasDuplicateRun。
+ */
+internal fun hasDuplicateRun(text: String, threshold: Int = DUPLICATE_RUN_THRESHOLD): Boolean {
+    if (text.length < threshold) return false
+    var run = 1
+    for (i in 1 until text.length) {
+        if (text[i] == text[i - 1]) {
+            run++
+            if (run >= threshold) return true
+        } else {
+            run = 1
+        }
+    }
+    return false
+}
 
 internal fun backgroundTextGenerationParams(
     model: Model,
@@ -159,6 +182,36 @@ class ChatService(
     // 错误状态
     private val _errors = MutableStateFlow<List<ChatError>>(emptyList())
     val errors: StateFlow<List<ChatError>> = _errors.asStateFlow()
+
+    // ---- Phase 3：异常重复输出检测 ----
+    // 流式生成中若模型陷入重复循环（连续相同字符），自动停止并重新生成，最多重试 DUPLICATE_MAX_RETRY 次。
+    // 移植自 Bubble-RikkaHub 的 hasDuplicateRun / checkDuplicateOutput。
+    private companion object {
+        const val DUPLICATE_MAX_RETRY = 2 // 最大自动重新生成次数
+        const val DUPLICATE_COOLDOWN_MS = 1500L // 同一会话两次检测的最小间隔，防重复触发
+    }
+
+    private val duplicateRetryCounts = ConcurrentHashMap<Uuid, Int>()
+    private val lastDuplicateDetectTime = ConcurrentHashMap<Uuid, Long>()
+
+    /**
+     * 是否应当因异常重复而停止当前生成并触发重新生成。
+     * 返回 true：需要停止 + 重新生成（同时递增重试计数）；
+     * 返回 false：已达上限或处于冷却，放弃处理（保留当前输出）。
+     */
+    private fun shouldStopForDuplicate(conversationId: Uuid): Boolean {
+        val now = System.currentTimeMillis()
+        val last = lastDuplicateDetectTime[conversationId] ?: 0L
+        if (now - last < DUPLICATE_COOLDOWN_MS) return false
+        lastDuplicateDetectTime[conversationId] = now
+        val retry = duplicateRetryCounts.getOrDefault(conversationId, 0)
+        if (retry >= DUPLICATE_MAX_RETRY) {
+            duplicateRetryCounts[conversationId] = 0
+            return false
+        }
+        duplicateRetryCounts[conversationId] = retry + 1
+        return true
+    }
 
     fun addError(
         error: Throwable,
@@ -300,6 +353,9 @@ class ChatService(
 
     fun sendMessage(conversationId: Uuid, content: List<UIMessagePart>, answer: Boolean = true) {
         if (content.isEmptyInputMessage()) return
+
+        // 新消息：重置异常重复检测的重试计数
+        duplicateRetryCounts[conversationId] = 0
 
         val session = getOrCreateSession(conversationId)
         val previousJob = session.getJob()
@@ -480,6 +536,9 @@ class ChatService(
             model.displayName
         }
 
+        // Phase 3：异常重复输出检测命中标记，用于流结束后触发自动重新生成
+        var duplicateDetected = false
+
         runCatching {
 
             // reset suggestions
@@ -518,10 +577,20 @@ class ChatService(
                 conversationModeInjectionIds = conversation.modeInjectionIds,
                 conversationLorebookIds = conversation.lorebookIds,
                 workspaceCwd = conversation.workspaceCwd,
-                memories = if (assistant.useGlobalMemory) {
-                    memoryRepository.getGlobalMemories()
-                } else {
-                    memoryRepository.getMemoriesOfAssistant(assistant.id.toString())
+                memories = buildList {
+                    addAll(
+                        if (assistant.useGlobalMemory) {
+                            memoryRepository.getGlobalMemories()
+                        } else {
+                            memoryRepository.getMemoriesOfAssistant(assistant.id.toString())
+                        }
+                    )
+                    // RAG 长期记忆：启用时把分块记忆作为额外上下文注入（FTS + 时间检索，无需嵌入模型）
+                    if (assistant.enableRagMemory) {
+                        memoryRepository
+                            .searchMemoryItems(assistant.id.toString(), null, null)
+                            .forEach { add(AssistantMemory(0, it.content)) }
+                    }
                 },
                 inputTransformers = buildList {
                     addAll(inputTransformers)
@@ -610,6 +679,21 @@ class ChatService(
                                 AppEvent.ChatGenerationUpdate(conversationId, lastMessage, senderName)
                             )
                         }
+
+                        // Phase 3：流式检测异常重复输出（模型陷入循环）。
+                        // 命中则停止当前生成并安排自动重新生成（截断坏消息）。
+                        val assistantText = updatedConversation.currentMessages
+                            .lastOrNull { it.role == MessageRole.ASSISTANT }
+                            ?.toText().orEmpty()
+                        if (assistantText.isNotEmpty() && hasDuplicateRun(assistantText) &&
+                            shouldStopForDuplicate(conversationId)
+                        ) {
+                            appEventBus.tryEmit(
+                                AppEvent.Toast(message = "检测到重复输出，正在重新生成…")
+                            )
+                            duplicateDetected = true
+                            throw CancellationException("duplicate output detected")
+                        }
                     }
                 }
             }
@@ -631,6 +715,18 @@ class ChatService(
             launchWithConversationReference(conversationId) {
                 generateSuggestion(conversationId, finalConversation)
             }
+        }
+
+        // Phase 3：异常重复输出命中后，自动重新生成（已截断坏消息）；
+        // 正常完成时重置重试计数，避免影响下一次生成。
+        if (duplicateDetected) {
+            getConversationFlow(conversationId).value.currentMessages
+                .lastOrNull { it.role == MessageRole.ASSISTANT }
+                ?.let { lastAssistant ->
+                    regenerateAtMessage(conversationId, lastAssistant)
+                }
+        } else {
+            duplicateRetryCounts[conversationId] = 0
         }
     }
 

@@ -726,7 +726,10 @@ private fun ChatSuggestionsRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        items(conversation.chatSuggestions) { suggestion ->
+        items(
+            items = conversation.chatSuggestions,
+            key = { it },
+        ) { suggestion ->
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(50))

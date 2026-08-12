@@ -13,6 +13,7 @@ import com.alibaba.mnnllm.android.server.MnnServerService.Companion.ACTION_STOP
 import com.alibaba.mnnllm.android.server.MnnServerService.Companion.EXTRA_PORT
 import com.alibaba.mnnllm.android.server.MnnServerService.Companion.EXTRA_TOKEN
 import com.alibaba.mnnllm.android.utils.AppContext
+import java.io.File
 import java.security.SecureRandom
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.CoroutineScope
@@ -194,6 +195,43 @@ class LocalMnnManager(private val context: Context) : MnnServerBackend {
             _state.update { it.copy(currentModel = null) }
         }
     }
+
+    /**
+     * Lists models already present on disk under the engine's models root
+     * (`filesDir/.mnnmodels`). Powers the Phase 3 in-app model manager so users can see
+     * installed models (and their version, when a downloader wrote a marker) and load
+     * one without manually pasting a directory path. Returns an empty list when the
+     * directory does not exist yet.
+     */
+    fun listInstalledModels(): List<LocalModelRegistry.InstalledModel> {
+        val root = File(context.filesDir, ".mnnmodels")
+        return LocalModelRegistry.list(root)
+    }
+
+    /** Root directory that holds every installed local model (each in its own sub-folder). */
+    fun modelsRoot(): File = File(context.filesDir, ".mnnmodels")
+
+    /**
+     * Removes an installed model's folder. If the model is the one currently selected for
+     * auto-load, the persisted selection is cleared too so the engine won't try to reload a
+     * missing directory on next start. The engine keeps a memory-mapped handle to a loaded
+     * model, so callers should unload first; deletion still proceeds (the OS keeps the
+     * mapped inode alive until unload) and the in-memory model is released on the next unload.
+     */
+    fun deleteModel(id: String): Boolean {
+        val dir = File(modelsRoot(), id)
+        if (!dir.exists()) return false
+        val wasCurrent = _state.value.modelDir?.let { File(it).name } == id
+        val deleted = dir.deleteRecursively()
+        if (deleted && wasCurrent) {
+            prefs.edit().remove(KEY_MODEL_DIR).apply()
+            _state.update { it.copy(modelDir = null, currentModel = null) }
+        }
+        return deleted
+    }
+
+    /** Directory name of the model currently selected for auto-load, or null. */
+    fun currentModelId(): String? = _state.value.modelDir?.let { File(it).name }
 
     private fun generateToken(): String {
         val bytes = ByteArray(32)
