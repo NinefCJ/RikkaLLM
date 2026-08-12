@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Add01
@@ -121,8 +122,8 @@ fun SettingSearchPage(vm: SettingVM = koinViewModel()) {
             modifier = Modifier
                 .fillMaxSize()
                 .imePadding(),
-            contentPadding = it + PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = it + PaddingValues(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.md),
             state = lazyListState
         ) {
             items(settings.searchServices, key = { it.id }) { service ->
@@ -208,7 +209,7 @@ private fun AddProviderDialog(
         },
         text = {
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs)
             ) {
                 items(SearchServiceOptions.TYPES.keys.toList()) { type ->
                     val name = SearchServiceOptions.TYPES[type] ?: "Unknown"
@@ -226,9 +227,9 @@ private fun AddProviderDialog(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 12.dp),
+                                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.md)
                         ) {
                             AutoAIIcon(
                                 name = name,
@@ -285,18 +286,18 @@ private fun SearchProviderCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.md)
         ) {
             AutoAIIcon(
                 name = service.displayName,
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier.size(Spacing.xxl)
             )
 
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs)
             ) {
                 Text(
                     text = service.displayName,
@@ -348,7 +349,7 @@ fun SearchAbilityTagLine(
     options: SearchServiceOptions
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
@@ -383,8 +384,8 @@ private fun CommonOptions(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             Text(
                 text = stringResource(R.string.setting_page_search_common_options),

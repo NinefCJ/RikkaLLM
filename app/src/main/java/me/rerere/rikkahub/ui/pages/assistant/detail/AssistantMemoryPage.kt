@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.assistant.detail
+package me.rerere.rikkahub.ui.pages.assistant.detail
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.PencilEdit01
@@ -162,10 +163,10 @@ private fun AssistantMemoryContent(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = Spacing.lg)
             .padding(innerPadding)
             .imePadding(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         CardGroup {
             item(
@@ -254,13 +255,13 @@ private fun AssistantMemoryContent(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = Spacing.sm)
         ) {
             Text(
                 text = stringResource(R.string.assistant_page_manage_memory_title),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
-                    .padding(bottom = 8.dp)
+                    .padding(bottom = Spacing.sm)
                     .align(Alignment.CenterStart)
             )
 
@@ -331,13 +332,13 @@ private fun MemoryItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                .padding(Spacing.lg),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs)
             ) {
                 Text(
                     text = "#${memory.id}",
@@ -394,10 +395,10 @@ private fun RagMemorySection(
         )
     }
 
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             TextField(
                 value = newRagText,
@@ -415,7 +416,7 @@ private fun RagMemorySection(
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             TextField(
                 value = ragQuery,
@@ -449,13 +450,13 @@ private fun RagMemoryItem(item: MemoryItemEntity, onDelete: () -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                .padding(Spacing.lg),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs)
             ) {
                 Text(
                     text = "#${item.id}",

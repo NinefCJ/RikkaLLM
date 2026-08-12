@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.message
+package me.rerere.rikkahub.ui.components.message
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -98,8 +99,8 @@ fun LanguageSelectionDialog(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         ) {
             // 标题
             Text(
@@ -110,7 +111,7 @@ fun LanguageSelectionDialog(
 
             // 语言列表
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(languages) { language ->
@@ -122,15 +123,15 @@ fun LanguageSelectionDialog(
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(Spacing.lg)
                                 .fillMaxWidth()
                         ) {
                             Icon(
                                 imageVector = HugeIcons.LanguageCircle,
                                 contentDescription = null,
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(Spacing.xl)
                             )
                             Text(
                                 text = getLanguageDisplayName(language),
@@ -149,9 +150,9 @@ fun LanguageSelectionDialog(
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(Spacing.lg)
                                 .fillMaxWidth()
                         ) {
                             Icon(
@@ -178,10 +179,10 @@ fun CollapsibleTranslationText(
     if (content.isNotBlank()) {
         var isCollapsed by remember { mutableStateOf(false) }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(Spacing.md))
 
         HorizontalDivider(
-            modifier = Modifier.padding(vertical = 8.dp),
+            modifier = Modifier.padding(vertical = Spacing.sm),
             color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
         )
 
@@ -193,12 +194,12 @@ fun CollapsibleTranslationText(
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 Icon(
                     imageVector = HugeIcons.LanguageCircle,
                     contentDescription = null,
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(Spacing.lg),
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Text(
@@ -212,14 +213,14 @@ fun CollapsibleTranslationText(
             // 折叠/展开按钮
             IconButton(
                 onClick = { isCollapsed = !isCollapsed },
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier.size(Spacing.xxl)
             ) {
                 Icon(
                     imageVector = if (isCollapsed) HugeIcons.ArrowDown01 else HugeIcons.ArrowUp01,
                     contentDescription = if (isCollapsed) stringResource(R.string.expand_translation) else stringResource(
                         R.string.collapse_translation
                     ),
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(Spacing.lg),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
@@ -234,7 +235,7 @@ fun CollapsibleTranslationText(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .padding(top = Spacing.sm),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
                 ),
@@ -247,14 +248,14 @@ fun CollapsibleTranslationText(
                     // Show loading animation for translation
                     Row(
                         modifier = Modifier
-                            .padding(12.dp)
+                            .padding(Spacing.md)
                             .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(16.dp),
-                            strokeWidth = 2.dp,
+                            modifier = Modifier.size(Spacing.lg),
+                            strokeWidth = Spacing.xxs,
                             color = MaterialTheme.colorScheme.primary
                         )
 
@@ -282,7 +283,7 @@ fun CollapsibleTranslationText(
                         content = content,
                         onClickCitation = onClickCitation,
                         modifier = Modifier
-                            .padding(12.dp)
+                            .padding(Spacing.md)
                             .animateContentSize()
                     )
                 }

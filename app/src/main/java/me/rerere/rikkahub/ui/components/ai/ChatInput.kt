@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -201,9 +203,9 @@ fun ChatInput(
             modifier = modifier
                 .imePadding()
                 .navigationBarsPadding()
-                .padding(horizontal = 8.dp)
-                .padding(bottom = if (imeVisible) 0.dp else 8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(horizontal = Spacing.sm)
+                .padding(bottom = if (imeVisible) 0.dp else Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             Surface(
                 modifier = Modifier
@@ -225,8 +227,8 @@ fun ChatInput(
                 color = if (settings.displaySetting.enableBlurEffect) Color.Transparent else hazeTintColor,
             ) {
                 Column(
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
+                    modifier = Modifier.padding(horizontal = Spacing.sm, vertical = Spacing.xs),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xxs)
                 ) {
                     if (state.messageContent.isNotEmpty()) {
                         MediaFileInputRow(state = state)
@@ -241,15 +243,15 @@ fun ChatInput(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 4.dp),
+                            .padding(horizontal = Spacing.xs),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                     ) {
                         Row(
                             modifier = Modifier
                                 .weight(1f)
                                 .horizontalScroll(rememberScrollState()),
-                            horizontalArrangement = Arrangement.spacedBy(2.dp)
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.xxs)
                         ) {
                             // Model Picker
                             ModelSelector(
@@ -430,17 +432,17 @@ private fun TextInputRow(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         if (state.isEditing()) {
             Surface(
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(Radius.lg),
                 color = MaterialTheme.colorScheme.surfaceContainerHigh,
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 14.dp, vertical = 4.dp),
+                        .padding(horizontal = 14.dp, vertical = Spacing.xs),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(text = stringResource(R.string.editing))
@@ -605,14 +607,14 @@ private fun CompletionPopup(
             .fillMaxWidth()
             .heightIn(max = 280.dp),
         shape = RoundedCornerShape(18.dp),
-        tonalElevation = 2.dp,
+        tonalElevation = Spacing.xxs,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 4.dp),
+                .padding(vertical = Spacing.xs),
         ) {
             items(
                 items = completionList.items,
@@ -624,7 +626,7 @@ private fun CompletionPopup(
                     color = Color.Transparent,
                 ) {
                     Row(
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                        modifier = Modifier.padding(horizontal = Spacing.md, vertical = Spacing.sm),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
@@ -638,7 +640,7 @@ private fun CompletionPopup(
                         }
                         Column(
                             modifier = Modifier.weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(2.dp),
+                            verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
                         ) {
                             Text(
                                 text = item.label,
@@ -703,7 +705,7 @@ private fun QuickMessageButton(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Column(
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier.padding(Spacing.sm)
                     ) {
                         Text(
                             text = quickMessage.title,
@@ -747,14 +749,14 @@ private fun FullScreenEditor(
                 modifier = Modifier
                     .widthIn(max = 800.dp)
                     .fillMaxHeight(0.9f),
-                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                shape = RoundedCornerShape(topStart = Spacing.lg, topEnd = Spacing.lg)
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(Spacing.sm)
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.End,
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     Row {
                         TextButton(
@@ -767,9 +769,9 @@ private fun FullScreenEditor(
                     TextField(
                         state = state.textContent,
                         modifier = Modifier
-                            .padding(bottom = 2.dp)
+                            .padding(bottom = Spacing.xxs)
                             .fillMaxSize(),
-                        shape = RoundedCornerShape(32.dp),
+                        shape = RoundedCornerShape(Radius.xl),
                         placeholder = {
                             Text(stringResource(R.string.chat_input_placeholder))
                         },

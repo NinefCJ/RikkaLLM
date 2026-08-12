@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.extensions.workspace
+package me.rerere.rikkahub.ui.pages.extensions.workspace
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.Intent
 import android.provider.OpenableColumns
@@ -324,8 +325,8 @@ private fun WorkspaceBasicPage(
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.md),
     ) {
         item {
             Card(
@@ -335,8 +336,8 @@ private fun WorkspaceBasicPage(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                        .padding(Spacing.lg),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.lg),
                 ) {
                     Text(
                         text = stringResource(R.string.workspace_detail_workspace_info),
@@ -356,8 +357,8 @@ private fun WorkspaceBasicPage(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                        .padding(Spacing.lg),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.lg),
                 ) {
                     Text(
                         text = stringResource(R.string.workspace_detail_enable_shell),
@@ -377,7 +378,7 @@ private fun WorkspaceBasicPage(
                         Icon(HugeIcons.Bash, contentDescription = null)
                         Text(
                             text = installButtonText,
-                            modifier = Modifier.padding(start = 8.dp),
+                            modifier = Modifier.padding(start = Spacing.sm),
                         )
                     }
 
@@ -411,10 +412,10 @@ private fun WorkspaceToolApprovalCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                 Text(
                     text = stringResource(R.string.workspace_detail_tool_approval),
                     style = MaterialTheme.typography.titleMedium,
@@ -429,12 +430,12 @@ private fun WorkspaceToolApprovalCard(
             workspaceToolApprovalItems().forEach { (toolName, label) ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.md),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Column(
                         modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(2.dp),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
                     ) {
                         Text(
                             text = label,
@@ -474,7 +475,7 @@ private fun WorkspaceInfoRow(
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -546,7 +547,7 @@ private fun InstallRootfsDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.workspace_detail_install_rootfs)) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 Text(
                     text = stringResource(R.string.workspace_detail_install_rootfs_desc, workspace.name),
                     style = MaterialTheme.typography.bodyMedium,
@@ -590,8 +591,8 @@ private fun WorkspaceFilesPage(
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = contentPadding + PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = contentPadding + PaddingValues(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.md),
     ) {
         item {
             WorkspaceAreaSelector(
@@ -663,7 +664,7 @@ private fun WorkspacePathBar(
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         IconButton(
             enabled = canGoUp,
@@ -701,7 +702,7 @@ private fun WorkspaceFileCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, top = 12.dp, bottom = 12.dp, end = 4.dp),
+                .padding(start = Spacing.lg, top = Spacing.md, bottom = Spacing.md, end = Spacing.xs),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
@@ -717,8 +718,8 @@ private fun WorkspaceFileCard(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(horizontal = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                    .padding(horizontal = Spacing.md),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 Text(
                     text = entry.name,
@@ -797,7 +798,7 @@ private fun EmptyDirectoryState() {
             .fillMaxWidth()
             .padding(vertical = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.md),
     ) {
         Icon(
             imageVector = HugeIcons.Folder01,
@@ -821,7 +822,7 @@ private fun ErrorCard(message: String) {
     ) {
         Text(
             text = message,
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(Spacing.lg),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.error,
         )

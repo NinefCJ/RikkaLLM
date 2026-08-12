@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Package01
@@ -175,7 +176,7 @@ fun SettingProviderDetailPage(id: Uuid, vm: SettingVM = koinViewModel()) {
                 title = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         AutoAIIcon(provider.name, modifier = Modifier.size(22.dp))
                         Text(text = provider.name, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -269,8 +270,8 @@ private fun SettingProviderConfigPage(
             .fillMaxSize()
             .imePadding()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
     ) {
         ProviderConfigure(
             provider = internalProvider,
@@ -290,7 +291,7 @@ private fun SettingProviderConfigPage(
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ProviderConnectionTester(
@@ -335,7 +336,7 @@ private fun SettingProviderConfigPage(
             SiliconFlowPowerByIcon(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 16.dp)
+                    .padding(vertical = Spacing.lg)
             )
         }
     }
@@ -412,9 +413,9 @@ private fun ModelList(
                     onExpand = { expanded = true },
                     onCollapse = { expanded = false },
                 ),
-            contentPadding = PaddingValues(16.dp) + PaddingValues(bottom = 128.dp),
+            contentPadding = PaddingValues(Spacing.lg) + PaddingValues(bottom = 128.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             state = lazyListState
         ) {
             // 模型列表
@@ -560,10 +561,10 @@ private fun ModelSettingsForm(
                 0 -> {
                     // 基本设置页面
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(vertical = 16.dp)
+                            .padding(vertical = Spacing.lg)
                             .verticalScroll(rememberScrollState())
                     ) {
                         OutlinedTextField(
@@ -633,8 +634,8 @@ private fun ModelSettingsForm(
                         modifier = Modifier
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState())
-                            .padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                            .padding(Spacing.lg),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.lg)
                     ) {
                         ProviderOverrideSettings(
                             providerOverride = model.providerOverwrite,
@@ -688,7 +689,7 @@ private fun AddModelButton(
     val scope = rememberCoroutineScope()
 
     Row(
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         ModelPicker(
@@ -750,7 +751,7 @@ private fun AddModelButton(
                     contentDescription = stringResource(R.string.setting_provider_page_add_model)
                 )
                 AnimatedVisibility(expanded) {
-                    Spacer(modifier = Modifier.size(8.dp))
+                    Spacer(modifier = Modifier.size(Spacing.sm))
                     Text(
                         stringResource(R.string.setting_provider_page_add_new_model),
                         style = MaterialTheme.typography.bodyLarge
@@ -786,8 +787,8 @@ private fun AddModelButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight(0.95f)
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                        .padding(Spacing.lg),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.lg),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
@@ -795,7 +796,7 @@ private fun AddModelButton(
                         style = MaterialTheme.typography.titleLarge
                     )
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth()
@@ -810,7 +811,7 @@ private fun AddModelButton(
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
                     ) {
                         TextButton(
                             onClick = {
@@ -866,15 +867,15 @@ private fun ModelPicker(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.9f)
-                    .padding(8.dp)
+                    .padding(Spacing.sm)
                     .imePadding(),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs)
             ) {
                 // 标题栏和添加所有按钮
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                        .padding(horizontal = Spacing.sm, vertical = Spacing.xs),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -909,27 +910,27 @@ private fun ModelPicker(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    contentPadding = PaddingValues(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+                    contentPadding = PaddingValues(Spacing.sm),
                 ) {
                     items(filteredModels) {
                         Card {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(
-                                    8.dp
+                                    Spacing.sm
                                 ),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(8.dp),
+                                    .padding(Spacing.sm),
                             ) {
                                 AutoAIIcon(
                                     it.modelId,
-                                    Modifier.size(32.dp)
+                                    Modifier.size(Spacing.xxl)
                                 )
                                 Column(
                                     verticalArrangement = Arrangement.spacedBy(
-                                        4.dp
+                                        Spacing.xs
                                     ),
                                     modifier = Modifier.weight(1f),
                                 ) {
@@ -940,7 +941,7 @@ private fun ModelPicker(
 
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.spacedBy(2.dp)
+                                        horizontalArrangement = Arrangement.spacedBy(Spacing.xxs)
                                     ) {
                                         val modelMeta = remember(it) {
                                             it.copy(
@@ -1185,8 +1186,8 @@ private fun ModelCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight(0.95f)
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                        .padding(Spacing.lg),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.lg),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Box(
@@ -1210,7 +1211,7 @@ private fun ModelCard(
                         )
                     }
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth()
@@ -1225,7 +1226,7 @@ private fun ModelCard(
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
                     ) {
                         TextButton(
                             onClick = {
@@ -1255,8 +1256,8 @@ private fun ModelCard(
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                    .padding(Spacing.sm),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(
@@ -1291,8 +1292,8 @@ private fun ModelCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Surface(
@@ -1306,7 +1307,7 @@ private fun ModelCard(
                 }
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs),
                 ) {
                     Text(
                         text = model.displayName,
@@ -1315,8 +1316,8 @@ private fun ModelCard(
                         overflow = TextOverflow.Ellipsis,
                     )
                     FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
                     ) {
                         if (model.providerOverwrite != null) {
                             Tag(type = TagType.INFO) {
@@ -1354,8 +1355,8 @@ private fun BuiltInToolsSettings(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg)
     ) {
         Text(
             text = stringResource(R.string.setting_page_built_in_tools),
@@ -1391,13 +1392,13 @@ private fun BuiltInToolsSettings(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(Spacing.lg),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(
                         modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                     ) {
                         Text(
                             text = title,
@@ -1435,7 +1436,7 @@ private fun ProviderOverrideSettings(
     var editingProvider by remember { mutableStateOf<ProviderSetting?>(null) }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         Text(
             text = stringResource(R.string.setting_provider_page_provider_override),
@@ -1455,16 +1456,16 @@ private fun ProviderOverrideSettings(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                        .padding(Spacing.lg),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         AutoAIIcon(
                             providerOverride.name,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(Spacing.xl)
                         )
                         Text(
                             text = "${providerOverride.name} (Override)",
@@ -1503,7 +1504,7 @@ private fun ProviderOverrideSettings(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(HugeIcons.Add01, contentDescription = null)
-                Spacer(modifier = Modifier.size(8.dp))
+                Spacer(modifier = Modifier.size(Spacing.sm))
                 Text(stringResource(R.string.setting_provider_page_add_provider_override))
             }
         }
@@ -1523,8 +1524,8 @@ private fun ProviderOverrideSettings(
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight(0.9f)
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                        .padding(Spacing.lg),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.lg)
                 ) {
                     Text(
                         text = stringResource(R.string.setting_provider_page_configure_provider_override),
@@ -1535,7 +1536,7 @@ private fun ProviderOverrideSettings(
                         modifier = Modifier
                             .weight(1f)
                             .verticalScroll(rememberScrollState()),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                        verticalArrangement = Arrangement.spacedBy(Spacing.lg)
                     ) {
                         ProviderConfigure(
                             provider = internalProvider,
@@ -1545,7 +1546,7 @@ private fun ProviderOverrideSettings(
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
                     ) {
                         TextButton(
                             onClick = {

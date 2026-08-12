@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.message
+package me.rerere.rikkahub.ui.components.message
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
@@ -42,9 +43,9 @@ fun ChatMessageNerdLine(
     ProvideTextStyle(MaterialTheme.typography.labelSmall.copy(color = color)) {
         CompositionLocalProvider(LocalContentColor provides color) {
             FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                 itemVerticalAlignment = Alignment.CenterVertically,
-                modifier = modifier.padding(horizontal = 4.dp),
+                modifier = modifier.padding(horizontal = Spacing.xs),
             ) {
                 val usage = message.usage
                 if (settings.showTokenUsage && usage != null) {
@@ -55,7 +56,7 @@ fun ChatMessageNerdLine(
                                 imageVector = HugeIcons.Upload02,
                                 contentDescription = "Input",
                                 tint = color,
-                                modifier = Modifier.size(12.dp)
+                                modifier = Modifier.size(Spacing.md)
                             )
                         },
                         content = {
@@ -74,7 +75,7 @@ fun ChatMessageNerdLine(
                             Icon(
                                 imageVector = HugeIcons.Download04,
                                 contentDescription = "Output",
-                                modifier = Modifier.size(12.dp)
+                                modifier = Modifier.size(Spacing.md)
                             )
                         },
                         content = {
@@ -94,7 +95,7 @@ fun ChatMessageNerdLine(
                                 Icon(
                                     imageVector = HugeIcons.Zap,
                                     contentDescription = "Speed",
-                                    modifier = Modifier.size(12.dp)
+                                    modifier = Modifier.size(Spacing.md)
                                 )
                             },
                             content = {
@@ -107,7 +108,7 @@ fun ChatMessageNerdLine(
                                 Icon(
                                     imageVector = HugeIcons.Clock02,
                                     contentDescription = "Duration",
-                                    modifier = Modifier.size(12.dp)
+                                    modifier = Modifier.size(Spacing.md)
                                 )
                             },
                             content = {

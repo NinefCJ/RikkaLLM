@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.pages.imggen
+package me.rerere.rikkahub.ui.pages.imggen
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -261,10 +263,10 @@ private fun ImageGenScreen(
     }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(Spacing.lg)
             .imePadding()
     ) {
         Box(
@@ -274,7 +276,7 @@ private fun ImageGenScreen(
                 .verticalScroll(rememberScrollState()),
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 (0 until minOf(2, currentGeneratedImages.size)).forEach { index ->
                     val image = currentGeneratedImages[index]
@@ -285,7 +287,7 @@ private fun ImageGenScreen(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(RoundedCornerShape(Radius.sm))
                             .clickable { showPreview = true },
                         contentScale = ContentScale.Crop
                     )
@@ -363,7 +365,7 @@ private fun InputBar(
 
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         if (referenceImages.isNotEmpty()) {
             ReferenceImagesRow(
@@ -472,12 +474,12 @@ private fun ReferenceImagesRow(
         modifier = Modifier
             .fillMaxWidth()
             .horizontalScroll(rememberScrollState()),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         images.forEach { image ->
             Surface(
                 modifier = Modifier.size(56.dp),
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(Radius.md),
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f)),
                 color = MaterialTheme.colorScheme.surfaceContainerHigh,
             ) {
@@ -503,7 +505,7 @@ private fun ReferenceImagesRow(
                                 imageVector = HugeIcons.Delete01,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.inverseOnSurface,
-                                modifier = Modifier.size(12.dp)
+                                modifier = Modifier.size(Spacing.md)
                             )
                         }
                     }
@@ -544,7 +546,7 @@ private fun ImageGalleryScreen(
                         modifier = Modifier.size(64.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(Spacing.lg))
                     Text(
                         text = stringResource(R.string.imggen_page_no_generated_images),
                         style = MaterialTheme.typography.bodyLarge,
@@ -556,9 +558,9 @@ private fun ImageGalleryScreen(
         } else {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(Spacing.lg),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 modifier = Modifier.fillMaxSize(),
             ) {
                 items(
@@ -587,8 +589,8 @@ private fun ImageGalleryScreen(
                                 Column(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(8.dp),
-                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                        .padding(Spacing.sm),
+                                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                                 ) {
                                     Column {
                                         Text(
@@ -613,12 +615,12 @@ private fun ImageGalleryScreen(
                                                     type = ToastType.Success
                                                 )
                                             },
-                                            modifier = Modifier.size(32.dp)
+                                            modifier = Modifier.size(Spacing.xxl)
                                         ) {
                                             Icon(
                                                 imageVector = HugeIcons.Copy01,
                                                 contentDescription = "Copy prompt",
-                                                modifier = Modifier.size(16.dp)
+                                                modifier = Modifier.size(Spacing.lg)
                                             )
                                         }
 
@@ -642,23 +644,23 @@ private fun ImageGalleryScreen(
                                                     }
                                                 }
                                             },
-                                            modifier = Modifier.size(32.dp)
+                                            modifier = Modifier.size(Spacing.xxl)
                                         ) {
                                             Icon(
                                                 imageVector = HugeIcons.FloppyDisk,
                                                 contentDescription = stringResource(R.string.imggen_page_save),
-                                                modifier = Modifier.size(16.dp)
+                                                modifier = Modifier.size(Spacing.lg)
                                             )
                                         }
 
                                         IconButton(
                                             onClick = { vm.deleteImage(it) },
-                                            modifier = Modifier.size(32.dp)
+                                            modifier = Modifier.size(Spacing.xxl)
                                         ) {
                                             Icon(
                                                 imageVector = HugeIcons.Delete01,
                                                 contentDescription = stringResource(R.string.imggen_page_delete),
-                                                modifier = Modifier.size(16.dp),
+                                                modifier = Modifier.size(Spacing.lg),
                                                 tint = MaterialTheme.colorScheme.error
                                             )
                                         }
@@ -698,9 +700,9 @@ private fun SettingsBottomSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(horizontal = Spacing.lg, vertical = Spacing.sm)
                 .imePadding(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             Text(
                 text = stringResource(R.string.imggen_page_settings_title),
@@ -723,8 +725,8 @@ private fun SettingsBottomSheet(
                 label = { Text("Image Size") }
             ) {
                 FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     ImageGenSize.entries.forEach { sizeOption ->
                         FilterChip(
@@ -735,7 +737,7 @@ private fun SettingsBottomSheet(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(Spacing.sm))
 
                 OutlinedTextField(
                     value = size,
@@ -748,7 +750,7 @@ private fun SettingsBottomSheet(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
         }
     }
 }

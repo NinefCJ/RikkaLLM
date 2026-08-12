@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.richtext
+package me.rerere.rikkahub.ui.components.richtext
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -148,7 +150,7 @@ fun MarkdownNew(
     }
 
     ProvideTextStyle(style) {
-        Column(modifier = modifier.padding(start = 4.dp)) {
+        Column(modifier = modifier.padding(start = Spacing.xs)) {
             document.body().childNodes().fastForEach { node ->
                 HtmlBodyNode(node = node, onClickCitation = onClickCitation)
             }
@@ -238,7 +240,7 @@ private fun HtmlBlockElement(
         }
 
         "hr" -> HorizontalDivider(
-            modifier = Modifier.padding(vertical = 16.dp),
+            modifier = Modifier.padding(vertical = Spacing.lg),
             color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
             thickness = 0.5.dp,
         )
@@ -252,7 +254,7 @@ private fun HtmlBlockElement(
                         model = src,
                         contentDescription = alt.takeIf { it.isNotEmpty() },
                         modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(RoundedCornerShape(Radius.sm))
                             .widthIn(min = 120.dp)
                             .heightIn(min = 120.dp),
                     )
@@ -409,7 +411,7 @@ private fun HtmlList(
     level: Int,
 ) {
     HtmlStyledElement(element = element) {
-        Column(modifier = Modifier.padding(start = (level * 8).dp, top = 4.dp, bottom = 4.dp)) {
+        Column(modifier = Modifier.padding(start = (level * 8).dp, top = Spacing.xs, bottom = Spacing.xs)) {
             val bulletBase = when (level % 3) {
                 0 -> "•"; 1 -> "◦"; else -> "▪"
             }
@@ -444,18 +446,18 @@ private fun HtmlListItem(
         Column {
             Row(
                 verticalAlignment = Alignment.Top,
-                modifier = Modifier.padding(vertical = 2.dp),
+                modifier = Modifier.padding(vertical = Spacing.xxs),
             ) {
                 if (isTaskItem && checkboxInput != null) {
                     // Checkbox indicator
                     Surface(
-                        shape = RoundedCornerShape(2.dp),
+                        shape = RoundedCornerShape(Radius.sm),
                         color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                        modifier = Modifier.padding(end = 4.dp, top = 2.dp),
+                        modifier = Modifier.padding(end = Spacing.xs, top = Spacing.xxs),
                     ) {
                         Box(
                             modifier = Modifier
-                                .padding(2.dp)
+                                .padding(Spacing.xxs)
                                 .size(LocalTextStyle.current.fontSize.toDp() * 0.8f),
                             contentAlignment = Alignment.Center,
                         ) {
@@ -540,7 +542,7 @@ private fun HtmlCodeBlock(element: Element) {
         language = language,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 4.dp),
+            .padding(bottom = Spacing.xs),
         completeCodeBlock = true,
     )
 }
@@ -557,7 +559,7 @@ private fun HtmlBlockquote(element: Element, onClickCitation: (String) -> Unit) 
                     drawRect(color = bgColor, size = size)
                     drawRect(color = borderColor, size = Size(10f, size.height))
                 }
-                .padding(8.dp),
+                .padding(Spacing.sm),
         ) {
             element.childNodes().fastForEach { HtmlBodyNode(it, onClickCitation) }
         }
@@ -572,7 +574,7 @@ private fun HtmlMathBlock(formula: String) {
             latex = formula,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .padding(vertical = Spacing.sm),
         )
     } else {
         Text(
@@ -580,7 +582,7 @@ private fun HtmlMathBlock(formula: String) {
             fontFamily = FontFamily.Monospace,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .padding(vertical = Spacing.sm),
         )
     }
 }
@@ -625,7 +627,7 @@ private fun HtmlTable(element: Element, onClickCitation: (String) -> Unit) {
     DataTable(
         headers = headers,
         rows = rows,
-        modifier = Modifier.padding(vertical = 8.dp),
+        modifier = Modifier.padding(vertical = Spacing.sm),
         columnMinWidths = List(columnCount) { 80.dp },
         columnMaxWidths = List(columnCount) { 200.dp },
     )
@@ -639,19 +641,19 @@ private fun HtmlDetails(element: Element, onClickCitation: (String) -> Unit) {
 
     var expanded by remember { mutableStateOf(element.hasAttr("open")) }
 
-    Column(modifier = Modifier.padding(vertical = 4.dp)) {
+    Column(modifier = Modifier.padding(vertical = Spacing.xs)) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { expanded = !expanded }
-                .padding(vertical = 8.dp),
+                .padding(vertical = Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(text = if (expanded) "▼ " else "▶ ")
             Text(text = summaryText, fontWeight = FontWeight.Medium)
         }
         if (expanded) {
-            Column(modifier = Modifier.padding(start = 16.dp)) {
+            Column(modifier = Modifier.padding(start = Spacing.lg)) {
                 element.childNodes().fastForEach { child ->
                     if (!(child is Element && child.tagName().lowercase() == "summary")) {
                         HtmlBodyNode(child, onClickCitation)
@@ -683,7 +685,7 @@ private fun HtmlProgress(element: Element) {
 
     androidx.compose.material3.LinearProgressIndicator(
         progress = { progress },
-        modifier = widthModifier.padding(vertical = 4.dp),
+        modifier = widthModifier.padding(vertical = Spacing.xs),
     )
 }
 
@@ -757,7 +759,7 @@ private fun HtmlInlineAsComposable(node: Node, onClickCitation: (String) -> Unit
                             model = src,
                             contentDescription = alt.takeIf { it.isNotEmpty() },
                             modifier = Modifier
-                                .clip(RoundedCornerShape(8.dp))
+                                .clip(RoundedCornerShape(Radius.sm))
                                 .widthIn(min = 120.dp)
                                 .heightIn(min = 120.dp),
                         )

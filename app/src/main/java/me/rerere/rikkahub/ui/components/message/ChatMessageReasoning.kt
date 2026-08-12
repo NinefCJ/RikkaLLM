@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.message
+package me.rerere.rikkahub.ui.components.message
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
@@ -210,7 +211,7 @@ fun ChainOfThoughtScope.ChatMessageReasoningStep(
             Icon(
                 imageVector = HugeIcons.Idea01,
                 contentDescription = null,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(Spacing.lg),
                 tint = MaterialTheme.colorScheme.secondary,
             )
         },
@@ -271,7 +272,7 @@ private fun ReasoningTitle(title: String) {
             style = MaterialTheme.typography.titleSmall.copy(fontFamily = chatFontFamily),
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier
-                .padding(horizontal = 4.dp)
+                .padding(horizontal = Spacing.xs)
                 .shimmer(true),
         )
     }

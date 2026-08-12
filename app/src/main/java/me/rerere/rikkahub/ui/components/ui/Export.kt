@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,7 +32,7 @@ fun <T> ExportDialog(
         onDismissRequest = onDismiss,
         title = { Text(title ?: stringResource(R.string.export_title)) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 OutlinedCard(
                     onClick = {
                         exporter.exportToFile()
@@ -42,8 +43,8 @@ fun <T> ExportDialog(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            .padding(Spacing.lg),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.md),
                         verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
                     ) {
                         Icon(HugeIcons.File01, null)
@@ -70,8 +71,8 @@ fun <T> ExportDialog(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            .padding(Spacing.lg),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.md),
                         verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
                     ) {
                         Icon(HugeIcons.Share01, null)

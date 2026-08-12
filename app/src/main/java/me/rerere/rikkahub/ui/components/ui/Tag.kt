@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -72,8 +73,8 @@ fun Tag(
 @Preview(showBackground = true)
 private fun TagPreview() {
     Column(
-        modifier = Modifier.padding(32.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        modifier = Modifier.padding(Spacing.xxl),
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         Tag(type = TagType.SUCCESS) {
             Text("测试")

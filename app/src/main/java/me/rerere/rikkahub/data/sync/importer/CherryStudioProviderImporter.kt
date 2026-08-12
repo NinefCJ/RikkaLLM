@@ -126,6 +126,7 @@ object CherryStudioProviderImporter {
             is ProviderSetting.OpenAI -> "openai|${provider.baseUrl}|${provider.apiKey}"
             is ProviderSetting.Google -> "google|${provider.baseUrl}|${provider.apiKey}"
             is ProviderSetting.Claude -> "claude|${provider.baseUrl}|${provider.apiKey}"
+            is ProviderSetting.LocalServer -> "local|${provider.baseUrl}|${provider.apiKey}"
         }
     }
 }

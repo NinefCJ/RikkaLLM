@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.Intent
 import android.os.Build
@@ -160,7 +161,7 @@ fun SettingWebPage() {
                 icon = {
                     if (serverState.isLoading) {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier.size(Spacing.xl),
                             strokeWidth = 3.dp,
                         )
                     } else {
@@ -191,14 +192,14 @@ fun SettingWebPage() {
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding + PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = innerPadding + PaddingValues(Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         ) {
             item {
                 CardGroup(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = Spacing.sm),
                 ) {
                     item(
                         headlineContent = { Text(stringResource(R.string.setting_page_web_server_port)) },

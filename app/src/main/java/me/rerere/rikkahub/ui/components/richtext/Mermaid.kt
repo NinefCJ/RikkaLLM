@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.richtext
+package me.rerere.rikkahub.ui.components.richtext
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -114,7 +116,7 @@ fun Mermaid(
         WebView(
             state = webViewState,
             modifier = Modifier
-                .clip(RoundedCornerShape(4.dp))
+                .clip(RoundedCornerShape(Radius.sm))
                 .height(200.dp),
         )
 
@@ -122,8 +124,8 @@ fun Mermaid(
             Row(
                 modifier = Modifier
                     .align(Alignment.End)
-                    .padding(4.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    .padding(Spacing.xs),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 IconButton(
                     onClick = {

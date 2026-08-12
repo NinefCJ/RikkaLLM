@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.extensions.workspace
+package me.rerere.rikkahub.ui.pages.extensions.workspace
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -83,8 +84,8 @@ fun WorkspacePage(vm: WorkspaceVM = koinViewModel()) {
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding + PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = innerPadding + PaddingValues(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.md),
         ) {
             if (workspaces.isEmpty()) {
                 item {
@@ -151,7 +152,7 @@ private fun EmptyWorkspaceState() {
             .fillMaxWidth()
             .padding(vertical = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.md),
     ) {
         Icon(
             imageVector = HugeIcons.File02,
@@ -193,7 +194,7 @@ private fun WorkspaceCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, top = 12.dp, bottom = 12.dp, end = 4.dp),
+                    .padding(start = Spacing.lg, top = Spacing.md, bottom = Spacing.md, end = Spacing.xs),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
@@ -205,8 +206,8 @@ private fun WorkspaceCard(
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(horizontal = 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                        .padding(horizontal = Spacing.md),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs),
                 ) {
                     Text(
                         text = workspace.name,

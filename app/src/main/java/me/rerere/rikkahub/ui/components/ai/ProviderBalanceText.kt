@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -66,7 +67,7 @@ fun ProviderBalanceText(
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         Icon(
             imageVector = HugeIcons.MoneyBag02,

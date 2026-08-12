@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.SizeTransform
@@ -96,7 +97,7 @@ internal fun AsrButton(
             .widthIn(min = 36.dp)
             .animateContentSize(animationSpec = MotionScheme.expressive().defaultSpatialSpec()),
         shape = CircleShape,
-        tonalElevation = if (isIdle) 0.dp else 2.dp,
+        tonalElevation = if (isIdle) 0.dp else Spacing.xxs,
         color = containerColor,
     ) {
         AnimatedContent(
@@ -138,7 +139,7 @@ internal fun AsrButton(
                         )
                         Box(
                             modifier = Modifier
-                                .size(8.dp)
+                                .size(Spacing.sm)
                                 .scale(scale)
                                 .clip(CircleShape)
                                 .background(contentColor)
@@ -150,8 +151,8 @@ internal fun AsrButton(
                     Row(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .padding(horizontal = 12.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            .padding(horizontal = Spacing.md),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         AudioLevelDots(
@@ -186,8 +187,8 @@ private fun AudioLevelDots(
     }
 
     val barWidth = 3.5.dp
-    val minHeight = 4.dp
-    val maxHeight = 16.dp
+    val minHeight = Spacing.xs
+    val maxHeight = Spacing.lg
 
     Row(
         modifier = modifier.height(maxHeight),

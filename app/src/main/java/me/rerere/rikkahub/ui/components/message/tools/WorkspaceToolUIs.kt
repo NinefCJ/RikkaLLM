@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.message.tools
+package me.rerere.rikkahub.ui.components.message.tools
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -84,7 +85,7 @@ object EditFileToolUI : ToolUIRenderer {
         val stats = remember(diff) { parseDiffStats(diff) }
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             Text(
                 text = "+${stats.additions}",
@@ -116,14 +117,14 @@ object EditFileToolUI : ToolUIRenderer {
         Column(
             modifier = Modifier
                 .fillMaxHeight(0.8f)
-                .padding(16.dp)
+                .padding(Spacing.lg)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 Text(
                     text = context.arguments.getStringContent("path") ?: toolName,
@@ -243,7 +244,7 @@ private fun FileContentSummary(text: String, path: String?, loading: Boolean) {
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.small)
             .background(MaterialTheme.colorScheme.surfaceContainer)
-            .padding(horizontal = 8.dp, vertical = 6.dp)
+            .padding(horizontal = Spacing.sm, vertical = 6.dp)
             .shimmer(isLoading = loading),
     ) {
         CodeHighlightText(
@@ -264,9 +265,9 @@ private fun FileContentPreview(path: String?, code: String) {
     Column(
         modifier = Modifier
             .fillMaxHeight(0.8f)
-            .padding(16.dp)
+            .padding(Spacing.lg)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         Text(
             text = path ?: stringResource(R.string.tool_ui_file),
@@ -313,7 +314,7 @@ object ShellToolUI : ToolUIRenderer {
                 .joinToString("\n")
                 .trim()
         }
-        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
             ShellExitStatus(content, MaterialTheme.typography.labelSmall)
             if (combined.isNotEmpty()) {
                 Box(
@@ -321,7 +322,7 @@ object ShellToolUI : ToolUIRenderer {
                         .fillMaxWidth()
                         .clip(MaterialTheme.shapes.small)
                         .background(MaterialTheme.colorScheme.surfaceContainer)
-                        .padding(horizontal = 8.dp, vertical = 6.dp)
+                        .padding(horizontal = Spacing.sm, vertical = 6.dp)
                         .shimmer(isLoading = context.loading),
                 ) {
                     Text(
@@ -351,14 +352,14 @@ object ShellToolUI : ToolUIRenderer {
         Column(
             modifier = Modifier
                 .fillMaxHeight(0.8f)
-                .padding(16.dp)
+                .padding(Spacing.lg)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 Text(
                     text = stringResource(R.string.tool_ui_shell_default),

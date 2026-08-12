@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.pages.debug
+package me.rerere.rikkahub.ui.pages.debug
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -141,10 +143,10 @@ private fun MainPage(vm: DebugVM) {
     val conversationCount by vm.conversationCount.collectAsStateWithLifecycle()
     Column(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(Spacing.sm)
             .verticalScroll(rememberScrollState())
             .imePadding(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         var avatar: Avatar by remember { mutableStateOf(Avatar.Emoji("😎")) }
         UIAvatar(
@@ -212,7 +214,7 @@ private fun MainPage(vm: DebugVM) {
         }
 
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
@@ -250,7 +252,7 @@ private fun MainPage(vm: DebugVM) {
             mutableStateOf(settings.launchCount.toString())
         }
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             OutlinedTextField(
@@ -273,7 +275,7 @@ private fun MainPage(vm: DebugVM) {
             mutableStateOf(settings.sponsorAlertDismissedAt.toString())
         }
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             OutlinedTextField(
@@ -359,8 +361,8 @@ private fun ColorsPage() {
         )
     }
     LazyColumn(
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        contentPadding = PaddingValues(Spacing.sm),
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
     ) {
         items(colorTokens, key = { it.first }) { (name, color) ->
             ColorTokenItem(name, color)
@@ -370,23 +372,23 @@ private fun ColorsPage() {
 
 @Composable
 private fun ColorTokenItem(name: String, color: Color) {
-    val shape = RoundedCornerShape(8.dp)
+    val shape = RoundedCornerShape(Radius.sm)
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .border(1.dp, MaterialTheme.colorScheme.outlineVariant, shape)
             .clip(shape)
-            .padding(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+            .padding(Spacing.sm),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier
                 .height(40.dp)
                 .weight(1f)
-                .clip(RoundedCornerShape(4.dp))
+                .clip(RoundedCornerShape(Radius.sm))
                 .background(color)
-                .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(4.dp))
+                .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(Radius.sm))
         )
         Column(modifier = Modifier.weight(2f)) {
             Text(name, style = MaterialTheme.typography.bodyMedium)

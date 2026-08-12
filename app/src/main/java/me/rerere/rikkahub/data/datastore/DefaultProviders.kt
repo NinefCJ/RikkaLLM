@@ -333,4 +333,72 @@ val DEFAULT_PROVIDERS = listOf(
             )
         )
     ),
+    ProviderSetting.LocalServer(
+        id = Uuid.parse("c1d2e3f4-5a6b-4789-8c0d-1e2f3a4b5c6d"),
+        name = "Local LLM Server",
+        baseUrl = "http://127.0.0.1:8080/v1",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
+        description = {
+            Text(stringResource(R.string.local_server_provider_hint))
+        },
+    ),
+    // ----- 更多 OpenAI 兼容的 API 提供商（默认关闭，按需启用）-----
+    ProviderSetting.OpenAI(
+        id = Uuid.parse("d1a0f1b2-3c4d-4e5f-8a9b-0c1d2e3f4a5b"),
+        name = "Groq",
+        baseUrl = "https://api.groq.com/openai/v1",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
+    ),
+    ProviderSetting.OpenAI(
+        id = Uuid.parse("e2b1a2c3-4d5e-4f60-9a0b-1c2d3e4f5a6b"),
+        name = "Perplexity",
+        baseUrl = "https://api.perplexity.ai",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
+    ),
+    ProviderSetting.OpenAI(
+        id = Uuid.parse("f3c2b3d4-5e6f-4071-9b0c-2d3e4f5a6b7c"),
+        name = "Together AI",
+        baseUrl = "https://api.together.xyz/v1",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
+    ),
+    ProviderSetting.OpenAI(
+        id = Uuid.parse("a4d3c4e5-6f70-4182-9c0d-3e4f5a6b7c8d"),
+        name = "NVIDIA",
+        baseUrl = "https://integrate.api.nvidia.com/v1",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
+    ),
+    ProviderSetting.OpenAI(
+        id = Uuid.parse("b5e4d5f6-7081-4293-9d0e-4f5a6b7c8d9e"),
+        name = "DeepInfra",
+        baseUrl = "https://api.deepinfra.com/v1/openai",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
+    ),
+    ProviderSetting.OpenAI(
+        id = Uuid.parse("c6f5e6a7-8192-43a4-9e0f-5a6b7c8d9e0f"),
+        name = "PPIO (派欧云)",
+        baseUrl = "https://api.ppio.cn/v1",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
+    ),
+    ProviderSetting.OpenAI(
+        id = Uuid.parse("d7a6f7b8-9203-44b5-9f0a-6b7c8d9e0f1a"),
+        name = "Infini-AI (无问芯穹)",
+        baseUrl = "https://cloud.infini-ai.com/maas/v1",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
+    ),
 )

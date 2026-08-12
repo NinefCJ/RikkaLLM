@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.message
+package me.rerere.rikkahub.ui.components.message
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -97,7 +98,7 @@ internal fun EditedFilesList(
 
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(6.dp),
-        verticalArrangement = Arrangement.spacedBy(2.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
     ) {
         visibleFiles.forEach { path ->
             val fileName = remember(path) { path.substringAfterLast('/') }
@@ -109,12 +110,12 @@ internal fun EditedFilesList(
                 Row(
                     modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                 ) {
                     Icon(
                         imageVector = HugeIcons.File02,
                         contentDescription = null,
-                        modifier = Modifier.size(16.dp),
+                        modifier = Modifier.size(Spacing.lg),
                     )
                     Text(
                         text = fileName,
@@ -154,8 +155,8 @@ internal fun EditedFilesList(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                    .padding(Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 Text(
                     text = fileName,
@@ -172,15 +173,15 @@ internal fun EditedFilesList(
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(Spacing.lg)
                             .fillMaxWidth(),
                     ) {
                         Icon(
                             imageVector = HugeIcons.FileImport,
                             contentDescription = null,
-                            modifier = Modifier.padding(4.dp),
+                            modifier = Modifier.padding(Spacing.xs),
                         )
                         Text(
                             text = stringResource(R.string.common_export),
@@ -218,15 +219,15 @@ internal fun EditedFilesList(
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(Spacing.lg)
                             .fillMaxWidth(),
                     ) {
                         Icon(
                             imageVector = HugeIcons.Share08,
                             contentDescription = null,
-                            modifier = Modifier.padding(4.dp),
+                            modifier = Modifier.padding(Spacing.xs),
                         )
                         Text(
                             text = stringResource(R.string.common_share),

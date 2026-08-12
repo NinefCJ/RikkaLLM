@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.backup
+package me.rerere.rikkahub.ui.pages.backup
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -65,7 +66,7 @@ fun BackupPage(vm: BackupVM = koinViewModel()) {
             SecondaryScrollableTabRow(
                 selectedTabIndex = pagerState.currentPage,
                 containerColor = CustomColors.topBarColors.containerColor,
-                edgePadding = 4.dp,
+                edgePadding = Spacing.xs,
             ) {
                 Tab(
                     selected = pagerState.currentPage == 0,

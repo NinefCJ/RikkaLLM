@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui.icons
+package me.rerere.rikkahub.ui.components.ui.icons
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -14,8 +15,8 @@ val ReasoningLow: ImageVector
 
         _reasoningLow = ImageVector.Builder(
             name = "ReasoningLow",
-            defaultWidth = 24.dp,
-            defaultHeight = 24.dp,
+            defaultWidth = Spacing.xl,
+            defaultHeight = Spacing.xl,
             viewportWidth = 24f,
             viewportHeight = 24f
         ).apply {
@@ -89,8 +90,8 @@ val ReasoningMedium: ImageVector
 
         _reasoningMedium = ImageVector.Builder(
             name = "ReasoningMedium",
-            defaultWidth = 24.dp,
-            defaultHeight = 24.dp,
+            defaultWidth = Spacing.xl,
+            defaultHeight = Spacing.xl,
             viewportWidth = 24f,
             viewportHeight = 24f
         ).apply {
@@ -182,8 +183,8 @@ val ReasoningHigh: ImageVector
 
         _reasoningHigh = ImageVector.Builder(
             name = "ReasoningHigh",
-            defaultWidth = 24.dp,
-            defaultHeight = 24.dp,
+            defaultWidth = Spacing.xl,
+            defaultHeight = Spacing.xl,
             viewportWidth = 24f,
             viewportHeight = 24f
         ).apply {

@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -56,16 +58,16 @@ fun <T> Select(
         onExpandedChange = { expanded = it }
     ) {
         Surface(
-            tonalElevation = 4.dp,
+            tonalElevation = Spacing.xs,
             shape = RoundedCornerShape(50),
             modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(4.dp))
+                    .clip(RoundedCornerShape(Radius.sm))
                     .clickable { expanded = true }
-                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                    .padding(vertical = Spacing.sm, horizontal = Spacing.lg),
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {

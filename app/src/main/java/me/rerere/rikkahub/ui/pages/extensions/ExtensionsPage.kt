@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.extensions
+package me.rerere.rikkahub.ui.pages.extensions
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -48,12 +49,12 @@ fun ExtensionsPage() {
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding + PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = innerPadding + PaddingValues(Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         ) {
             item {
                 CardGroup(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier.padding(horizontal = Spacing.sm),
                     title = { Text(stringResource(R.string.extensions_page_section_extensions)) },
                 ) {
                     item(

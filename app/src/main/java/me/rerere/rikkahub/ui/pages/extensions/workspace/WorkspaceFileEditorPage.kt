@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.extensions.workspace
+package me.rerere.rikkahub.ui.pages.extensions.workspace
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -131,7 +132,7 @@ fun WorkspaceFileEditorPage(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(16.dp),
+                    .padding(Spacing.lg),
             ) {
                 Text(
                     text = loadError ?: "",

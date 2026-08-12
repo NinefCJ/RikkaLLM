@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.chat
+package me.rerere.rikkahub.ui.pages.chat
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Tick01
@@ -219,7 +220,7 @@ private fun ChatListNormal(
         val listener: (Boolean) -> Boolean = { isVolumeUp ->
             if (settings.displaySetting.enableVolumeKeyScroll) {
                 val bottomPaddingPx = with(density) {
-                    (32.dp + innerPadding.calculateBottomPadding()).toPx()
+                    (Spacing.xxl + innerPadding.calculateBottomPadding()).toPx()
                 }
                 val scrollAmount = (state.layoutInfo.viewportSize.height - bottomPaddingPx) *
                     settings.displaySetting.volumeKeyScrollRatio
@@ -304,9 +305,9 @@ private fun ChatListNormal(
         ChatFontProvider(displaySetting = settings.displaySetting) {
             LazyColumn(
                 state = state,
-                contentPadding = PaddingValues(16.dp) + PaddingValues(bottom = 32.dp + innerPadding.calculateBottomPadding()),
+                contentPadding = PaddingValues(Spacing.lg) + PaddingValues(bottom = Spacing.xxl + innerPadding.calculateBottomPadding()),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.md),
                 modifier = Modifier
                     .fillMaxSize()
                     .hazeSource(state = hazeState)
@@ -381,9 +382,9 @@ private fun ChatListNormal(
             if (loading) {
                 item(LoadingIndicatorKey) {
                     Row(
-                        modifier = Modifier.padding(8.dp),
+                        modifier = Modifier.padding(Spacing.sm),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     ) {
                         RabbitLoadingIndicator(
                             modifier = Modifier.size(28.dp)
@@ -626,7 +627,7 @@ private fun ChatListPreview(
             onValueChange = { searchQuery = it },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
             placeholder = { Text(stringResource(R.string.history_page_search)) },
             leadingIcon = {
                 Icon(
@@ -653,8 +654,8 @@ private fun ChatListPreview(
 
         // 消息预览
         LazyColumn(
-            contentPadding = PaddingValues(16.dp) + PaddingValues(bottom = 32.dp + innerPadding.calculateBottomPadding()),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(Spacing.lg) + PaddingValues(bottom = Spacing.xxl + innerPadding.calculateBottomPadding()),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
@@ -669,7 +670,7 @@ private fun ChatListPreview(
                     modifier = Modifier
                         .fillMaxWidth()
                         .then(
-                            if (!isUser) Modifier.padding(end = 24.dp) else Modifier
+                            if (!isUser) Modifier.padding(end = Spacing.xl) else Modifier
                         ),
                     horizontalAlignment = if (isUser) Alignment.End else Alignment.Start,
                 ) {
@@ -682,8 +683,8 @@ private fun ChatListPreview(
                                 .clickable {
                                     onJumpToMessage(originalIndex)
                                 }
-                                .padding(horizontal = 8.dp, vertical = 6.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                .padding(horizontal = Spacing.sm, vertical = 6.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             val highlightColor = MaterialTheme.colorScheme.tertiaryContainer
@@ -722,8 +723,8 @@ private fun ChatSuggestionsRow(
     LazyRow(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+            .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         items(
@@ -736,8 +737,8 @@ private fun ChatSuggestionsRow(
                     .clickable {
                         onClickSuggestion(suggestion)
                     }
-                    .background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp))
-                    .padding(vertical = 4.dp, horizontal = 8.dp),
+                    .background(MaterialTheme.colorScheme.surfaceColorAtElevation(Spacing.xxs))
+                    .padding(vertical = Spacing.xs, horizontal = Spacing.sm),
             ) {
                 Text(
                     text = suggestion,
@@ -766,8 +767,8 @@ private fun BoxScope.MessageJumper(
         )
     ) {
         Column(
-            modifier = Modifier.padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier.padding(Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             Surface(
                 onClick = {
@@ -776,16 +777,16 @@ private fun BoxScope.MessageJumper(
                     }
                 },
                 shape = CircleShape,
-                tonalElevation = 4.dp,
+                tonalElevation = Spacing.xs,
                 color = MaterialTheme.colorScheme.surfaceColorAtElevation(
-                    4.dp
+                    Spacing.xs
                 ).copy(alpha = 0.65f)
             ) {
                 Icon(
                     imageVector = HugeIcons.ArrowUpDouble,
                     contentDescription = null,
                     modifier = Modifier
-                        .padding(4.dp)
+                        .padding(Spacing.xs)
                 )
             }
             Surface(
@@ -799,16 +800,16 @@ private fun BoxScope.MessageJumper(
                     }
                 },
                 shape = CircleShape,
-                tonalElevation = 4.dp,
+                tonalElevation = Spacing.xs,
                 color = MaterialTheme.colorScheme.surfaceColorAtElevation(
-                    4.dp
+                    Spacing.xs
                 ).copy(alpha = 0.65f)
             ) {
                 Icon(
                     imageVector = HugeIcons.ArrowUp01,
                     contentDescription = null,
                     modifier = Modifier
-                        .padding(4.dp)
+                        .padding(Spacing.xs)
                 )
             }
             Surface(
@@ -819,14 +820,14 @@ private fun BoxScope.MessageJumper(
                 },
                 shape = CircleShape,
                 color = MaterialTheme.colorScheme.surfaceColorAtElevation(
-                    4.dp
+                    Spacing.xs
                 ).copy(alpha = 0.65f)
             ) {
                 Icon(
                     imageVector = HugeIcons.ArrowDown01,
                     contentDescription = null,
                     modifier = Modifier
-                        .padding(4.dp)
+                        .padding(Spacing.xs)
                 )
             }
             Surface(
@@ -837,14 +838,14 @@ private fun BoxScope.MessageJumper(
                 },
                 shape = CircleShape,
                 color = MaterialTheme.colorScheme.surfaceColorAtElevation(
-                    4.dp
+                    Spacing.xs
                 ).copy(alpha = 0.65f),
             ) {
                 Icon(
                     imageVector = HugeIcons.ArrowDownDouble,
                     contentDescription = stringResource(R.string.chat_page_scroll_to_bottom),
                     modifier = Modifier
-                        .padding(4.dp)
+                        .padding(Spacing.xs)
                 )
             }
         }

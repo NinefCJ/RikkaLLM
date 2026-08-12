@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.graphics.Paint
 import android.graphics.Typeface
@@ -74,7 +75,7 @@ fun ViewText(
 private fun TextViewPreview() {
     MaterialTheme {
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             val style = MaterialTheme.typography.bodyMedium
             Text(

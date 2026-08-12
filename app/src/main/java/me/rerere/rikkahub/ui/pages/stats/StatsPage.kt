@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.stats
+package me.rerere.rikkahub.ui.pages.stats
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.ChartColumn
@@ -82,19 +83,19 @@ fun StatsPage(vm: StatsVM = koinViewModel()) {
         } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = padding + PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = padding + PaddingValues(Spacing.sm),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 item {
                     HeatmapCard(
                         conversationsPerDay = stats.conversationsPerDay,
-                        modifier = Modifier.padding(horizontal = 8.dp),
+                        modifier = Modifier.padding(horizontal = Spacing.sm),
                     )
                 }
                 item {
                     StatsGrid(
                         stats = stats,
-                        modifier = Modifier.padding(horizontal = 8.dp),
+                        modifier = Modifier.padding(horizontal = Spacing.sm),
                     )
                 }
             }
@@ -109,8 +110,8 @@ private fun HeatmapCard(conversationsPerDay: Map<LocalDate, Int>, modifier: Modi
         colors = CustomColors.cardColorsOnSurfaceContainer,
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.md),
         ) {
             Text(stringResource(R.string.stats_page_heatmap_title), style = MaterialTheme.typography.titleMedium)
 
@@ -118,7 +119,7 @@ private fun HeatmapCard(conversationsPerDay: Map<LocalDate, Int>, modifier: Modi
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xs, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -126,11 +127,11 @@ private fun HeatmapCard(conversationsPerDay: Map<LocalDate, Int>, modifier: Modi
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                Spacer(Modifier.width(2.dp))
+                Spacer(Modifier.width(Spacing.xxs))
                 listOf(0f, 0.25f, 0.5f, 0.75f, 1f).forEach { alpha ->
                     HeatmapCell(alpha = alpha, sizeDp = 10)
                 }
-                Spacer(Modifier.width(2.dp))
+                Spacer(Modifier.width(Spacing.xxs))
                 Text(
                     text = stringResource(R.string.stats_page_heatmap_more),
                     style = MaterialTheme.typography.labelSmall,
@@ -154,7 +155,7 @@ private fun ChatHeatmap(conversationsPerDay: Map<LocalDate, Int>) {
     val q2 = activeCounts.getOrElse((activeCounts.size * 0.50).toInt()) { 2 }
     val q3 = activeCounts.getOrElse((activeCounts.size * 0.75).toInt()) { 3 }
     val cellSize = 11.dp
-    val cellSpacing = 2.dp
+    val cellSpacing = Spacing.xxs
     // Month label row height
     val monthLabelHeight = 14.dp
 
@@ -172,13 +173,13 @@ private fun ChatHeatmap(conversationsPerDay: Map<LocalDate, Int>) {
     // Shared scroll state so month labels + grid scroll together
     val scrollState = rememberScrollState(initial = Int.MAX_VALUE)
 
-    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
         // Fixed left column: spacer for month label row + DOW labels
         Column(
-            modifier = Modifier.width(12.dp),
+            modifier = Modifier.width(Spacing.md),
             verticalArrangement = Arrangement.spacedBy(cellSpacing),
         ) {
-            Spacer(Modifier.height(monthLabelHeight + 2.dp))
+            Spacer(Modifier.height(monthLabelHeight + Spacing.xxs))
             dowLabels.forEach { label ->
                 Box(
                     modifier = Modifier.size(cellSize),
@@ -199,7 +200,7 @@ private fun ChatHeatmap(conversationsPerDay: Map<LocalDate, Int>) {
         // Scrollable area: month labels + heatmap grid share one scroll state
         Column(
             modifier = Modifier.horizontalScroll(scrollState),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
         ) {
             // Month labels row
             Row(horizontalArrangement = Arrangement.spacedBy(cellSpacing)) {
@@ -277,10 +278,10 @@ private fun HeatmapCell(alpha: Float, sizeDp: Int) {
 private fun StatsGrid(stats: AppStats, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             modifier = Modifier.fillMaxWidth(),
         ) {
             StatCard(
@@ -297,7 +298,7 @@ private fun StatsGrid(stats: AppStats, modifier: Modifier = Modifier) {
             )
         }
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             modifier = Modifier.fillMaxWidth(),
         ) {
             StatCard(
@@ -339,8 +340,8 @@ private fun StatCard(
 ) {
     Card(modifier = modifier, colors = CustomColors.cardColorsOnSurfaceContainer) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             Icon(
                 imageVector = icon,

@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,7 +43,7 @@ fun ModeInjectionsContent(
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         items(modeInjections) { injection ->
             ListItem(
@@ -76,7 +77,7 @@ fun LorebooksContent(
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         items(lorebooks) { lorebook ->
             ListItem(
@@ -119,7 +120,7 @@ fun SkillsContent(
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         items(skills, key = { it.skillDir.absolutePath }) { skill ->
             ListItem(
@@ -160,7 +161,7 @@ fun QuickMessagesContent(
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         items(quickMessages, key = { it.id }) { quickMessage ->
             ListItem(
@@ -194,14 +195,14 @@ private fun ManageButton(onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = Spacing.lg),
         horizontalArrangement = Arrangement.End,
     ) {
         TextButton(onClick = onClick) {
-            Icon(Lucide.ExternalLink, contentDescription = null, modifier = Modifier.size(16.dp))
+            Icon(Lucide.ExternalLink, contentDescription = null, modifier = Modifier.size(Spacing.lg))
             Text(
                 text = stringResource(R.string.extension_content_manage),
-                modifier = Modifier.padding(start = 4.dp),
+                modifier = Modifier.padding(start = Spacing.xs),
                 style = MaterialTheme.typography.labelMedium,
             )
         }
@@ -217,9 +218,9 @@ fun ExtensionEmptyState(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(32.dp),
+            .padding(Spacing.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         Text(
             text = message,

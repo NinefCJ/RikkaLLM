@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -79,7 +80,7 @@ fun ExtensionSelector(
             selectedTabIndex = pagerState.currentPage,
             containerColor = Color.Transparent,
             modifier = Modifier.fillMaxWidth(),
-            edgePadding = 4.dp,
+            edgePadding = Spacing.xs,
         ) {
             Tab(
                 selected = pagerState.currentPage == 0,

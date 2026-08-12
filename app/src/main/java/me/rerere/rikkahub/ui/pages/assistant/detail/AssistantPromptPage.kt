@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.assistant.detail
+package me.rerere.rikkahub.ui.pages.assistant.detail
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.ArrowDown01
@@ -146,17 +147,17 @@ private fun AssistantPromptContent(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = Spacing.lg)
             .padding(innerPadding)
             .imePadding(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         Card(
             colors = CustomColors.cardColorsOnSurfaceContainer
         ) {
             Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                modifier = Modifier.padding(Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 val systemPromptValue = rememberTextFieldState(
                     initialText = assistant.systemPrompt,
@@ -184,8 +185,8 @@ private fun AssistantPromptContent(
                         style = MaterialTheme.typography.labelSmall
                     )
                     FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(2.dp),
-                        verticalArrangement = Arrangement.spacedBy(2.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xxs),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
                     ) {
                         DefaultPlaceholderProvider.placeholders.forEach { (k, info) ->
                             Tag(
@@ -206,7 +207,7 @@ private fun AssistantPromptContent(
             colors = CustomColors.cardColorsOnSurfaceContainer
         ) {
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_allow_conversation_system_prompt))
                 },
@@ -232,7 +233,7 @@ private fun AssistantPromptContent(
             colors = CustomColors.cardColorsOnSurfaceContainer
         ) {
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_allow_conversation_prompt_injection))
                 },
@@ -258,7 +259,7 @@ private fun AssistantPromptContent(
             colors = CustomColors.cardColorsOnSurfaceContainer
         ) {
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -336,10 +337,10 @@ private fun AssistantPromptContent(
             )
             Column(
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(Spacing.sm)
                     .clip(MaterialTheme.shapes.small)
                     .background(MaterialTheme.colorScheme.background)
-                    .padding(8.dp)
+                    .padding(Spacing.sm)
                     .fillMaxWidth()
             ) {
                 Text(
@@ -399,7 +400,7 @@ private fun AssistantPromptContent(
             colors = CustomColors.cardColorsOnSurfaceContainer
         ) {
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_preset_messages))
                 },
@@ -408,16 +409,16 @@ private fun AssistantPromptContent(
                 }
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg),
+                modifier = Modifier.padding(Spacing.lg)
             ) {
                 assistant.presetMessages.fastForEachIndexed { index, presetMessage ->
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Select(
@@ -501,7 +502,7 @@ private fun AssistantPromptContent(
             colors = CustomColors.cardColorsOnSurfaceContainer
         ) {
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_regex_title))
                 },
@@ -510,8 +511,8 @@ private fun AssistantPromptContent(
                 }
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(horizontal = 8.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg),
+                modifier = Modifier.padding(horizontal = Spacing.sm)
             ) {
                 assistant.regexes.fastForEachIndexed { index, regex ->
                     AssistantRegexCard(
@@ -555,9 +556,9 @@ private fun AssistantRegexCard(
     ) {
         Column(
             modifier = Modifier
-                .padding(12.dp)
+                .padding(Spacing.md)
                 .animateContentSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -585,7 +586,7 @@ private fun AssistantRegexCard(
                             )
                         )
                     },
-                    modifier = Modifier.padding(start = 8.dp)
+                    modifier = Modifier.padding(start = Spacing.sm)
                 )
                 IconButton(
                     onClick = {
@@ -666,12 +667,12 @@ private fun AssistantRegexCard(
                         style = MaterialTheme.typography.labelMedium
                     )
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.lg)
                     ) {
                         AssistantAffectScope.entries.forEach { scope ->
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
                             ) {
                                 Checkbox(
                                     checked = scope in regex.affectingScope,
@@ -705,7 +706,7 @@ private fun AssistantRegexCard(
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     Checkbox(
                         checked = regex.visualOnly,
@@ -742,7 +743,7 @@ private fun AssistantRegexCard(
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                     ) {
                         Icon(HugeIcons.Delete01, null)
                         Text(stringResource(R.string.delete))

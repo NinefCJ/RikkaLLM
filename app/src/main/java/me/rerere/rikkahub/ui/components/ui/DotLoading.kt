@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -25,7 +26,7 @@ fun DotLoading(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.primary,
     animationDuration: Int = 600,
-    size: Dp = 16.dp,
+    size: Dp = Spacing.lg,
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "dot_loading")
     val alpha by infiniteTransition.animateFloat(

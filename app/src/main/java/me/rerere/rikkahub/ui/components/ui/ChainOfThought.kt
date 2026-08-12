@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
@@ -86,11 +88,11 @@ fun <T> ChainOfThought(
         Card(
             modifier = modifier,
             colors = cardColors,
-            shape = RoundedCornerShape(16.dp),
+            shape = RoundedCornerShape(Radius.lg),
         ) {
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 12.dp, vertical = 4.dp)
+                    .padding(horizontal = Spacing.md, vertical = Spacing.xs)
                     .animateContentSize(
                         animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec()
                     ),
@@ -114,25 +116,25 @@ fun <T> ChainOfThought(
                             )
                             .clip(MaterialTheme.shapes.small)
                             .clickable { expanded = !expanded }
-                            .padding(vertical = 4.dp),
+                            .padding(vertical = Spacing.xs),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        // 左侧：图标区域（24.dp，和步骤图标对齐）
+                        // 左侧：图标区域（Spacing.xl，和步骤图标对齐）
                         Box(
-                            modifier = Modifier.width(24.dp),
+                            modifier = Modifier.width(Spacing.xl),
                             contentAlignment = Alignment.Center,
                         ) {
                             Icon(
                                 imageVector = if (expanded) HugeIcons.ArrowUp01 else HugeIcons.ArrowDown01,
                                 contentDescription = null,
-                                modifier = Modifier.size(16.dp),
+                                modifier = Modifier.size(Spacing.lg),
                                 tint = MaterialTheme.colorScheme.primary,
                             )
                         }
 
-                        // 右侧：文字区域（8.dp 间距后开始，和步骤 label 对齐）
+                        // 右侧：文字区域（Spacing.sm 间距后开始，和步骤 label 对齐）
                         Text(
-                            modifier = Modifier.padding(start = 8.dp),
+                            modifier = Modifier.padding(start = Spacing.sm),
                             text = if (expanded) {
                                 stringResource(R.string.chain_of_thought_collapse)
                             } else {
@@ -151,7 +153,7 @@ fun <T> ChainOfThought(
                 val scope = remember { ChainOfThoughtScopeImpl() }
                 Box(
                     modifier = Modifier.drawBehind {
-                        val x = 12.dp.toPx()
+                        val x = Spacing.md.toPx()
                         val offsetPx = 18.dp.toPx()
                         drawLine(
                             color = lineColor,
@@ -324,13 +326,13 @@ private class ChainOfThoughtScopeImpl : ChainOfThoughtScope {
                             Modifier
                         }
                     )
-                    .padding(vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    .padding(vertical = Spacing.sm),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 // Icon（不透明背景遮住背后的连线）
                 Box(
-                    modifier = Modifier.width(24.dp),
+                    modifier = Modifier.width(Spacing.xl),
                     contentAlignment = Alignment.Center,
                 ) {
                     Box(
@@ -349,7 +351,7 @@ private class ChainOfThoughtScopeImpl : ChainOfThoughtScope {
                         } else {
                             Box(
                                 modifier = Modifier
-                                    .size(8.dp)
+                                    .size(Spacing.sm)
                                     .clip(CircleShape)
                                     .background(MaterialTheme.colorScheme.onSurfaceVariant)
                             )
@@ -380,14 +382,14 @@ private class ChainOfThoughtScopeImpl : ChainOfThoughtScope {
                     Icon(
                         imageVector = HugeIcons.ArrowRight01,
                         contentDescription = null,
-                        modifier = Modifier.size(16.dp),
+                        modifier = Modifier.size(Spacing.lg),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 } else if (hasContent) {
                     Icon(
                         imageVector = if (expanded) HugeIcons.ArrowUp01 else HugeIcons.ArrowDown01,
                         contentDescription = null,
-                        modifier = Modifier.size(16.dp),
+                        modifier = Modifier.size(Spacing.lg),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
@@ -404,7 +406,7 @@ private class ChainOfThoughtScopeImpl : ChainOfThoughtScope {
                                 Modifier
                             }
                         )
-                        .padding(start = 32.dp, top = 4.dp, bottom = 8.dp)
+                        .padding(start = Spacing.xxl, top = Spacing.xs, bottom = Spacing.sm)
                 ) {
                     content()
                 }
@@ -445,7 +447,7 @@ private fun ChainOfThoughtPreview() {
                 ChainOfThought(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(Spacing.lg),
                     steps = listOf(
                         StepData("Searching the web", HugeIcons.Search01, "3 results", hasContent = true),
                         StepData("Reading documents", HugeIcons.Sparkles, "Completed", hasOnClick = true),
@@ -489,7 +491,7 @@ private fun ChainOfThoughtPreview() {
                     val contentComposable: (@Composable () -> Unit)? = if (step.hasContent) {
                         {
                             Column(
-                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                             ) {
                                 if (step.label.contains("Search")) {
                                     listOf(

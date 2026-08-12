@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -63,7 +64,7 @@ fun CompressContextDialog(
         },
         text = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 if (isLoading) {
                     // Loading state
@@ -73,9 +74,9 @@ fun CompressContextDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RabbitLoadingIndicator(
-                            modifier = Modifier.size(32.dp)
+                            modifier = Modifier.size(Spacing.xxl)
                         )
-                        Spacer(modifier = Modifier.width(12.dp))
+                        Spacer(modifier = Modifier.width(Spacing.md))
                         Text(stringResource(R.string.chat_page_compressing))
                     }
                 } else {

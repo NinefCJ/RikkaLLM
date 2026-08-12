@@ -111,6 +111,77 @@ sealed class ProviderSetting {
         }
     }
 
+    /**
+     * 本地大模型服务（OpenAI 兼容适配层）。
+     *
+     * 市面上大量本地推理服务——如 Google Play 上的 Mobile LLM Server、LM Studio、
+     * Ollama、llama.cpp server、GPT4All 等——都以 OpenAI 兼容的 Chat Completions
+     * 协议对外暴露 HTTP 接口。该类型与 [OpenAI] 字段完全一致（便于在适配层直接投影），
+     * 仅预设了更适合本地场景的默认值：本地回环地址、无需鉴权、关闭 Responses API。
+     * 底层无论是 GGUF / MNN / Safetensors，只要说出 OpenAI 兼容协议即可无缝接入。
+     */
+    @Serializable
+    @SerialName("localServer")
+    data class LocalServer(
+        override var id: Uuid = Uuid.random(),
+        override var enabled: Boolean = true,
+        override var name: String = "Local LLM Server",
+        override var models: List<Model> = emptyList(),
+        override val balanceOption: BalanceOption = BalanceOption(),
+        @Transient override val builtIn: Boolean = false,
+        @Transient override val description: @Composable (() -> Unit) = {},
+        @Transient override val shortDescription: @Composable (() -> Unit) = {},
+        var apiKey: String = "",
+        var baseUrl: String = "http://127.0.0.1:8080/v1",
+        var chatCompletionsPath: String = "/chat/completions",
+        var useResponseApi: Boolean = false,
+        var includeHistoryReasoning: Boolean = true,
+    ) : ProviderSetting() {
+        override fun addModel(model: Model): ProviderSetting {
+            return copy(models = models + model)
+        }
+
+        override fun editModel(model: Model): ProviderSetting {
+            return copy(models = models.map { if (it.id == model.id) model.copy() else it })
+        }
+
+        override fun delModel(model: Model): ProviderSetting {
+            return copy(models = models.filter { it.id != model.id })
+        }
+
+        override fun moveMove(
+            from: Int,
+            to: Int
+        ): ProviderSetting {
+            return copy(models = models.toMutableList().apply {
+                val model = removeAt(from)
+                add(to, model)
+            })
+        }
+
+        override fun copyProvider(
+            id: Uuid,
+            enabled: Boolean,
+            name: String,
+            models: List<Model>,
+            balanceOption: BalanceOption,
+            builtIn: Boolean,
+            description: @Composable (() -> Unit),
+            shortDescription: @Composable (() -> Unit),
+        ): ProviderSetting {
+            return this.copy(
+                id = id,
+                enabled = enabled,
+                name = name,
+                models = models,
+                builtIn = builtIn,
+                description = description,
+                balanceOption = balanceOption,
+                shortDescription = shortDescription
+            )
+        }
+    }
+
     @Serializable
     @SerialName("google")
     data class Google(
@@ -243,6 +314,7 @@ sealed class ProviderSetting {
                 OpenAI::class,
                 Google::class,
                 Claude::class,
+                LocalServer::class,
             )
         }
     }

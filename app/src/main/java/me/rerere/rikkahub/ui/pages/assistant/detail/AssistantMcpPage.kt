@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.assistant.detail
+package me.rerere.rikkahub.ui.pages.assistant.detail
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -54,10 +55,10 @@ fun AssistantMcpPage(id: String) {
         McpPicker(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(
-                start = innerPadding.calculateStartPadding(layoutDirection) + 16.dp,
+                start = innerPadding.calculateStartPadding(layoutDirection) + Spacing.lg,
                 top = innerPadding.calculateTopPadding(),
-                end = innerPadding.calculateEndPadding(layoutDirection) + 16.dp,
-                bottom = innerPadding.calculateBottomPadding() + 16.dp,
+                end = innerPadding.calculateEndPadding(layoutDirection) + Spacing.lg,
+                bottom = innerPadding.calculateBottomPadding() + Spacing.lg,
             ),
             assistant = assistant,
             servers = mcpServerConfigs,

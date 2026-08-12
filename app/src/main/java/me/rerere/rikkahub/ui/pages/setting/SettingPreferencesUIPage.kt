@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.Context
 import android.graphics.Typeface
@@ -119,12 +120,12 @@ fun SettingPreferencesUIPage(vm: SettingVM = koinViewModel()) {
     ) { contentPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = contentPadding + PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            contentPadding = contentPadding + PaddingValues(Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             item {
                 CardGroup(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier.padding(horizontal = Spacing.sm),
                     title = { Text(stringResource(R.string.setting_page_message_display_settings)) },
                 ) {
                     item(
@@ -157,7 +158,7 @@ fun SettingPreferencesUIPage(vm: SettingVM = koinViewModel()) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                             ) {
                                 Slider(
                                     value = displaySetting.bubbleOpacity,
@@ -282,7 +283,7 @@ fun SettingPreferencesUIPage(vm: SettingVM = koinViewModel()) {
                                     }
                                 },
                                 modifier = Modifier
-                                    .padding(top = 4.dp)
+                                    .padding(top = Spacing.xs)
                                     .fillMaxWidth(),
                                 optionToString = { it.labelUI() },
                                 optionLeading = { family ->
@@ -348,7 +349,7 @@ fun SettingPreferencesUIPage(vm: SettingVM = koinViewModel()) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                                 ) {
                                     Slider(
                                         value = displaySetting.fontSizeRatio,
@@ -377,7 +378,7 @@ fun SettingPreferencesUIPage(vm: SettingVM = koinViewModel()) {
 
             item {
                 CardGroup(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier.padding(horizontal = Spacing.sm),
                     title = { Text(stringResource(R.string.setting_page_code_display_settings)) },
                 ) {
                     item(

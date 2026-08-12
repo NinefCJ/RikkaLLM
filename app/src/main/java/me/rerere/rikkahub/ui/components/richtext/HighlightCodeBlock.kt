@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.richtext
+package me.rerere.rikkahub.ui.components.richtext
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.ClipData
 import android.net.Uri
@@ -141,7 +143,7 @@ fun HighlightCodeBlock(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.surfaceContainerHighest)
-                .padding(horizontal = 12.dp, vertical = 8.dp)
+                .padding(horizontal = Spacing.md, vertical = Spacing.sm)
         ) {
             HighlightCodeActions(
                 language = language,
@@ -159,7 +161,7 @@ fun HighlightCodeBlock(
             )
         }
         Column(
-            modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 8.dp)
+            modifier = Modifier.padding(start = Spacing.md, end = Spacing.md, top = Spacing.sm, bottom = Spacing.sm)
         ) {
             when {
                 canInlinePreview && previewMode -> {
@@ -208,7 +210,7 @@ fun HighlightCodeBlock(
                         }
                     }
 
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(Spacing.xs))
                     // 代码折叠按钮
                     if (settings.displaySetting.codeBlockAutoCollapse && codeLines.size > COLLAPSE_LINES) {
                         Box(
@@ -221,8 +223,8 @@ fun HighlightCodeBlock(
                             Row(
                                 modifier = Modifier
                                     .align(Alignment.Center)
-                                    .padding(vertical = 4.dp),
-                                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    .padding(vertical = Spacing.xs),
+                                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Icon(
@@ -272,7 +274,7 @@ private fun CodeBlockWithLineNumbersWrapped(
                         fontFamily = JetbrainsMono,
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
                         softWrap = false,
-                        modifier = Modifier.padding(end = 8.dp)
+                        modifier = Modifier.padding(end = Spacing.sm)
                     )
                     CodeHighlightText(
                         code = line,
@@ -317,7 +319,7 @@ private fun CodeBlockDefault(
                 displayLines.size.toString().length
             }
             Column(
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier.padding(end = Spacing.sm)
             ) {
                 displayLines.forEachIndexed { index, _ ->
                     Text(
@@ -377,10 +379,10 @@ private fun HighlightCodeActions(
         )
         Spacer(Modifier.weight(1f))
         Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val iconSize = 16.dp
+            val iconSize = Spacing.lg
             val iconTint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
 
             Icon(
@@ -388,7 +390,7 @@ private fun HighlightCodeActions(
                 contentDescription = stringResource(id = R.string.chat_page_save),
                 tint = iconTint,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(4.dp))
+                    .clip(RoundedCornerShape(Radius.sm))
                     .onClick {
                         val extension = when (language.lowercase()) {
                             "kotlin" -> "kt"
@@ -415,7 +417,7 @@ private fun HighlightCodeActions(
                             }.$extension"
                         )
                     }
-                    .padding(4.dp)
+                    .padding(Spacing.xs)
                     .size(iconSize)
             )
 
@@ -424,13 +426,13 @@ private fun HighlightCodeActions(
                 contentDescription = stringResource(id = R.string.code_block_copy),
                 tint = iconTint,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(4.dp))
+                    .clip(RoundedCornerShape(Radius.sm))
                     .onClick {
                         scope.launch {
                             clipboardManager.setClipEntry(ClipEntry(ClipData.newPlainText("code", code)))
                         }
                     }
-                    .padding(4.dp)
+                    .padding(Spacing.xs)
                     .size(iconSize)
             )
 
@@ -441,11 +443,11 @@ private fun HighlightCodeActions(
                     contentDescription = if (previewMode) "Code" else stringResource(id = R.string.code_block_preview),
                     tint = iconTint,
                     modifier = Modifier
-                        .clip(RoundedCornerShape(4.dp))
+                        .clip(RoundedCornerShape(Radius.sm))
                         .onClick {
                             onTogglePreviewMode()
                         }
-                        .padding(4.dp)
+                        .padding(Spacing.xs)
                         .size(iconSize)
                 )
             }
@@ -456,13 +458,13 @@ private fun HighlightCodeActions(
                     contentDescription = stringResource(id = R.string.code_block_preview),
                     tint = iconTint,
                     modifier = Modifier
-                        .clip(RoundedCornerShape(4.dp))
+                        .clip(RoundedCornerShape(Radius.sm))
                         .onClick {
                             val content = buildCodePreviewHtml(code = code, language = normalizedLanguage)
                             val contentId = WebViewContentCache.store(context.cacheDir, content)
                             navController.navigate(Screen.WebView(contentId = contentId))
                         }
-                        .padding(4.dp)
+                        .padding(Spacing.xs)
                         .size(iconSize)
                 )
             }
@@ -490,7 +492,7 @@ private fun CodeBlockPreview(
 
     WebView(
         state = state,
-        modifier = modifier.clip(RoundedCornerShape(4.dp)),
+        modifier = modifier.clip(RoundedCornerShape(Radius.sm)),
     )
 }
 

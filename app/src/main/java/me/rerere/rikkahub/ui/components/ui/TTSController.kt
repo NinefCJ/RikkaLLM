@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -62,13 +63,13 @@ fun TTSController() {
         Surface(
             shape = CircleShape,
             color = MaterialTheme.colorScheme.surface,
-            tonalElevation = 4.dp,
-            modifier = Modifier.padding(8.dp),
-            shadowElevation = 4.dp,
+            tonalElevation = Spacing.xs,
+            modifier = Modifier.padding(Spacing.sm),
+            shadowElevation = Spacing.xs,
         ) {
             Row(
-                modifier = Modifier.padding(4.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier.padding(Spacing.xs),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 PlayPauseButton(playbackState = playbackState, ttsState = ttsState)
@@ -87,7 +88,7 @@ fun TTSController() {
 
                 AnimatedVisibility(expand) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         SpeedButton(playbackState, ttsState)
@@ -161,7 +162,7 @@ private fun PlayPauseButton(
                     }
                 },
                 color = MaterialTheme.colorScheme.tertiary,
-                strokeWidth = 2.dp,
+                strokeWidth = Spacing.xxs,
                 trackColor = Color.Transparent
             )
             CircularProgressIndicator(
@@ -173,8 +174,8 @@ private fun PlayPauseButton(
                     }
                 },
                 color = MaterialTheme.colorScheme.tertiary,
-                modifier = Modifier.padding(2.dp),
-                strokeWidth = 2.dp,
+                modifier = Modifier.padding(Spacing.xxs),
+                strokeWidth = Spacing.xxs,
                 trackColor = Color.Transparent
             )
         }

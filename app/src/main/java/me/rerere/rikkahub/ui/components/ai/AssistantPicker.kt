@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -141,20 +142,20 @@ private fun AssistantPickerSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.8f)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             Text(
                 text = stringResource(R.string.assistant_page_title),
                 style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = Spacing.sm)
             )
 
             // 标签过滤器
             if (settings.assistantTags.isNotEmpty()) {
                 LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    contentPadding = PaddingValues(bottom = 8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+                    contentPadding = PaddingValues(bottom = Spacing.sm)
                 ) {
                     items(settings.assistantTags, key = { tag -> tag.id }) { tag ->
                         FilterChip(
@@ -171,14 +172,14 @@ private fun AssistantPickerSheet(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(Spacing.sm))
             }
 
             // 助手列表
             val navController = LocalNavController.current
             LazyColumn(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 items(filteredAssistants, key = { it.id }) { assistant ->
                     val checked = assistant.id == currentAssistant.id
@@ -227,7 +228,7 @@ private fun AssistantItem(
             UIAvatar(
                 name = assistant.name.ifEmpty { defaultAssistantName },
                 value = assistant.avatar,
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier.size(Spacing.xxl)
             )
         },
         trailingContent = {

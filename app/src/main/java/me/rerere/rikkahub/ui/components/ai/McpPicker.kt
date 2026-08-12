@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
@@ -79,12 +80,12 @@ fun McpPickerButton(
     ) {
         Row(
             modifier = Modifier
-                .padding(vertical = 8.dp, horizontal = 8.dp),
+                .padding(vertical = Spacing.sm, horizontal = Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             Box(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(Spacing.xl),
                 contentAlignment = Alignment.Center
             ) {
                 if (loading) {
@@ -122,9 +123,9 @@ fun McpPickerButton(
                 modifier = Modifier.Companion
                     .fillMaxWidth()
                     .fillMaxHeight(0.7f)
-                    .padding(16.dp),
+                    .padding(Spacing.lg),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 Text(
                     text = stringResource(id = R.string.mcp_picker_title),
@@ -135,8 +136,8 @@ fun McpPickerButton(
                 AnimatedVisibility(loading) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                        modifier = Modifier.padding(vertical = 4.dp)
+                        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+                        modifier = Modifier.padding(vertical = Spacing.xs)
                     ) {
                         LinearWavyProgressIndicator()
                         Text(
@@ -178,7 +179,7 @@ fun McpPickerListItem(
     ListItem(
         leadingContent = {
             if (loading) {
-                CircularProgressIndicator(modifier = Modifier.size(24.dp))
+                CircularProgressIndicator(modifier = Modifier.size(Spacing.xl))
             } else {
                 Icon(
                     imageVector = HugeIcons.McpServer,
@@ -235,9 +236,9 @@ private fun McpPickerSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.7f)
-                .padding(16.dp),
+                .padding(Spacing.lg),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             Text(
                 text = stringResource(id = R.string.mcp_picker_title),
@@ -248,8 +249,8 @@ private fun McpPickerSheet(
             AnimatedVisibility(loading) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    modifier = Modifier.padding(vertical = 4.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+                    modifier = Modifier.padding(vertical = Spacing.xs)
                 ) {
                     LinearWavyProgressIndicator()
                     Text(
@@ -284,39 +285,39 @@ fun McpPicker(
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = contentPadding,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
     ) {
         items(servers.fastFilter { it.commonOptions.enable }) { server ->
             val status by mcpManager.getStatus(server).collectAsStateWithLifecycle(McpStatus.Idle)
             Card {
                 Row(
                     modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .padding(horizontal = Spacing.lg, vertical = Spacing.sm)
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     when (status) {
                         McpStatus.Idle -> Icon(HugeIcons.Icon1stBracket, null)
                         McpStatus.Connecting -> CircularProgressIndicator(
                             modifier = Modifier.size(
-                                24.dp
+                                Spacing.xl
                             )
                         )
 
                         McpStatus.Connected -> Icon(HugeIcons.McpServer, null)
                         is McpStatus.Reconnecting -> CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(Spacing.xl)
                         )
                         is McpStatus.Error -> Icon(HugeIcons.Alert01, null)
                         McpStatus.NeedsAuthorization -> Icon(HugeIcons.Alert01, null)
                         McpStatus.Authorizing -> CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(Spacing.xl)
                         )
                     }
                     Column(
                         modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                     ) {
                         Text(
                             text = server.commonOptions.name,

@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Play
@@ -120,8 +121,8 @@ fun SettingSearchDetailPage(
             modifier = Modifier
                 .fillMaxSize()
                 .imePadding(),
-            contentPadding = padding + PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            contentPadding = padding + PaddingValues(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             item("config") {
                 Card(
@@ -133,8 +134,8 @@ fun SettingSearchDetailPage(
                         modifier = Modifier
                             .animateContentSize()
                             .fillMaxWidth()
-                            .padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                            .padding(Spacing.lg),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.md)
                     ) {
                         Text(
                             text = stringResource(R.string.setting_page_search_config),
@@ -244,8 +245,8 @@ private fun SearchTestSection(
             modifier = Modifier
                 .animateContentSize()
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.md)
         ) {
             Text(
                 text = stringResource(R.string.setting_page_search_test),
@@ -254,7 +255,7 @@ private fun SearchTestSection(
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 OutlinedTextField(
                     value = query,
@@ -283,8 +284,8 @@ private fun SearchTestSection(
                 ) {
                     if (testing) {
                         CircularProgressIndicator(
-                            modifier = Modifier.padding(4.dp),
-                            strokeWidth = 2.dp
+                            modifier = Modifier.padding(Spacing.xs),
+                            strokeWidth = Spacing.xxs
                         )
                     } else {
                         Icon(
@@ -313,8 +314,8 @@ private fun SearchTestSection(
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(12.dp),
-                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                                    .padding(Spacing.md),
+                                verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                             ) {
                                 Text(
                                     text = "${index + 1}. ${item.title}",

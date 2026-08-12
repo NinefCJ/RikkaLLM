@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.richtext
+package me.rerere.rikkahub.ui.components.richtext
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
@@ -102,7 +104,7 @@ private fun RenderNode(
                                 color = inlineStyle?.color ?: LocalContentColor.current,
                                 fontWeight = inlineStyle?.fontWeight ?: FontWeight.Normal
                             ),
-                            modifier = Modifier.padding(bottom = 8.dp)
+                            modifier = Modifier.padding(bottom = Spacing.sm)
                         )
                     }
                 }
@@ -130,7 +132,7 @@ private fun RenderNode(
                                 color = inlineStyle?.color ?: LocalContentColor.current,
                                 fontWeight = inlineStyle?.fontWeight ?: textStyle.fontWeight
                             ),
-                            modifier = Modifier.padding(vertical = 8.dp)
+                            modifier = Modifier.padding(vertical = Spacing.sm)
                         )
                     }
                 }
@@ -156,7 +158,7 @@ private fun RenderNode(
                 }
 
                 "br" -> {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(Spacing.sm))
                 }
 
                 "div" -> {
@@ -195,17 +197,17 @@ private fun RenderList(
     isOrdered: Boolean,
     onLinkClick: (String) -> Unit
 ) {
-    Column(modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)) {
+    Column(modifier = Modifier.padding(start = Spacing.lg, bottom = Spacing.sm)) {
         listElement.children().forEachIndexed { index, item ->
             if (item.tagName().lowercase() == "li") {
-                Row(modifier = Modifier.padding(vertical = 2.dp)) {
+                Row(modifier = Modifier.padding(vertical = Spacing.xxs)) {
                     Text(
                         text = if (isOrdered) "${index + 1}. " else "• ",
                         style = MaterialTheme.typography.bodyMedium.copy(
                             color = LocalContentColor.current
                         )
                     )
-                    Spacer(modifier = Modifier.width(4.dp))
+                    Spacer(modifier = Modifier.width(Spacing.xs))
 
                     val annotatedString = buildAnnotatedStringFromElement(item, onLinkClick)
                     if (annotatedString.text.isNotBlank()) {
@@ -236,13 +238,13 @@ private fun RenderDetails(
     }
     val summaryText = summaryElement?.text() ?: "Details"
 
-    Column(modifier = Modifier.padding(vertical = 4.dp)) {
+    Column(modifier = Modifier.padding(vertical = Spacing.xs)) {
         // Summary (clickable header)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { isExpanded = !isExpanded }
-                .padding(vertical = 8.dp),
+                .padding(vertical = Spacing.sm),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -272,7 +274,7 @@ private fun RenderDetails(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, top = 4.dp)
+                    .padding(start = Spacing.lg, top = Spacing.xs)
             ) {
                 detailsElement.children().forEach { child ->
                     if (child.tagName().lowercase() != "summary") {
@@ -294,7 +296,7 @@ private fun RenderImage(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .padding(vertical = Spacing.sm),
             contentAlignment = Alignment.Center
         ) {
             ZoomableAsyncImage(
@@ -303,7 +305,7 @@ private fun RenderImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(max = 400.dp)
-                    .clip(RoundedCornerShape(8.dp)),
+                    .clip(RoundedCornerShape(Radius.sm)),
                 contentScale = ContentScale.Fit,
             )
         }
@@ -675,7 +677,7 @@ private fun RenderTable(
     }
 
     if (headers.isNotEmpty() || rows.isNotEmpty()) {
-        Box(modifier = Modifier.padding(vertical = 8.dp)) {
+        Box(modifier = Modifier.padding(vertical = Spacing.sm)) {
             DataTable(
                 headers = headers,
                 rows = rows,

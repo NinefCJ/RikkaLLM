@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting.components
+package me.rerere.rikkahub.ui.pages.setting.components
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -82,7 +83,7 @@ fun ProviderConnectionTester(
                 Text(stringResource(R.string.setting_provider_page_test_connection))
             },
             text = {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                     ModelSelector(
                         modelId = model?.id,
                         providers = listOf(internalProvider),
@@ -215,7 +216,7 @@ private fun TestResultItem(
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Top,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         Text(
             text = label,
@@ -231,7 +232,7 @@ private fun TestResultItem(
             is UiState.Loading -> LinearWavyProgressIndicator(modifier = Modifier.weight(1f))
             is UiState.Success -> Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(2.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.xxs)
             ) {
                 Text(
                     text = "✓",
@@ -274,9 +275,9 @@ private fun TestResultItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.8f)
-                    .padding(16.dp)
+                    .padding(Spacing.lg)
                     .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 Text(
                     text = label,

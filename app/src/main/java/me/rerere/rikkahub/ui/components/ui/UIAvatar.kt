@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -70,7 +71,7 @@ fun TextAvatar(
 ) {
     Box(
         modifier = modifier
-            .then(Modifier.size(32.dp))
+            .then(Modifier.size(Spacing.xxl))
             .clip(shape = rememberAvatarShape(loading))
             .background(color),
         contentAlignment = Alignment.Center
@@ -145,7 +146,7 @@ fun UIAvatar(
         }
     }
 
-    Box(modifier = modifier.then(Modifier.size(32.dp))) {
+    Box(modifier = modifier.then(Modifier.size(Spacing.xxl))) {
         Surface(
             shape = rememberAvatarShape(loading),
             modifier = Modifier.fillMaxSize(),
@@ -153,7 +154,7 @@ fun UIAvatar(
                 onClick?.invoke()
                 if (onUpdate != null) showPickOption = true
             },
-            tonalElevation = 4.dp,
+            tonalElevation = Spacing.xs,
             color = MaterialTheme.colorScheme.secondaryContainer,
         ) {
             Box(
@@ -225,7 +226,7 @@ fun UIAvatar(
             },
             text = {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     Button(
                         onClick = {
@@ -293,7 +294,7 @@ fun UIAvatar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(16.dp)
+                    .padding(Spacing.lg)
             )
         }
     }
@@ -387,8 +388,8 @@ private fun hslToColor(h: Float, s: Float, l: Float): Color {
 private fun PreviewUIAvatar() {
     var loading by remember { mutableStateOf(true) }
     Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        modifier = Modifier.padding(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg)
     ) {
         UIAvatar(
             name = "John Doe",

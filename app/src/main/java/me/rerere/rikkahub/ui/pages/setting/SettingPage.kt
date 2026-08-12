@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -135,8 +136,8 @@ fun SettingPage(vm: SettingVM = koinViewModel()) {
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding + PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = innerPadding + PaddingValues(Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         ) {
             if (settings.isNotConfigured()) {
                 item {
@@ -152,7 +153,7 @@ fun SettingPage(vm: SettingVM = koinViewModel()) {
                     ColorMode.DARK -> stringResource(R.string.setting_page_color_mode_dark)
                 }
                 CardGroup(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier.padding(horizontal = Spacing.sm),
                     title = { Text(stringResource(R.string.setting_page_general_settings)) },
                 ) {
                     item(
@@ -205,7 +206,7 @@ fun SettingPage(vm: SettingVM = koinViewModel()) {
 
             item("modelServices") {
                 CardGroup(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier.padding(horizontal = Spacing.sm),
                     title = { Text(stringResource(R.string.setting_page_model_and_services)) },
                 ) {
                     item(
@@ -258,7 +259,7 @@ fun SettingPage(vm: SettingVM = koinViewModel()) {
                     value = filesManager.countChatFiles()
                 }
                 CardGroup(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier.padding(horizontal = Spacing.sm),
                     title = { Text(stringResource(R.string.setting_page_data_settings)) },
                 ) {
                     item(
@@ -294,7 +295,7 @@ fun SettingPage(vm: SettingVM = koinViewModel()) {
                 val share = stringResource(R.string.setting_page_share)
                 val noShareApp = stringResource(R.string.setting_page_no_share_app)
                 CardGroup(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier.padding(horizontal = Spacing.sm),
                     title = { Text(stringResource(R.string.setting_page_about)) },
                 ) {
                     item(
@@ -304,7 +305,7 @@ fun SettingPage(vm: SettingVM = koinViewModel()) {
                         trailingContent = {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
                             ) {
                                 var showQQGroupSheet by remember { mutableStateOf(false) }
                                 IconButton(
@@ -385,7 +386,7 @@ fun SettingPage(vm: SettingVM = koinViewModel()) {
 @Composable
 private fun ProviderConfigWarningCard(navController: Navigator) {
     Card(
-        modifier = Modifier.padding(8.dp),
+        modifier = Modifier.padding(Spacing.sm),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.errorContainer
         )
@@ -393,7 +394,7 @@ private fun ProviderConfigWarningCard(navController: Navigator) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(Spacing.sm),
             horizontalAlignment = Alignment.End
         ) {
             ListItem(
@@ -440,8 +441,8 @@ private fun QQGroupBottomSheet(onDismiss: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
         ) {
             QQ_GROUPS.forEach { group ->
                 ListItem(

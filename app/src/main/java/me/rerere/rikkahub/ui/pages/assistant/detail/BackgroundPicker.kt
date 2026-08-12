@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.assistant.detail
+package me.rerere.rikkahub.ui.pages.assistant.detail
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -83,7 +84,7 @@ fun BackgroundPicker(
         if (background != null) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -121,7 +122,7 @@ fun BackgroundPicker(
             },
             text = {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     Button(
                         onClick = {

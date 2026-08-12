@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.extensions
+package me.rerere.rikkahub.ui.pages.extensions
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Book01
@@ -207,8 +208,8 @@ private fun ModeInjectionTab(
                     onExpand = { expanded = true },
                     onCollapse = { expanded = false }
                 ),
-            contentPadding = PaddingValues(16.dp) + PaddingValues(bottom = 128.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(Spacing.lg) + PaddingValues(bottom = 128.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             state = lazyListState
         ) {
             if (modeInjections.isEmpty()) {
@@ -275,7 +276,7 @@ private fun ModeInjectionTab(
                     Icon(HugeIcons.Add01, null)
                     AnimatedVisibility(expanded) {
                         Row {
-                            Spacer(modifier = Modifier.size(8.dp))
+                            Spacer(modifier = Modifier.size(Spacing.sm))
                             Text(stringResource(R.string.prompt_page_add_mode_injection))
                         }
                     }
@@ -314,8 +315,8 @@ private fun ModeInjectionCard(
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                    .padding(Spacing.sm),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = { scope.launch { swipeState.reset() } }) {
@@ -342,13 +343,13 @@ private fun ModeInjectionCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     Text(
                         text = injection.name.ifEmpty { stringResource(R.string.prompt_page_unnamed) },
@@ -357,7 +358,7 @@ private fun ModeInjectionCard(
                         overflow = TextOverflow.Ellipsis
                     )
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
                     ) {
                         Tag(type = TagType.INFO) {
                             Text(getPositionLabel(injection.position))
@@ -419,8 +420,8 @@ private fun ModeInjectionEditSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.9f)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             Text(
                 text = stringResource(R.string.prompt_page_edit_mode_injection),
@@ -432,7 +433,7 @@ private fun ModeInjectionEditSheet(
                 modifier = Modifier
                     .weight(1f)
                     .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 OutlinedTextField(
                     value = injection.name,
@@ -483,7 +484,7 @@ private fun ModeInjectionEditSheet(
                 }
 
                 AnimatedVisibility(visible = injection.position.usesStandaloneMessage()) {
-                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(Spacing.lg)) {
                         Text(
                             stringResource(R.string.prompt_page_injection_role),
                             style = MaterialTheme.typography.titleSmall
@@ -508,7 +509,7 @@ private fun ModeInjectionEditSheet(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End)
             ) {
                 TextButton(onClick = onDismiss) {
                     Text(stringResource(R.string.prompt_page_cancel))
@@ -619,8 +620,8 @@ private fun LorebookTab(
                     onExpand = { expanded = true },
                     onCollapse = { expanded = false }
                 ),
-            contentPadding = PaddingValues(16.dp) + PaddingValues(bottom = 128.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(Spacing.lg) + PaddingValues(bottom = 128.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             state = lazyListState
         ) {
             if (lorebooks.isEmpty()) {
@@ -687,7 +688,7 @@ private fun LorebookTab(
                     Icon(HugeIcons.Add01, null)
                     AnimatedVisibility(expanded) {
                         Row {
-                            Spacer(modifier = Modifier.size(8.dp))
+                            Spacer(modifier = Modifier.size(Spacing.sm))
                             Text(stringResource(R.string.prompt_page_add_lorebook))
                         }
                     }
@@ -726,8 +727,8 @@ private fun LorebookCard(
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                    .padding(Spacing.sm),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = { scope.launch { swipeState.reset() } }) {
@@ -754,13 +755,13 @@ private fun LorebookCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     Text(
                         text = book.name.ifEmpty { stringResource(R.string.prompt_page_unnamed_lorebook) },
@@ -778,7 +779,7 @@ private fun LorebookCard(
                         )
                     }
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
                     ) {
                         Tag(type = TagType.INFO) {
                             Text(
@@ -850,8 +851,8 @@ private fun LorebookEditSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.95f)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             Text(
                 text = stringResource(R.string.prompt_page_edit_lorebook),
@@ -863,7 +864,7 @@ private fun LorebookEditSheet(
                 modifier = Modifier
                     .weight(1f)
                     .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 OutlinedTextField(
                     value = book.name,
@@ -919,7 +920,7 @@ private fun LorebookEditSheet(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End)
             ) {
                 TextButton(onClick = onDismiss) {
                     Text(stringResource(R.string.prompt_page_cancel))
@@ -953,13 +954,13 @@ private fun RegexInjectionEntryCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs)
             ) {
                 Text(
                     text = entry.name.ifEmpty { stringResource(R.string.prompt_page_unnamed_entry) },
@@ -975,7 +976,7 @@ private fun RegexInjectionEntryCard(
                     )
                 }
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     if (!entry.enabled) {
                         Tag(type = TagType.WARNING) {
@@ -1013,7 +1014,7 @@ private fun RegexInjectionEditDialog(
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
                     .imePadding(),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
                 OutlinedTextField(
                     value = entry.name,
@@ -1066,8 +1067,8 @@ private fun RegexInjectionEditDialog(
                 // 关键词
                 Text(stringResource(R.string.prompt_page_keywords_label), style = MaterialTheme.typography.titleSmall)
                 FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     entry.keywords.forEach { keyword ->
                         InputChip(
@@ -1079,9 +1080,9 @@ private fun RegexInjectionEditDialog(
                                     onClick = {
                                         onEdit(entry.copy(keywords = entry.keywords - keyword))
                                     },
-                                    modifier = Modifier.size(16.dp)
+                                    modifier = Modifier.size(Spacing.lg)
                                 ) {
-                                    Icon(HugeIcons.Cancel01, null, modifier = Modifier.size(12.dp))
+                                    Icon(HugeIcons.Cancel01, null, modifier = Modifier.size(Spacing.md))
                                 }
                             }
                         )
@@ -1089,7 +1090,7 @@ private fun RegexInjectionEditDialog(
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     OutlinedTextField(
@@ -1153,7 +1154,7 @@ private fun RegexInjectionEditDialog(
                 )
 
                 AnimatedVisibility(visible = entry.position.usesStandaloneMessage()) {
-                    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                         Text(
                             stringResource(R.string.prompt_page_injection_role),
                             style = MaterialTheme.typography.titleSmall

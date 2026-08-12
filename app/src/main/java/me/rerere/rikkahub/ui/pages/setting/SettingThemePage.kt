@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.ClipData
 import androidx.compose.foundation.Canvas
@@ -119,15 +121,15 @@ fun SettingThemePage(vm: SettingVM = koinViewModel()) {
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding + PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = innerPadding + PaddingValues(Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         ) {
             if (settings.dynamicColor) {
                 item("dynamicColorHint") {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(32.dp),
+                            .padding(Spacing.xxl),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
@@ -142,13 +144,13 @@ fun SettingThemePage(vm: SettingVM = koinViewModel()) {
             if (!settings.dynamicColor) {
                 item("presetThemes") {
                     Column(
-                        modifier = Modifier.padding(horizontal = 8.dp),
+                        modifier = Modifier.padding(horizontal = Spacing.sm),
                     ) {
                         Text(
                             text = stringResource(R.string.setting_theme_page_preset_themes),
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(start = 4.dp, top = 8.dp, bottom = 8.dp)
+                            modifier = Modifier.padding(start = Spacing.xs, top = Spacing.sm, bottom = Spacing.sm)
                         )
                         Box(
                             modifier = Modifier
@@ -171,7 +173,7 @@ fun SettingThemePage(vm: SettingVM = koinViewModel()) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 12.dp),
+                            .padding(horizontal = Spacing.md),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
@@ -180,12 +182,12 @@ fun SettingThemePage(vm: SettingVM = koinViewModel()) {
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.primary,
                         )
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                             FilledTonalButton(
                                 onClick = { showImportDialog = true }
                             ) {
                                 Icon(HugeIcons.FileImport, null, modifier = Modifier.size(18.dp))
-                                Spacer(Modifier.width(4.dp))
+                                Spacer(Modifier.width(Spacing.xs))
                                 Text(stringResource(R.string.setting_theme_page_import_theme))
                             }
                             FilledTonalButton(
@@ -195,7 +197,7 @@ fun SettingThemePage(vm: SettingVM = koinViewModel()) {
                                 }
                             ) {
                                 Icon(HugeIcons.PlusSign, null, modifier = Modifier.size(18.dp))
-                                Spacer(Modifier.width(4.dp))
+                                Spacer(Modifier.width(Spacing.xs))
                                 Text(stringResource(R.string.setting_theme_page_add_theme))
                             }
                         }
@@ -207,7 +209,7 @@ fun SettingThemePage(vm: SettingVM = koinViewModel()) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(32.dp),
+                                .padding(Spacing.xxl),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -320,8 +322,8 @@ private fun CustomThemeItem(
 
     ListItem(
         modifier = Modifier
-            .padding(horizontal = 8.dp)
-            .clip(RoundedCornerShape(16.dp))
+            .padding(horizontal = Spacing.sm)
+            .clip(RoundedCornerShape(Radius.lg))
             .clickable { onSelect() },
         headlineContent = { Text(theme.name.ifEmpty { "Unnamed" }) },
         leadingContent = {
@@ -353,7 +355,7 @@ private fun CustomThemeItem(
                         HugeIcons.Tick01,
                         contentDescription = null,
                         tint = Color.White,
-                        modifier = Modifier.size(16.dp)
+                        modifier = Modifier.size(Spacing.lg)
                     )
                 }
             }
@@ -398,8 +400,8 @@ private fun CustomThemeEditSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-                .padding(bottom = 32.dp),
+                .padding(horizontal = Spacing.xl)
+                .padding(bottom = Spacing.xxl),
         ) {
             Text(
                 text = if (theme == null) stringResource(R.string.setting_theme_page_create_theme)
@@ -407,13 +409,13 @@ private fun CustomThemeEditSheet(
                 style = MaterialTheme.typography.titleLarge,
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Spacing.lg))
 
             Column(
                 modifier = Modifier
                     .weight(1f, fill = false)
                     .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg),
             ) {
                 OutlinedTextField(
                     value = currentTheme.name,
@@ -467,7 +469,7 @@ private fun CustomThemeEditSheet(
                 ThemePreview(currentTheme)
             }
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Spacing.lg))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -477,7 +479,7 @@ private fun CustomThemeEditSheet(
                 TextButton(onClick = onDismiss) {
                     Text(stringResource(android.R.string.cancel))
                 }
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(Spacing.sm))
                 Button(
                     onClick = { onSave(currentTheme) },
                     enabled = currentTheme.name.isNotBlank()
@@ -501,7 +503,7 @@ private fun ImportThemeDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.setting_theme_page_import_theme)) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 OutlinedTextField(
                     value = jsonText,
                     onValueChange = {
@@ -564,11 +566,11 @@ private fun ColorPickerRow(
     }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
         ) {
             Canvas(
                 modifier = Modifier
@@ -579,7 +581,7 @@ private fun ColorPickerRow(
             }
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("H", style = MaterialTheme.typography.labelSmall, modifier = Modifier.width(16.dp))
+                    Text("H", style = MaterialTheme.typography.labelSmall, modifier = Modifier.width(Spacing.lg))
                     Slider(
                         value = hue,
                         onValueChange = {
@@ -590,7 +592,7 @@ private fun ColorPickerRow(
                     )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("S", style = MaterialTheme.typography.labelSmall, modifier = Modifier.width(16.dp))
+                    Text("S", style = MaterialTheme.typography.labelSmall, modifier = Modifier.width(Spacing.lg))
                     Slider(
                         value = saturation,
                         onValueChange = {
@@ -601,7 +603,7 @@ private fun ColorPickerRow(
                     )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("L", style = MaterialTheme.typography.labelSmall, modifier = Modifier.width(16.dp))
+                    Text("L", style = MaterialTheme.typography.labelSmall, modifier = Modifier.width(Spacing.lg))
                     Slider(
                         value = lightness,
                         onValueChange = {
@@ -679,7 +681,7 @@ private fun ThemePreview(theme: CustomTheme) {
     val scheme = theme.generateColorScheme(darkMode)
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         Text(
             text = stringResource(R.string.setting_theme_page_preview),
@@ -688,9 +690,9 @@ private fun ThemePreview(theme: CustomTheme) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(Radius.lg))
                 .background(scheme.surface)
-                .padding(16.dp),
+                .padding(Spacing.lg),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             ColorSwatch(scheme.primary, "P")
@@ -707,11 +709,11 @@ private fun ThemePreview(theme: CustomTheme) {
 private fun ColorSwatch(color: Color, label: String) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
     ) {
         Canvas(
             modifier = Modifier
-                .size(32.dp)
+                .size(Spacing.xxl)
                 .clip(CircleShape)
         ) {
             drawCircle(color = color)

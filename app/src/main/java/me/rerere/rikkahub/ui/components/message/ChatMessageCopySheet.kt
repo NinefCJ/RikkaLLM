@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.message
+package me.rerere.rikkahub.ui.components.message
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -51,8 +52,8 @@ fun ChatMessageCopySheet(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         ) {
             // Header
             Row(
@@ -82,9 +83,9 @@ fun ChatMessageCopySheet(
                     Icon(
                         imageVector = HugeIcons.Copy01,
                         contentDescription = null,
-                        modifier = Modifier.size(16.dp)
+                        modifier = Modifier.size(Spacing.lg)
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(stringResource(R.string.copy_all))
                 }
             }

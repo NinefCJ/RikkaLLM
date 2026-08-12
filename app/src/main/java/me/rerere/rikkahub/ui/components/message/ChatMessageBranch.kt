@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.message
+package me.rerere.rikkahub.ui.components.message
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
@@ -32,7 +33,7 @@ fun ChatMessageBranchSelector(
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         if (node.messages.size > 1) {
             val actionColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -56,8 +57,8 @@ fun ChatMessageBranchSelector(
                             }
                         }
                     )
-                    .padding(8.dp)
-                    .size(16.dp),
+                    .padding(Spacing.sm)
+                    .size(Spacing.lg),
                 tint = actionColor
             )
 
@@ -86,8 +87,8 @@ fun ChatMessageBranchSelector(
                             }
                         }
                     )
-                    .padding(8.dp)
-                    .size(16.dp),
+                    .padding(Spacing.sm)
+                    .size(Spacing.lg),
                 tint = actionColor
             )
         }

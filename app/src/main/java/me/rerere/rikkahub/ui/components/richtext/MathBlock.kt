@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.richtext
+package me.rerere.rikkahub.ui.components.richtext
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
@@ -157,7 +158,7 @@ fun MathBlock(
     val state = renderState
     when (state) {
         DiagramRenderState.Idle -> {
-            Box(modifier = modifier.padding(8.dp)) {
+            Box(modifier = modifier.padding(Spacing.sm)) {
                 LatexText(
                     latex = latex,
                     color = LocalContentColor.current,
@@ -170,7 +171,7 @@ fun MathBlock(
         }
 
         is DiagramRenderState.Failed -> {
-            Column(modifier = modifier.padding(8.dp)) {
+            Column(modifier = modifier.padding(Spacing.sm)) {
                 LatexText(
                     latex = latex,
                     color = LocalContentColor.current.copy(alpha = 0.5f),
@@ -181,13 +182,13 @@ fun MathBlock(
                     text = state.reason,
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.labelSmall,
-                    modifier = Modifier.padding(top = 4.dp),
+                    modifier = Modifier.padding(top = Spacing.xs),
                 )
             }
         }
 
         DiagramRenderState.Rendering -> {
-            Box(modifier = modifier.padding(8.dp)) {
+            Box(modifier = modifier.padding(Spacing.sm)) {
                 LatexText(
                     latex = latex,
                     color = LocalContentColor.current.copy(alpha = 0.4f),
@@ -233,7 +234,7 @@ private fun DiagramImage(svg: String, key: String, modifier: Modifier) {
             contentDescription = "交换图",
             modifier = modifier
                 .size(width = (w * scale).dp, height = (h * scale).dp)
-                .padding(vertical = 4.dp),
+                .padding(vertical = Spacing.xs),
             contentScale = ContentScale.Fit,
         )
     }

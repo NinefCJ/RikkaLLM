@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.history;
+package me.rerere.rikkahub.ui.pages.history;
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Pin
@@ -104,8 +105,8 @@ fun HistoryPage(vm: HistoryVM = koinViewModel()) {
         val snackMessageDeleted = stringResource(R.string.history_page_conversation_deleted)
         val snackMessageUndo = stringResource(R.string.history_page_undo)
         LazyColumn(
-            contentPadding = contentPadding + PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = contentPadding + PaddingValues(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             items(conversations, key = { it.id }) { conversation ->
                 SwipeableConversationItem(
@@ -229,7 +230,7 @@ private fun ConversationItem(
 ) {
     Surface(
         onClick = onClick,
-        tonalElevation = 2.dp,
+        tonalElevation = Spacing.xxs,
         shape = RoundedCornerShape(25),
         modifier = modifier
     ) {
@@ -237,14 +238,14 @@ private fun ConversationItem(
             headlineContent = {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                 ) {
                     if (conversation.isPinned) {
                         Icon(
                             imageVector = HugeIcons.Pin,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(16.dp),
+                            modifier = Modifier.size(Spacing.lg),
                         )
                     }
                     Text(

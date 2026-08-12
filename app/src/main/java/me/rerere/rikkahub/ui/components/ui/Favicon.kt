@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
@@ -74,7 +75,7 @@ fun FaviconRow(
             measurable.measure(constraints)
         }
         val faviconSize = size.roundToPx()
-        val overlap = 4.dp.roundToPx()
+        val overlap = Spacing.xs.roundToPx()
         val step = faviconSize - overlap
 
         val width = if (placeables.isEmpty()) {

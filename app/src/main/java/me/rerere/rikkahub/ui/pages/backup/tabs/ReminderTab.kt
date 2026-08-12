@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.backup.tabs
+package me.rerere.rikkahub.ui.pages.backup.tabs
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -39,9 +40,9 @@ fun ReminderTab(vm: BackupVM) {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp)
+            .padding(Spacing.lg)
             .imePadding(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
     ) {
         CardGroup(
             modifier = Modifier.fillMaxWidth(),

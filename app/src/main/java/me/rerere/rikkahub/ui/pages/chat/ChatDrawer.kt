@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.chat
+package me.rerere.rikkahub.ui.pages.chat
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
@@ -165,8 +166,8 @@ fun ChatDrawerContent(
         modifier = Modifier.width(300.dp)
     ) {
         Column(
-            modifier = Modifier.padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             if (settings.displaySetting.showUpdates && !isPlayStore) {
                 UpdateCard(vm)
@@ -181,9 +182,9 @@ fun ChatDrawerContent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 8.dp),
+                    .padding(horizontal = Spacing.sm, vertical = Spacing.sm),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
             ) {
                 UIAvatar(
                     name = settings.displaySetting.userNickname.ifBlank { stringResource(R.string.user_default_name) },
@@ -202,11 +203,11 @@ fun ChatDrawerContent(
 
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(2.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                     ) {
                         Text(
                             text = settings.displaySetting.userNickname.ifBlank { stringResource(R.string.user_default_name) },
@@ -311,7 +312,7 @@ fun ChatDrawerContent(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
+                    .padding(horizontal = Spacing.sm)
             ) {
                 DrawerAction(
                     icon = {
@@ -465,13 +466,13 @@ fun ChatDrawerContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(max = 400.dp)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                    .padding(Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 Text(
                     text = stringResource(R.string.chat_page_move_to_folder),
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = Spacing.sm)
                 )
 
                 // 移出文件夹（未归类）
@@ -488,9 +489,9 @@ fun ChatDrawerContent(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
+                            .padding(Spacing.lg),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.md)
                     ) {
                         Icon(HugeIcons.Folder01, null)
                         Text(
@@ -501,7 +502,7 @@ fun ChatDrawerContent(
                 }
 
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     items(folders) { folder ->
                         val isCurrent = folder.id == conversationToMoveFolder?.folderId
@@ -514,14 +515,14 @@ fun ChatDrawerContent(
                             } else {
                                 MaterialTheme.colorScheme.surface
                             },
-                            tonalElevation = if (isCurrent) 2.dp else 0.dp
+                            tonalElevation = if (isCurrent) Spacing.xxs else 0.dp
                         ) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp),
+                                    .padding(Spacing.lg),
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                                horizontalArrangement = Arrangement.spacedBy(Spacing.md)
                             ) {
                                 Icon(HugeIcons.Folder01, null)
                                 Text(
@@ -640,17 +641,17 @@ fun ChatDrawerContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(max = 400.dp)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                    .padding(Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 Text(
                     text = stringResource(R.string.chat_page_move_to_assistant),
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = Spacing.sm)
                 )
 
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     items(settings.assistants) { assistant ->
                         AssistantItem(
@@ -682,16 +683,16 @@ private fun DrawerActions(navController: Navigator) {
             onClick = { navController.navigate(Screen.MessageSearch) },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 4.dp),
+                .padding(horizontal = Spacing.xs),
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.surfaceContainerLow,
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 10.dp),
+                    .padding(horizontal = Spacing.sm, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md),
             ) {
                 Icon(
                     imageVector = HugeIcons.Search01,
@@ -712,16 +713,16 @@ private fun DrawerActions(navController: Navigator) {
             onClick = { navController.navigate(Screen.History) },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 4.dp),
+                .padding(horizontal = Spacing.xs),
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.surfaceContainerLow,
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 10.dp),
+                    .padding(horizontal = Spacing.sm, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md),
             ) {
                 Icon(
                     imageVector = HugeIcons.TransactionHistory,
@@ -781,8 +782,8 @@ private fun FolderBar(
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 4.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+            .padding(horizontal = Spacing.xs),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         item {
@@ -861,9 +862,9 @@ private fun FolderChip(
             )
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+            modifier = Modifier.padding(horizontal = Spacing.md, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
         ) {
             if (icon != null) {
                 Icon(icon, null, modifier = Modifier.size(14.dp))
@@ -893,14 +894,14 @@ private fun AssistantItem(
         } else {
             MaterialTheme.colorScheme.surface
         },
-        tonalElevation = if (isCurrentAssistant) 2.dp else 0.dp
+        tonalElevation = if (isCurrentAssistant) Spacing.xxs else 0.dp
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(Spacing.lg),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.md)
         ) {
             UIAvatar(
                 name = assistant.name,

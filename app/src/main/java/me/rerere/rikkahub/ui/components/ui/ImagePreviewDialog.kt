@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -60,8 +61,8 @@ fun ImagePreviewDialog(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .zIndex(1f)
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    .padding(Spacing.sm),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 IconButton(
                     onClick = {

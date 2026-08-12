@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
@@ -114,12 +116,12 @@ internal fun FilesPicker(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(Spacing.lg), verticalArrangement = Arrangement.spacedBy(Spacing.lg)
     ) {
         FlowRow(
             modifier = Modifier.fillMaxWidth().wrapContentWidth(Alignment.CenterHorizontally),
-            horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.lg, Alignment.Start),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
         ) {
             TakePicButton(onLaunchCamera = onTakePic)
 
@@ -248,14 +250,14 @@ internal fun FilesPicker(
             TextButton(
                 onClick = { showCwdSheet = true },
                 modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
+                contentPadding = PaddingValues(horizontal = Spacing.md, vertical = 0.dp),
             ) {
                 Icon(
                     imageVector = HugeIcons.Folder01,
                     contentDescription = null,
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(Spacing.lg),
                 )
-                Spacer(Modifier.width(4.dp))
+                Spacer(Modifier.width(Spacing.xs))
                 Text(
                     text = conversation.workspaceCwd ?: "/workspace",
                     maxLines = 1,
@@ -406,7 +408,7 @@ private fun InjectionQuickConfigSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.75f)
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = Spacing.lg),
         ) {
             ExtensionSelector(
                 assistant = assistant,
@@ -428,7 +430,7 @@ private fun InjectionQuickConfigSheet(
                     navController.navigate(Screen.Skills)
                 })
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
         }
     }
 }
@@ -498,7 +500,7 @@ private fun BigIconTextButton(
     val interactionSource = remember { MutableInteractionSource() }
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(Radius.sm))
             .clickable(
                 interactionSource = interactionSource, indication = LocalIndication.current, onClick = onClick
             )
@@ -507,12 +509,12 @@ private fun BigIconTextButton(
             }
             .wrapContentWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
         Surface(
-            color = MaterialTheme.colorScheme.surfaceContainer, shape = RoundedCornerShape(8.dp)
+            color = MaterialTheme.colorScheme.surfaceContainer, shape = RoundedCornerShape(Radius.sm)
         ) {
             Box(
-                modifier = Modifier.padding(horizontal = 32.dp, vertical = 16.dp)
+                modifier = Modifier.padding(horizontal = Spacing.xxl, vertical = Spacing.lg)
             ) {
                 icon()
             }
@@ -527,7 +529,7 @@ private fun BigIconTextButton(
 @Composable
 private fun BigIconTextButtonPreview() {
     Row(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(Spacing.lg)
     ) {
         BigIconTextButton(icon = {
             Icon(HugeIcons.Image02, null)

@@ -953,6 +953,9 @@ mDNS 地址：使用 .local 主机名，同一网络中的其他设备可通过�
   <string name="setting_provider_page_model_type">模型类型</string>
   <string name="setting_provider_page_models">模型</string>
   <string name="setting_provider_page_name">名称</string>
+  <string name="local_server_provider_hint">用于连接遵循 OpenAI 兼容协议的本地推理服务，例如本机或局域网中运行的 Mobile LLM Server、LM Studio、Ollama、llama.cpp server、GPT4All 等。</string>
+  <string name="local_server_provider_api_key_optional">可选：多数本地服务无需密钥，留空即可。</string>
+  <string name="local_server_provider_base_url_hint">本地服务地址，默认 http://127.0.0.1:8080/v1</string>
   <string name="setting_provider_page_no_models">暂无模型</string>
   <string name="setting_provider_page_no_permission">没有权限</string>
   <string name="setting_provider_page_no_qr_found">未找到有效的二维码</string>

@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -64,7 +65,7 @@ internal fun MediaFileInputRow(
     }
 
     Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 6.dp, vertical = 6.dp)
@@ -159,9 +160,9 @@ private fun AttachmentChip(
         Row(
             modifier = Modifier
                 .height(44.dp)
-                .padding(start = 8.dp, end = 6.dp),
+                .padding(start = Spacing.sm, end = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             leading()
             Text(
@@ -182,7 +183,7 @@ private fun AttachmentChip(
                     imageVector = HugeIcons.Cancel01,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(Spacing.lg)
                 )
             }
         }

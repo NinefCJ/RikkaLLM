@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.richtext
+package me.rerere.rikkahub.ui.components.richtext
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.ClipData
 import android.content.Intent
@@ -173,7 +175,7 @@ private fun MarkdownPreview() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
-                    .padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)
+                    .padding(Spacing.lg), verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 MarkdownBlock(
                     content = "Hi there!", modifier = Modifier.background(Color.Red)
@@ -261,7 +263,7 @@ fun MarkdownBlock(
     } else {
         ProvideTextStyle(style) {
             Column(
-                modifier = modifier.padding(horizontal = 4.dp)
+                modifier = modifier.padding(horizontal = Spacing.xs)
             ) {
                 data.astTree.children.fastForEach { child ->
                     MarkdownNode(
@@ -303,11 +305,11 @@ object HeaderStyle {
     }
 
     fun verticalPadding(level: Int) = when (level) {
-        1 -> 16.dp
+        1 -> Spacing.lg
         2 -> 14.dp
-        3 -> 12.dp
+        3 -> Spacing.md
         4 -> 10.dp
-        5 -> 8.dp
+        5 -> Spacing.sm
         else -> 6.dp
     }
 
@@ -369,7 +371,7 @@ private fun MarkdownNode(
             )
             val headingPadding = HeaderStyle.verticalPadding(node.type)
             ProvideTextStyle(value = LocalTextStyle.current.merge(style)) {
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                     node.children.fastForEach { node ->
                         if (node.type == MarkdownTokenTypes.ATX_CONTENT) {
                             Paragraph(
@@ -410,13 +412,13 @@ private fun MarkdownNode(
         GFMTokenTypes.CHECK_BOX -> {
             val isChecked = node.getTextInNode(content).trim() == "[x]"
             Surface(
-                shape = RoundedCornerShape(2.dp),
+                shape = RoundedCornerShape(Radius.sm),
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
                 modifier = modifier,
             ) {
                 Box(
                     modifier = Modifier
-                        .padding(2.dp)
+                        .padding(Spacing.xxs)
                         .size(LocalTextStyle.current.fontSize.toDp() * 0.8f),
                     contentAlignment = Alignment.Center,
                 ) {
@@ -447,7 +449,7 @@ private fun MarkdownNode(
                                 color = borderColor, size = Size(10f, size.height)
                             )
                         }
-                        .padding(8.dp)) {
+                        .padding(Spacing.sm)) {
                     node.children.fastForEach { child ->
                         MarkdownNode(
                             node = child, content = content, onClickCitation = onClickCitation
@@ -509,7 +511,7 @@ private fun MarkdownNode(
 
         MarkdownTokenTypes.HORIZONTAL_RULE -> {
             HorizontalDivider(
-                modifier = Modifier.padding(vertical = 16.dp),
+                modifier = Modifier.padding(vertical = Spacing.lg),
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
                 thickness = 0.5.dp
             )
@@ -528,7 +530,7 @@ private fun MarkdownNode(
                     model = imageUrl,
                     contentDescription = altText,
                     modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(Radius.sm))
                         .widthIn(min = 120.dp)
                         .heightIn(min = 120.dp),
                 )
@@ -559,7 +561,7 @@ private fun MarkdownNode(
                 MathBlock(
                     formula, modifier = modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp),
+                        .padding(vertical = Spacing.sm),
                     fontSize = LocalTextStyle.current.fontSize
                 )
             } else {
@@ -568,7 +570,7 @@ private fun MarkdownNode(
                     fontFamily = FontFamily.Monospace,
                     modifier = modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                        .padding(vertical = Spacing.sm)
                 )
             }
         }
@@ -611,7 +613,7 @@ private fun MarkdownNode(
                 code = code,
                 language = language,
                 modifier = Modifier
-                    .padding(bottom = 4.dp)
+                    .padding(bottom = Spacing.xs)
                     .fillMaxWidth(),
                 completeCodeBlock = hasEnd
             )
@@ -718,7 +720,7 @@ private fun ListItemNode(
                     color = MaterialTheme.colorScheme.primary,
                 )
                 FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     itemVerticalAlignment = Alignment.CenterVertically,
                 ) {
                     directContent.fastForEach { contentChild ->
@@ -897,7 +899,7 @@ private fun TableNode(node: ASTNode, content: String, modifier: Modifier = Modif
     // 渲染表格卡片（工具栏 + 表格）
     Column(
         modifier = modifier
-            .padding(vertical = 8.dp)
+            .padding(vertical = Spacing.sm)
             .clip(MaterialTheme.shapes.large)
             .border(BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant), MaterialTheme.shapes.large)
             .background(MaterialTheme.colorScheme.surfaceContainer)
@@ -906,7 +908,7 @@ private fun TableNode(node: ASTNode, content: String, modifier: Modifier = Modif
             modifier = Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.surfaceContainerHighest)
-                .padding(horizontal = 12.dp, vertical = 8.dp),
+                .padding(horizontal = Spacing.md, vertical = Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
@@ -918,10 +920,10 @@ private fun TableNode(node: ASTNode, content: String, modifier: Modifier = Modif
             )
             Spacer(Modifier.weight(1f))
             Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                val iconSize = 16.dp
+                val iconSize = Spacing.lg
                 val iconTint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
 
                 Icon(
@@ -929,13 +931,13 @@ private fun TableNode(node: ASTNode, content: String, modifier: Modifier = Modif
                     contentDescription = "Copy",
                     tint = iconTint,
                     modifier = Modifier
-                        .clip(RoundedCornerShape(4.dp))
+                        .clip(RoundedCornerShape(Radius.sm))
                         .onClick {
                             scope.launch {
                                 clipboardManager.setClipEntry(ClipEntry(ClipData.newPlainText("table", tableMarkdown)))
                             }
                         }
-                        .padding(4.dp)
+                        .padding(Spacing.xs)
                         .size(iconSize)
                 )
 
@@ -944,7 +946,7 @@ private fun TableNode(node: ASTNode, content: String, modifier: Modifier = Modif
                     contentDescription = "Download",
                     tint = iconTint,
                     modifier = Modifier
-                        .clip(RoundedCornerShape(4.dp))
+                        .clip(RoundedCornerShape(Radius.sm))
                         .onClick {
                             createDocumentLauncher.launch(
                                 "table_${
@@ -952,7 +954,7 @@ private fun TableNode(node: ASTNode, content: String, modifier: Modifier = Modif
                                 }.csv"
                             )
                         }
-                        .padding(4.dp)
+                        .padding(Spacing.xs)
                         .size(iconSize)
                 )
             }

@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.search
+package me.rerere.rikkahub.ui.pages.search
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Refresh01
@@ -133,7 +134,7 @@ fun SearchPage(vm: SearchVM = koinViewModel()) {
                 onValueChange = { vm.onQueryChange(it) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(horizontal = Spacing.lg, vertical = Spacing.sm)
                     .focusRequester(focusRequester),
                 placeholder = { Text(stringResource(R.string.search_page_placeholder)) },
                 shape = RoundedCornerShape(50),
@@ -195,8 +196,8 @@ fun SearchPage(vm: SearchVM = koinViewModel()) {
 
                     else -> {
                         LazyColumn(
-                            contentPadding = PaddingValues(horizontal = 16.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            contentPadding = PaddingValues(horizontal = Spacing.lg),
+                            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                             modifier = Modifier.fillMaxSize(),
                         ) {
                             items(vm.results) { result ->
@@ -307,9 +308,9 @@ private fun SearchResultItem(
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(Spacing.lg)
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
         ) {
             Text(
                 text = result.title.ifBlank { untitled },

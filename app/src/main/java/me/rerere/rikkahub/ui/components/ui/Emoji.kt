@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -82,9 +84,9 @@ fun EmojiPicker(
                     .height(height.dp)
                     .background(
                         MaterialTheme.colorScheme.surface,
-                        RoundedCornerShape(12.dp)
+                        RoundedCornerShape(Radius.md)
                     )
-                    .padding(8.dp)
+                    .padding(Spacing.sm)
             ) {
                 // Search bar
                 if (showSearch) {
@@ -100,7 +102,7 @@ fun EmojiPicker(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 8.dp),
+                            .padding(bottom = Spacing.sm),
                         keyboardOptions = KeyboardOptions(
                             imeAction = ImeAction.Search
                         ),
@@ -116,8 +118,8 @@ fun EmojiPicker(
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        .padding(bottom = Spacing.sm),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     items(data.categories.size) { index ->
                         val category = data.categories[index]
@@ -154,7 +156,7 @@ fun EmojiPicker(
                                     "Flags" -> "\uD83D\uDEA9"
                                     else -> category.name
                                 },
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                                modifier = Modifier.padding(horizontal = Spacing.lg, vertical = Spacing.sm),
                                 color = if (isSelected) {
                                     MaterialTheme.colorScheme.onPrimary
                                 } else {
@@ -189,9 +191,9 @@ fun EmojiPicker(
                     columns = GridCells.Adaptive(minSize = 40.dp),
                     state = lazyListState,
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(4.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    contentPadding = PaddingValues(Spacing.xs),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     items(filteredEmojiVariants.toList(), key = { it.first.emoji }) { (baseEmoji, variants) ->
                         EmojiItem(
@@ -245,7 +247,7 @@ private fun EmojiItem(
                 onClick = onClick,
                 onLongClick = onLongClick
             )
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(Radius.sm))
             .background(
                 MaterialTheme.colorScheme.surfaceVariant.copy(
                     alpha = if (hasVariants) 0.5f else 0.3f
@@ -278,30 +280,30 @@ private fun EmojiModifierPicker(
         Surface(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(16.dp),
-            shape = RoundedCornerShape(12.dp),
+                .padding(Spacing.lg),
+            shape = RoundedCornerShape(Radius.md),
             color = MaterialTheme.colorScheme.surface,
-            shadowElevation = 8.dp,
-            tonalElevation = 8.dp
+            shadowElevation = Spacing.sm,
+            tonalElevation = Spacing.sm
         ) {
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(Spacing.lg)
             ) {
                 Text(
                     text = stringResource(R.string.emoji_picker_select_skin_tone),
                     style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier.padding(bottom = 12.dp)
+                    modifier = Modifier.padding(bottom = Spacing.md)
                 )
 
                 LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     items(variants) { variant ->
                         Box(
                             modifier = Modifier
                                 .size(48.dp)
                                 .clickable { onEmojiSelected(variant) }
-                                .clip(RoundedCornerShape(8.dp))
+                                .clip(RoundedCornerShape(Radius.sm))
                                 .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)),
                             contentAlignment = Alignment.Center
                         ) {

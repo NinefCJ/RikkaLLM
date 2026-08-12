@@ -50,6 +50,7 @@ import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.rerere.rikkahub.ui.theme.Spacing
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dokar.sonner.ToastType
 import kotlinx.coroutines.launch
@@ -122,9 +123,9 @@ fun TranslatorPage(vm: TranslatorVM = koinViewModel()) {
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(Spacing.lg)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             // 输入区域
             Column {
@@ -152,7 +153,7 @@ fun TranslatorPage(vm: TranslatorVM = koinViewModel()) {
                     }
                 ) {
                     Icon(HugeIcons.Clipboard, null)
-                    Text("粘贴文本", modifier = Modifier.padding(start = 4.dp))
+                    Text("粘贴文本", modifier = Modifier.padding(start = Spacing.xs))
                 }
             }
 
@@ -161,7 +162,7 @@ fun TranslatorPage(vm: TranslatorVM = koinViewModel()) {
                 if (isTranslating) {
                     LinearWavyProgressIndicator(
                         modifier = Modifier
-                            .padding(8.dp)
+                            .padding(Spacing.sm)
                             .fillMaxWidth()
                     )
                 } else {
@@ -178,7 +179,7 @@ fun TranslatorPage(vm: TranslatorVM = koinViewModel()) {
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
+                        .padding(Spacing.sm)
                 )
             }
 
@@ -197,7 +198,7 @@ fun TranslatorPage(vm: TranslatorVM = koinViewModel()) {
                     }
                 ) {
                     Icon(HugeIcons.Clipboard, null)
-                    Text("复制翻译结果", modifier = Modifier.padding(start = 4.dp))
+                    Text("复制翻译结果", modifier = Modifier.padding(start = Spacing.xs))
                 }
             }
         }
@@ -242,7 +243,7 @@ private fun LanguageSelector(
     }
 
     Box(
-        modifier = Modifier.padding(horizontal = 4.dp)
+        modifier = Modifier.padding(horizontal = Spacing.xs)
     ) {
         ExposedDropdownMenuBox(
             expanded = expanded,
@@ -311,9 +312,9 @@ private fun BottomBar(
             ) {
                 if (!translating) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(horizontal = 8.dp)
+                        modifier = Modifier.padding(horizontal = Spacing.sm)
                     ) {
                         Icon(
                             HugeIcons.LanguageCircle,
@@ -322,7 +323,7 @@ private fun BottomBar(
                         )
                         Text(
                             stringResource(R.string.translator_page_translate),
-                            modifier = Modifier.padding(start = 4.dp)
+                            modifier = Modifier.padding(start = Spacing.xs)
                         )
                     }
                 } else {

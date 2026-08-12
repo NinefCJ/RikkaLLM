@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.pages.setting.components
+package me.rerere.rikkahub.ui.pages.setting.components
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Tick01
@@ -50,9 +52,9 @@ fun PresetThemeButton(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
         modifier = modifier
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(Radius.lg))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = LocalIndication.current,
@@ -60,7 +62,7 @@ fun PresetThemeButton(
                     onClick()
                 }
             )
-            .padding(8.dp),
+            .padding(Spacing.sm),
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -92,7 +94,7 @@ fun PresetThemeButton(
                 )
                 drawCircle(
                     color = scheme.primary,
-                    radius = if (selected) 12.dp.toPx() else 8.dp.toPx(),
+                    radius = if (selected) Spacing.md.toPx() else Spacing.sm.toPx(),
                     center = Offset(
                         x = size.width / 2,
                         y = size.height / 2
@@ -129,9 +131,9 @@ fun PresetThemeButtonGroup(
     FlowRow(
         modifier = modifier
             .fillMaxWidth()
-            .padding(12.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+            .padding(Spacing.md),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         maxItemsInEachRow = THEME_GRID_COLUMNS,
     ) {
         PresetThemes.fastForEach { theme ->

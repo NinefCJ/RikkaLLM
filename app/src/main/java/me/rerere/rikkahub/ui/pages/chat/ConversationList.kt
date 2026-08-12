@@ -51,6 +51,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import me.rerere.rikkahub.R
 import me.rerere.rikkahub.data.model.Conversation
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 import me.rerere.rikkahub.ui.theme.extendColors
 import me.rerere.rikkahub.utils.toLocalString
 import java.time.LocalDate
@@ -104,22 +106,22 @@ fun ColumnScope.ConversationList(
     LazyColumn(
         state = listState,
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         if (conversations.itemCount == 0) {
             item {
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    shape = RoundedCornerShape(8.dp),
+                        .padding(Spacing.lg),
+                    shape = RoundedCornerShape(Radius.md),
                     color = MaterialTheme.colorScheme.surfaceContainerLow
                 ) {
                     Text(
                         text = stringResource(id = R.string.chat_page_no_conversations),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(Spacing.lg)
                     )
                 }
             }
@@ -181,7 +183,7 @@ private fun DateHeaderItem(
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surfaceContainerLow)
-            .padding(horizontal = 12.dp, vertical = 8.dp),
+            .padding(horizontal = Spacing.md, vertical = Spacing.sm),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -201,16 +203,16 @@ private fun PinnedHeader(
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surfaceContainerLow)
-            .padding(horizontal = 12.dp, vertical = 8.dp),
+            .padding(horizontal = Spacing.md, vertical = Spacing.sm),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = HugeIcons.Pin,
             contentDescription = null,
-            modifier = Modifier.size(16.dp),
+            modifier = Modifier.size(Spacing.lg),
             tint = MaterialTheme.colorScheme.primary
         )
-        Spacer(Modifier.size(8.dp))
+        Spacer(Modifier.size(Spacing.sm))
         Text(
             text = stringResource(R.string.pinned_chats),
             style = MaterialTheme.typography.labelLarge,
@@ -235,7 +237,7 @@ private fun ConversationItem(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val backgroundColor = if (selected) {
-        MaterialTheme.colorScheme.surfaceColorAtElevation(8.dp)
+        MaterialTheme.colorScheme.surfaceColorAtElevation(Spacing.sm)
     } else {
         Color.Transparent
     }
@@ -258,7 +260,7 @@ private fun ConversationItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 6.dp),
+                .padding(horizontal = Spacing.md, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -273,7 +275,7 @@ private fun ConversationItem(
                 Icon(
                     imageVector = HugeIcons.Pin,
                     contentDescription = "Pinned",
-                    modifier = Modifier.size(12.dp),
+                    modifier = Modifier.size(Spacing.md),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
@@ -282,7 +284,7 @@ private fun ConversationItem(
                     modifier = Modifier
                         .clip(CircleShape)
                         .background(MaterialTheme.extendColors.green6)
-                        .size(4.dp)
+                        .size(Spacing.xs)
                         .semantics {
                             contentDescription = "Loading"
                         }

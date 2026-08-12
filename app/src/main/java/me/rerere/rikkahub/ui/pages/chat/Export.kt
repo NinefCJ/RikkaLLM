@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.pages.chat
+package me.rerere.rikkahub.ui.pages.chat
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -129,8 +131,8 @@ fun ChatExportSheet(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 32.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                    .padding(horizontal = Spacing.lg, vertical = Spacing.xxl),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(text = stringResource(id = R.string.chat_page_export_format))
@@ -196,7 +198,7 @@ fun ChatExportSheet(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                                .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
                             horizontalArrangement = Arrangement.End
                         ) {
                             Button(
@@ -467,8 +469,8 @@ private fun ExportedChatImage(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.surface)
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                        .padding(Spacing.lg),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.lg)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -543,7 +545,7 @@ private fun ExportedChatMessage(
             modifier = Modifier
                 .widthIn(max = (540 * 0.9).dp)
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             horizontalAlignment = if (message.role == MessageRole.USER) Alignment.End else Alignment.Start
         ) {
             groupedParts.forEach { block ->
@@ -583,7 +585,7 @@ private fun ExportedChatMessage(
                                             ) {
                                                 MarkdownBlock(
                                                     content = part.text,
-                                                    modifier = Modifier.padding(8.dp)
+                                                    modifier = Modifier.padding(Spacing.sm)
                                                 )
                                             }
                                         } else {
@@ -596,7 +598,7 @@ private fun ExportedChatMessage(
                                                 ) {
                                                     MarkdownBlock(
                                                         content = part.text,
-                                                        modifier = Modifier.padding(8.dp)
+                                                        modifier = Modifier.padding(Spacing.sm)
                                                     )
                                                 }
                                             } else {
@@ -619,7 +621,7 @@ private fun ExportedChatMessage(
                                     contentDescription = "Image",
                                     modifier = Modifier
                                         .sizeIn(maxHeight = 300.dp)
-                                        .clip(RoundedCornerShape(12.dp)),
+                                        .clip(RoundedCornerShape(Radius.md)),
                                 )
                             }
 
@@ -635,21 +637,21 @@ private fun ExportedChatMessage(
 
     if (showModelIcon) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(top = 8.dp)
+            modifier = Modifier.padding(top = Spacing.sm)
         ) {
             AutoAIIcon(
                 name = iconLabel,
                 modifier = Modifier
-                    .padding(top = 8.dp)
+                    .padding(top = Spacing.sm)
                     .size(36.dp)
             )
 
             Text(
                 text = iconLabel,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = Spacing.sm)
             )
         }
     }
@@ -672,7 +674,7 @@ private fun ChainOfThoughtScope.ExportedReasoningStep(
             Icon(
                 painter = painterResource(R.drawable.deepthink),
                 contentDescription = null,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(Spacing.lg),
                 tint = MaterialTheme.colorScheme.secondary
             )
         },
@@ -747,7 +749,7 @@ private fun ChainOfThoughtScope.ExportedToolStep(
                     else -> HugeIcons.Wrench01
                 },
                 contentDescription = null,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(Spacing.lg),
                 tint = MaterialTheme.colorScheme.secondary
             )
         },

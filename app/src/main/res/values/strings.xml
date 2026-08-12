@@ -973,6 +973,9 @@
   <string name="setting_provider_page_model_type">Model Type</string>
   <string name="setting_provider_page_models">Models</string>
   <string name="setting_provider_page_name">Name</string>
+  <string name="local_server_provider_hint">Connects to local inference servers that speak the OpenAI-compatible protocol — such as Mobile LLM Server, LM Studio, Ollama, llama.cpp server and GPT4All running on your device or LAN.</string>
+  <string name="local_server_provider_api_key_optional">Optional: most local servers need no API key, leave it blank.</string>
+  <string name="local_server_provider_base_url_hint">Address of the local server, default http://127.0.0.1:8080/v1</string>
   <string name="setting_provider_page_no_models">No models</string>
   <string name="setting_provider_page_no_permission">No permission</string>
   <string name="setting_provider_page_no_qr_found">No valid QR code found</string>

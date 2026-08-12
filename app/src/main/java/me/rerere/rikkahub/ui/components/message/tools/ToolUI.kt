@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.message.tools
+package me.rerere.rikkahub.ui.components.message.tools
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -128,9 +129,9 @@ fun DefaultToolPreview(
     Column(
         modifier = Modifier
             .fillMaxHeight(0.8f)
-            .padding(16.dp)
+            .padding(Spacing.lg)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -161,7 +162,7 @@ fun DefaultToolPreview(
                     Text(stringResource(R.string.chat_message_tool_call_result))
                 }
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                     context.tool.output.fastForEach { part ->
                         when (part) {
                             is UIMessagePart.Text -> HighlightCodeBlock(

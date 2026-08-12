@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.richtext
+package me.rerere.rikkahub.ui.components.richtext
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -68,11 +70,11 @@ fun DiffView(
 
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(Radius.sm))
             .background(MaterialTheme.colorScheme.surfaceContainerLow)
             .horizontalScroll(rememberScrollState())
             .width(IntrinsicSize.Max)
-            .padding(vertical = 4.dp),
+            .padding(vertical = Spacing.xs),
     ) {
         lines.fastForEach { line ->
             DiffLine(line)
@@ -84,7 +86,7 @@ fun DiffView(
                 fontFamily = FontFamily.Monospace,
                 fontSize = 11.sp,
                 lineHeight = 16.sp,
-                modifier = Modifier.padding(horizontal = 8.dp),
+                modifier = Modifier.padding(horizontal = Spacing.sm),
             )
         }
     }
@@ -118,6 +120,6 @@ private fun DiffLine(line: String) {
         modifier = Modifier
             .fillMaxWidth()
             .background(background)
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = Spacing.sm),
     )
 }

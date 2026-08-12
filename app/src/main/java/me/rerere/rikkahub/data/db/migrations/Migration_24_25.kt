@@ -27,7 +27,7 @@ val Migration_24_25 = object : Migration(24, 25) {
 
         db.execSQL(
             """CREATE VIRTUAL TABLE IF NOT EXISTS `memory_item_fts` USING Fts4(
-                `content` TEXT, `subject_tags` TEXT, content=`memory_item`, contentless=0
+                `content` TEXT NOT NULL, `subject_tags` TEXT NOT NULL, content=`memory_item`
             )"""
         )
 

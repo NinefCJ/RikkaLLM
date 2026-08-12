@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.combinedClickable
@@ -188,7 +189,7 @@ fun ModelSelector(
                 model?.modelId?.let {
                     AutoAIIcon(
                         it, Modifier
-                            .padding(end = 4.dp)
+                            .padding(end = Spacing.xs)
                             .size(36.dp),
                         color = Color.Transparent
                     )
@@ -269,10 +270,10 @@ fun ModelListSheet(
     ) {
         Column(
             modifier = Modifier
-                .padding(8.dp)
+                .padding(Spacing.sm)
                 .fillMaxHeight(0.8f)
                 .imePadding(),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
         ) {
             ModelList(
                 currentModel = state.modelId,
@@ -422,7 +423,7 @@ private fun ColumnScope.ModelList(
         shape = RoundedCornerShape(50),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = Spacing.sm),
     ) {
         OutlinedTextField(
             value = searchKeywords,
@@ -449,8 +450,8 @@ private fun ColumnScope.ModelList(
 
     LazyColumn(
         state = lazyListState,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+        contentPadding = PaddingValues(Spacing.sm),
         modifier = Modifier
             .weight(1f)
             .fillMaxWidth(),
@@ -461,7 +462,7 @@ private fun ColumnScope.ModelList(
                     text = stringResource(R.string.model_list_no_providers),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.extendColors.gray6,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(Spacing.sm)
                 )
             }
         }
@@ -473,7 +474,7 @@ private fun ColumnScope.ModelList(
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
-                        .padding(bottom = 4.dp, top = 8.dp)
+                        .padding(bottom = Spacing.xs, top = Spacing.sm)
                 )
             }
 
@@ -539,8 +540,8 @@ private fun ColumnScope.ModelList(
             stickyHeader(key = "header:${providerSetting.id}") {
                 Row(
                     modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .padding(bottom = 4.dp, top = 8.dp),
+                        .padding(horizontal = Spacing.sm)
+                        .padding(bottom = Spacing.xs, top = Spacing.sm),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
@@ -638,9 +639,9 @@ private fun ColumnScope.ModelList(
     }
     if (providers.isNotEmpty()) {
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(horizontal = 8.dp),
+            contentPadding = PaddingValues(horizontal = Spacing.sm),
             state = providerBadgeListState
         ) {
             items(providers) { provider ->
@@ -655,7 +656,7 @@ private fun ColumnScope.ModelList(
                         Text(provider.name)
                     },
                     leadingIcon = {
-                        AutoAIIcon(name = provider.name, modifier = Modifier.size(16.dp))
+                        AutoAIIcon(name = provider.name, modifier = Modifier.size(Spacing.lg))
                     },
                 )
             }
@@ -685,10 +686,10 @@ private fun ModelItem(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 12.dp, horizontal = 16.dp)
+                .padding(vertical = Spacing.md, horizontal = Spacing.lg)
         ) {
             Row(
                 modifier = Modifier
@@ -708,7 +709,7 @@ private fun ModelItem(
                         indication = LocalIndication.current
                     ),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md),
             ) {
                 Surface(
                     color = MaterialTheme.colorScheme.secondaryContainer,
@@ -717,13 +718,13 @@ private fun ModelItem(
                     AutoAIIcon(
                         name = model.modelId,
                         modifier = Modifier
-                            .padding(4.dp)
-                            .size(32.dp)
+                            .padding(Spacing.xs)
+                            .size(Spacing.xxl)
                     )
                 }
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(2.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
                 ) {
                     Text(
                         text = model.displayName,
@@ -735,8 +736,8 @@ private fun ModelItem(
                     FlowRow(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        verticalArrangement = Arrangement.spacedBy(2.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
                     ) {
                         ModelTypeTag(model = model)
 

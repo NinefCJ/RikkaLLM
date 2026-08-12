@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.net.Uri
 import me.rerere.hugeicons.HugeIcons
@@ -163,7 +164,7 @@ fun SettingProviderPage(vm: SettingVM = koinViewModel()) {
                 onValueChange = { searchQuery = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
                 placeholder = { Text(stringResource(R.string.setting_provider_page_search_providers)) },
                 leadingIcon = {
                     Icon(HugeIcons.Search01, contentDescription = null)
@@ -185,9 +186,9 @@ fun SettingProviderPage(vm: SettingVM = koinViewModel()) {
                     .fillMaxWidth()
                     .weight(1f)
                     .imePadding(),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp) +
+                contentPadding = PaddingValues(horizontal = Spacing.lg, vertical = Spacing.sm) +
                     PaddingValues(bottom = innerPadding.calculateBottomPadding()),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 state = lazyListState,
             ) {
                 items(filteredProviders, key = { it.id }) { provider ->
@@ -256,14 +257,14 @@ private fun RecommendProviderButton(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                    .padding(horizontal = Spacing.lg)
+                    .padding(bottom = Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 Text(
                     text = stringResource(R.string.setting_provider_page_recommend),
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(bottom = 4.dp)
+                    modifier = Modifier.padding(bottom = Spacing.xs)
                 )
                 RECOMMENDED_PROVIDERS.forEach { provider ->
                     RecommendProviderItem(
@@ -295,8 +296,8 @@ private fun RecommendProviderItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             AutoAIIcon(
@@ -305,7 +306,7 @@ private fun RecommendProviderItem(
             )
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 Text(
                     text = provider.name,
@@ -365,7 +366,7 @@ private fun ImportProviderButton(
             },
             text = {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(24.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xl)
                 ) {
                     Text(
                         text = stringResource(R.string.setting_provider_page_import_dialog_message),
@@ -375,7 +376,7 @@ private fun ImportProviderButton(
 
                     Column(
                         modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                        verticalArrangement = Arrangement.spacedBy(Spacing.lg)
                     ) {
                         // 主要操作：扫描二维码
                         Button(
@@ -398,7 +399,7 @@ private fun ImportProviderButton(
                                     contentDescription = null,
                                     modifier = Modifier.size(20.dp)
                                 )
-                                Spacer(modifier = Modifier.width(12.dp))
+                                Spacer(modifier = Modifier.width(Spacing.md))
                                 Text(
                                     text = stringResource(R.string.setting_provider_page_scan_qr_code),
                                     style = MaterialTheme.typography.labelLarge
@@ -431,7 +432,7 @@ private fun ImportProviderButton(
                                     contentDescription = null,
                                     modifier = Modifier.size(20.dp)
                                 )
-                                Spacer(modifier = Modifier.width(12.dp))
+                                Spacer(modifier = Modifier.width(Spacing.md))
                                 Text(
                                     text = stringResource(R.string.setting_provider_page_select_from_gallery),
                                     style = MaterialTheme.typography.labelLarge
@@ -603,8 +604,8 @@ private fun ProviderItem(
         }
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.padding(horizontal = Spacing.lg, vertical = Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             AutoAIIcon(
@@ -613,7 +614,7 @@ private fun ProviderItem(
             )
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 Text(
                     text = provider.name,
@@ -627,8 +628,8 @@ private fun ProviderItem(
                     }
                 }
                 FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     Tag(type = if (provider.enabled) TagType.SUCCESS else TagType.WARNING) {
                         Text(stringResource(if (provider.enabled) R.string.setting_provider_page_enabled else R.string.setting_provider_page_disabled))

@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.assistant.detail
+package me.rerere.rikkahub.ui.pages.assistant.detail
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Add01
@@ -46,11 +47,11 @@ private val jsonLenient = Json {
 @Composable
 fun CustomHeaders(headers: List<CustomHeader>, onUpdate: (List<CustomHeader>) -> Unit) {
     Column(
-        modifier = Modifier.padding(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = Modifier.padding(Spacing.sm),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         Text(stringResource(R.string.assistant_page_custom_headers))
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Spacing.sm))
 
         headers.forEachIndexed { index, header ->
             var headerName by remember(header.name) { mutableStateOf(header.name) }
@@ -61,7 +62,7 @@ fun CustomHeaders(headers: List<CustomHeader>, onUpdate: (List<CustomHeader>) ->
                     supportingContent = {
                         Column(
                             modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                         ) {
                             OutlinedTextField(
                                 value = headerName,
@@ -114,7 +115,7 @@ fun CustomHeaders(headers: List<CustomHeader>, onUpdate: (List<CustomHeader>) ->
             modifier = Modifier.fillMaxWidth()
         ) {
             Icon(HugeIcons.Add01, contentDescription = stringResource(R.string.assistant_page_add_header))
-            Spacer(Modifier.width(4.dp))
+            Spacer(Modifier.width(Spacing.xs))
             Text(stringResource(R.string.assistant_page_add_header))
         }
     }
@@ -124,11 +125,11 @@ fun CustomHeaders(headers: List<CustomHeader>, onUpdate: (List<CustomHeader>) ->
 fun CustomBodies(customBodies: List<CustomBody>, onUpdate: (List<CustomBody>) -> Unit) {
     val context = LocalContext.current
     Column(
-        modifier = Modifier.padding(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = Modifier.padding(Spacing.sm),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         Text(stringResource(R.string.assistant_page_custom_bodies))
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Spacing.sm))
 
         customBodies.forEachIndexed { index, body ->
             var bodyKey by remember(body.key) { mutableStateOf(body.key) }
@@ -142,7 +143,7 @@ fun CustomBodies(customBodies: List<CustomBody>, onUpdate: (List<CustomBody>) ->
                     supportingContent = {
                         Column(
                             modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                         ) {
                             OutlinedTextField(
                                 value = bodyKey,
@@ -219,7 +220,7 @@ fun CustomBodies(customBodies: List<CustomBody>, onUpdate: (List<CustomBody>) ->
             modifier = Modifier.fillMaxWidth()
         ) {
             Icon(HugeIcons.Add01, contentDescription = stringResource(R.string.assistant_page_add_body))
-            Spacer(Modifier.width(4.dp))
+            Spacer(Modifier.width(Spacing.xs))
             Text(stringResource(R.string.assistant_page_add_body))
         }
     }

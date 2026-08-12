@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.ui.permission
+package me.rerere.rikkahub.ui.components.ui.permission
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -50,8 +52,8 @@ internal fun PermissionRationaleDialog(
         Card(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
+                .padding(Spacing.lg),
+            shape = RoundedCornerShape(Radius.lg),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surface
             )
@@ -59,7 +61,7 @@ internal fun PermissionRationaleDialog(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(24.dp),
+                    .padding(Spacing.xl),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // 标题图标
@@ -70,7 +72,7 @@ internal fun PermissionRationaleDialog(
                     tint = MaterialTheme.colorScheme.primary
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(Spacing.lg))
 
                 // 标题
                 val hasPermanentlyDenied = permanentlyDeniedPermissions.isNotEmpty()
@@ -81,7 +83,7 @@ internal fun PermissionRationaleDialog(
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(Spacing.sm))
 
                 // 说明文字
                 Text(
@@ -95,12 +97,12 @@ internal fun PermissionRationaleDialog(
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(Spacing.lg))
 
                 // 权限列表
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.md)
                 ) {
                     items(permissions) { permissionInfo ->
                         PermissionItem(
@@ -111,14 +113,14 @@ internal fun PermissionRationaleDialog(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(Spacing.xl))
 
                 // 按钮组
                 if (hasPermanentlyDenied) {
                     // 有永久拒绝的权限，只显示前往设置和取消按钮
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.md)
                     ) {
                         OutlinedButton(
                             onClick = onCancel,
@@ -138,7 +140,7 @@ internal fun PermissionRationaleDialog(
                     // 没有永久拒绝的权限，显示正常的授权按钮
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.md)
                     ) {
                         OutlinedButton(
                             onClick = onCancel,
@@ -174,12 +176,12 @@ private fun PermissionItem(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(Radius.sm)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp)
+                .padding(Spacing.md)
         ) {
             // 权限名称
             Row(
@@ -192,20 +194,20 @@ private fun PermissionItem(
                 }
 
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     if (permissionInfo.required) {
                         Card(
                             colors = CardDefaults.cardColors(
                                 containerColor = MaterialTheme.colorScheme.errorContainer
                             ),
-                            shape = RoundedCornerShape(4.dp)
+                            shape = RoundedCornerShape(Radius.sm)
                         ) {
                             Text(
                                 text = stringResource(R.string.permission_required),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onErrorContainer,
-                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = Spacing.xxs)
                             )
                         }
                     }
@@ -215,20 +217,20 @@ private fun PermissionItem(
                             colors = CardDefaults.cardColors(
                                 containerColor = MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
                             ),
-                            shape = RoundedCornerShape(4.dp)
+                            shape = RoundedCornerShape(Radius.sm)
                         ) {
                             Text(
                                 text = stringResource(R.string.permission_permanently_denied),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onError,
-                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = Spacing.xxs)
                             )
                         }
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(Spacing.xs))
 
             // 权限使用说明
             ProvideTextStyle(value = MaterialTheme.typography.bodySmall) {

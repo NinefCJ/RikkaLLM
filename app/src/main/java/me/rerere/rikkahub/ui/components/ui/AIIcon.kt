@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -45,14 +46,14 @@ private fun AIIcon(
             .build()
     }
     Surface(
-        modifier = modifier.size(24.dp),
+        modifier = modifier.size(Spacing.xl),
         shape = rememberAvatarShape(loading),
         color = color,
     ) {
         AsyncImage(
             model = model,
             contentDescription = name,
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(Spacing.xs)
         )
     }
 }

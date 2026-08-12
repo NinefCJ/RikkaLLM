@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
@@ -45,13 +47,13 @@ fun ShareSheet(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                    .padding(Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     Text("共享你的LLM模型", style = MaterialTheme.typography.titleLarge)
 
@@ -77,7 +79,7 @@ fun ShareSheet(
                 QRCode(
                     value = state.currentProvider?.encodeForShare() ?: "",
                     modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(Radius.sm))
                         .fillMaxWidth()
                         .aspectRatio(1f)
                 )

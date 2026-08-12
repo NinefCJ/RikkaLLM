@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -78,12 +79,12 @@ fun SearchPickerButton(
     ) {
         Row(
             modifier = Modifier
-                .padding(vertical = 8.dp, horizontal = 8.dp),
+                .padding(vertical = Spacing.sm, horizontal = Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             Box(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(Spacing.xl),
                 contentAlignment = Alignment.Center
             ) {
                 if (model?.tools?.contains(BuiltInTools.Search) == true) {
@@ -115,9 +116,9 @@ fun SearchPickerButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.7f)
-                    .padding(16.dp),
+                    .padding(Spacing.lg),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 Text(
                     text = stringResource(R.string.search_picker_title),
@@ -196,15 +197,15 @@ private fun AppSearchSettings(
     Card {
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .padding(horizontal = Spacing.lg, vertical = Spacing.md)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(HugeIcons.GlobalSearch, null)
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs)
             ) {
                 Text(
                     text = stringResource(R.string.use_web_search),
@@ -238,8 +239,8 @@ private fun AppSearchSettings(
     LazyVerticalGrid(
         modifier = modifier.fillMaxSize(),
         columns = GridCells.Adaptive(150.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
     ) {
         itemsIndexed(settings.searchServices) { index, service ->
             val containerColor = animateColorAsState(
@@ -268,14 +269,14 @@ private fun AppSearchSettings(
             ) {
                 Row(
                     modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 12.dp)
+                        .padding(horizontal = Spacing.lg, vertical = Spacing.md)
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     AutoAIIcon(
                         name = service.displayName,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(Spacing.xl)
                     )
                     Column(
                         modifier = Modifier.weight(1f),
@@ -302,15 +303,15 @@ private fun BuiltInSearchSetting(model: Model) {
     Card {
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .padding(horizontal = Spacing.lg, vertical = Spacing.md)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(HugeIcons.GlobalSearch, null)
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs)
             ) {
                 Text(
                     text = stringResource(R.string.built_in_search_title),

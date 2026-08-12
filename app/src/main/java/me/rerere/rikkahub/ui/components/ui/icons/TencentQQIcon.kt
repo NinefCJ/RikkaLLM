@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui.icons
+package me.rerere.rikkahub.ui.components.ui.icons
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathFillType
@@ -16,8 +17,8 @@ public val TencentQQIcon: ImageVector
         }
         _tencentQQ = ImageVector.Builder(
             name = "TencentQq",
-            defaultWidth = 16.dp,
-            defaultHeight = 16.dp,
+            defaultWidth = Spacing.lg,
+            defaultHeight = Spacing.lg,
             viewportWidth = 16f,
             viewportHeight = 16f
         ).apply {

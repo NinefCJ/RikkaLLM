@@ -24,12 +24,12 @@ data class PresetTheme(
 
 val PresetThemes by lazy {
     listOf(
+        MinimalThemePreset,
         SakuraThemePreset,
         OceanThemePreset,
         SpringThemePreset,
         AutumnThemePreset,
         BlackThemePreset,
-        MinimalThemePreset,
         ClaudeThemePreset,
         ExpressiveThemePreset,
     )

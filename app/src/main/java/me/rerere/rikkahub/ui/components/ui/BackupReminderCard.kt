@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -43,8 +44,8 @@ fun BackupReminderCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(horizontal = Spacing.md, vertical = Spacing.sm),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
@@ -72,12 +73,12 @@ fun BackupReminderCard(
             }
             IconButton(
                 onClick = { dismissed = true },
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(Spacing.xxl),
             ) {
                 Icon(
                     imageVector = HugeIcons.Cancel01,
                     contentDescription = stringResource(R.string.backup_page_reminder_dismiss),
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(Spacing.lg),
                 )
             }
         }

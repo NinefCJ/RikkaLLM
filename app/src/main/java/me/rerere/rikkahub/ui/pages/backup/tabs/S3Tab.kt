@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.backup.tabs
+package me.rerere.rikkahub.ui.pages.backup.tabs
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.View
@@ -112,8 +113,8 @@ fun S3Tab(
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         ) {
             BackupStatusCard(
                 title = stringResource(R.string.backup_page_s3_backup),
@@ -245,8 +246,8 @@ fun S3Tab(
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
+                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End)
         ) {
             OutlinedButton(
                 onClick = {
@@ -311,7 +312,7 @@ fun S3Tab(
                 } else {
                     Icon(HugeIcons.Upload02, contentDescription = null, modifier = Modifier.size(18.dp))
                 }
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(Spacing.sm))
                 Text(
                     if (isBackingUp) {
                         stringResource(R.string.backup_page_backing_up)
@@ -334,8 +335,8 @@ fun S3Tab(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.8f)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                    .padding(Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -345,8 +346,8 @@ fun S3Tab(
                 backupItemsState.onSuccess {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(bottom = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        contentPadding = PaddingValues(bottom = Spacing.lg),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         items(it) { item ->
                             S3BackupItemCard(
@@ -475,11 +476,11 @@ private fun S3BackupItemCard(
             supportingContent = {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
@@ -493,7 +494,7 @@ private fun S3BackupItemCard(
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.End),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.lg, Alignment.End),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         TextButton(
@@ -512,9 +513,9 @@ private fun S3BackupItemCard(
                         ) {
                             if (isRestoring) {
                                 CircularWavyProgressIndicator(
-                                    modifier = Modifier.size(16.dp)
+                                    modifier = Modifier.size(Spacing.lg)
                                 )
-                                Spacer(Modifier.width(8.dp))
+                                Spacer(Modifier.width(Spacing.sm))
                             }
                             Text(
                                 if (isRestoring) {

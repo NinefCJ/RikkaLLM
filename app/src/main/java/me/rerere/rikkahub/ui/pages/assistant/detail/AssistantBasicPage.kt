@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.assistant.detail
+package me.rerere.rikkahub.ui.pages.assistant.detail
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -110,16 +111,16 @@ internal fun AssistantBasicContent(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = Spacing.lg)
             .padding(innerPadding)
             .imePadding(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             UIAvatar(
@@ -145,7 +146,7 @@ internal fun AssistantBasicContent(
                 label = {
                     Text(stringResource(R.string.assistant_page_name))
                 },
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
 
                 ) {
                 OutlinedTextField(
@@ -167,7 +168,7 @@ internal fun AssistantBasicContent(
                 label = {
                     Text(stringResource(R.string.assistant_page_tags))
                 },
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
             ) {
                 TagsInput(
                     value = assistant.tags,
@@ -187,7 +188,7 @@ internal fun AssistantBasicContent(
                 description = {
                     Text(stringResource(R.string.assistant_page_workspace_desc))
                 },
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
             ) {
                 val selectedWorkspace = workspaces.find { it.id == assistant.workspaceId?.toString() }
                 Select(
@@ -210,7 +211,7 @@ internal fun AssistantBasicContent(
             HorizontalDivider()
 
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_use_assistant_avatar))
                 },
@@ -236,7 +237,7 @@ internal fun AssistantBasicContent(
             colors = CustomColors.cardColorsOnSurfaceContainer
         ) {
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_chat_model))
                 },
@@ -260,7 +261,7 @@ internal fun AssistantBasicContent(
             )
             HorizontalDivider()
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_temperature))
                 },
@@ -313,7 +314,7 @@ internal fun AssistantBasicContent(
             }
             HorizontalDivider()
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_top_p))
                 },
@@ -366,7 +367,7 @@ internal fun AssistantBasicContent(
             }
             HorizontalDivider()
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_context_message_limit))
                 },
@@ -409,7 +410,7 @@ internal fun AssistantBasicContent(
             }
             HorizontalDivider()
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_stream_output))
                 },
@@ -431,7 +432,7 @@ internal fun AssistantBasicContent(
             )
             HorizontalDivider()
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_thinking_budget))
                 },
@@ -445,7 +446,7 @@ internal fun AssistantBasicContent(
             }
             HorizontalDivider()
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_max_tokens))
                 },
@@ -486,7 +487,7 @@ internal fun AssistantBasicContent(
             colors = CustomColors.cardColorsOnSurfaceContainer
         ) {
             FormItem(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(Spacing.sm),
                 label = {
                     Text(stringResource(R.string.assistant_page_gradient_background))
                 },
@@ -511,7 +512,7 @@ internal fun AssistantBasicContent(
                 HorizontalDivider()
 
                 BackgroundPicker(
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier.padding(Spacing.sm),
                     background = assistant.background,
                     backgroundOpacity = assistant.backgroundOpacity,
                     onUpdate = { background ->
@@ -528,7 +529,7 @@ internal fun AssistantBasicContent(
                 val backgroundOpacity = assistant.backgroundOpacity.coerceIn(0f, 1f)
                 HorizontalDivider()
                 FormItem(
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier.padding(Spacing.sm),
                     label = {
                         Text(stringResource(R.string.assistant_page_background_opacity))
                     },

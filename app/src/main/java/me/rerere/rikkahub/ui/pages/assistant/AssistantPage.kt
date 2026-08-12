@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.assistant
+package me.rerere.rikkahub.ui.pages.assistant
+import me.rerere.rikkahub.ui.theme.Radius
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Copy01
@@ -77,6 +78,7 @@ import me.rerere.rikkahub.ui.hooks.useEditState
 import me.rerere.rikkahub.ui.modifier.onClick
 import me.rerere.rikkahub.ui.pages.assistant.detail.AssistantImporter
 import me.rerere.rikkahub.ui.theme.CustomColors
+import me.rerere.rikkahub.ui.theme.Spacing
 import org.koin.androidx.compose.koinViewModel
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
@@ -138,9 +140,9 @@ fun AssistantPage(vm: AssistantVM = koinViewModel()) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
-                .padding(top = 16.dp)
+                .padding(top = Spacing.lg)
                 .consumeWindowInsets(it),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             val lazyListState = rememberLazyListState()
             val isFiltering = selectedTagIds.isNotEmpty() || searchQuery.isNotBlank()
@@ -160,7 +162,7 @@ fun AssistantPage(vm: AssistantVM = koinViewModel()) {
                 onValueChange = { searchQuery = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = Spacing.lg),
                 placeholder = { Text(stringResource(R.string.assistant_page_search_placeholder)) },
                 leadingIcon = {
                     Icon(HugeIcons.Search01, contentDescription = null)
@@ -173,7 +175,7 @@ fun AssistantPage(vm: AssistantVM = koinViewModel()) {
                     }
                 },
                 singleLine = true,
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(Radius.md)
             )
 
             // 标签过滤器
@@ -190,8 +192,8 @@ fun AssistantPage(vm: AssistantVM = koinViewModel()) {
                 modifier = Modifier
                     .fillMaxSize()
                     .imePadding(),
-                contentPadding = PaddingValues(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(horizontal = Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 state = lazyListState,
             ) {
                 lazyItems(filteredAssistants, key = { assistant -> assistant.id }) { assistant ->
@@ -274,8 +276,8 @@ private fun AssistantTagsFilterRow(
         }
 
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+            modifier = Modifier.padding(horizontal = Spacing.lg),
             state = tagsListState
         ) {
             lazyItems(items = settings.assistantTags, key = { tag -> tag.id }) { tag ->
@@ -284,7 +286,7 @@ private fun AssistantTagsFilterRow(
                 ) { isDragging ->
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
                     ) {
                         FilterChip(
                             onClick = {
@@ -335,12 +337,12 @@ private fun AssistantCreationSheet(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 32.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                    .padding(horizontal = Spacing.lg, vertical = Spacing.xxl),
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.md),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     FormItem(
@@ -369,7 +371,7 @@ private fun AssistantCreationSheet(
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End)
                 ) {
                     TextButton(
                         onClick = {
@@ -408,8 +410,8 @@ private fun AssistantItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                .padding(Spacing.lg),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
             verticalAlignment = Alignment.CenterVertically
         ) {
             UIAvatar(
@@ -422,7 +424,7 @@ private fun AssistantItem(
 
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
 
                 Text(
@@ -433,7 +435,7 @@ private fun AssistantItem(
                 )
 
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (assistant.enableMemory) {
@@ -452,7 +454,7 @@ private fun AssistantItem(
                             ) {
                                 Text(
                                     text = tag.name,
-                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+                                    modifier = Modifier.padding(horizontal = Spacing.sm, vertical = Spacing.xxs),
                                     style = MaterialTheme.typography.labelSmall,
                                 )
                             }
@@ -495,14 +497,14 @@ private fun AssistantActionSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 32.dp)
+                .padding(bottom = Spacing.xxl)
         ) {
             // 助手信息头部
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 UIAvatar(
@@ -516,7 +518,7 @@ private fun AssistantActionSheet(
                 )
             }
 
-            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = Spacing.sm))
 
             // 克隆选项
             ListItem(

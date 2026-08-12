@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.assistant.detail
+package me.rerere.rikkahub.ui.pages.assistant.detail
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.BookOpen01
@@ -79,19 +80,19 @@ fun AssistantDetailPage(id: String) {
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding + PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = innerPadding + PaddingValues(Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         ) {
             item {
                 AssistantHeader(
                     assistant = assistant,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)
+                    modifier = Modifier.padding(horizontal = Spacing.sm, vertical = Spacing.lg)
                 )
             }
 
             item {
                 CardGroup(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier.padding(horizontal = Spacing.sm),
                 ) {
                     item(
                         onClick = { navController.navigate(Screen.AssistantBasic(id)) },
@@ -156,7 +157,7 @@ private fun AssistantHeader(
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         UIAvatar(
             value = assistant.avatar,

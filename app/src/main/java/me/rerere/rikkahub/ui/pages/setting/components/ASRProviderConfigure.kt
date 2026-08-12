@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting.components
+package me.rerere.rikkahub.ui.pages.setting.components
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,7 +24,7 @@ fun ASRProviderConfigure(
     onValueChange: (ASRProviderSetting) -> Unit
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
         FormItem(

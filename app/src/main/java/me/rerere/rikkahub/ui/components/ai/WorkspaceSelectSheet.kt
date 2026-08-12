@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -52,21 +53,21 @@ internal fun WorkspaceSelectSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+                .padding(horizontal = Spacing.lg)
+                .padding(bottom = Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
         ) {
             Text(
                 text = stringResource(R.string.workspace_select),
                 style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                modifier = Modifier.padding(vertical = 8.dp),
+                modifier = Modifier.padding(vertical = Spacing.sm),
             )
 
             Column(
                 modifier = Modifier
                     .heightIn(max = 360.dp)
                     .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 // 不绑定
                 WorkspaceSelectRow(
@@ -84,7 +85,7 @@ internal fun WorkspaceSelectSheet(
                 }
             }
 
-            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = Spacing.xs))
 
             // 管理工作区
             ListItem(

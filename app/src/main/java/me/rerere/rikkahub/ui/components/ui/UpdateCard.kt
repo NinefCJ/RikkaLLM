@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -60,9 +61,9 @@ fun UpdateCard(vm: ChatVM) {
         Card {
             Column(
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(Spacing.sm)
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 Text(
                     text = stringResource(R.string.update_card_check_failed),
@@ -90,9 +91,9 @@ fun UpdateCard(vm: ChatVM) {
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(Spacing.sm)
                         .fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -134,8 +135,8 @@ fun UpdateCard(vm: ChatVM) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 32.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                        .padding(horizontal = Spacing.lg, vertical = Spacing.xxl),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(

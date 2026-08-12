@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.pages.setting.components
+package me.rerere.rikkahub.ui.pages.setting.components
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.LocalIndication
@@ -40,8 +42,8 @@ fun CustomThemeButtonGroup(
     onChangeTheme: (String) -> Unit,
 ) {
     Column(
-        modifier = modifier.padding(12.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier.padding(Spacing.md),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
@@ -73,15 +75,15 @@ private fun CustomThemeButton(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
         modifier = modifier
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(Radius.lg))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = LocalIndication.current,
                 onClick = onClick
             )
-            .padding(8.dp),
+            .padding(Spacing.sm),
     ) {
         Box(contentAlignment = Alignment.Center) {
             Canvas(
@@ -102,7 +104,7 @@ private fun CustomThemeButton(
                 )
                 drawCircle(
                     color = scheme.primary,
-                    radius = if (selected) 12.dp.toPx() else 8.dp.toPx(),
+                    radius = if (selected) Spacing.md.toPx() else Spacing.sm.toPx(),
                     center = Offset(x = size.width / 2, y = size.height / 2)
                 )
             }

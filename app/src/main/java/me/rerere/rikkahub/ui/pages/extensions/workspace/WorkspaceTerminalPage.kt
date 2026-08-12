@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.extensions.workspace
+package me.rerere.rikkahub.ui.pages.extensions.workspace
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.graphics.Typeface
 import android.view.MotionEvent
@@ -144,7 +145,7 @@ private fun WorkspaceTerminalContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(contentPadding)
-                .padding(16.dp),
+                .padding(Spacing.lg),
             contentAlignment = Alignment.Center,
         ) {
             Text(
@@ -228,7 +229,7 @@ private fun WorkspaceTerminalContent(
                         text = stringResource(R.string.workspace_terminal_exited),
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
-                        .padding(12.dp),
+                        .padding(Spacing.md),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
                     )
@@ -258,7 +259,7 @@ private fun TerminalExtraKeysBar(
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
             .horizontalScroll(rememberScrollState())
-            .padding(horizontal = 8.dp, vertical = 6.dp),
+            .padding(horizontal = Spacing.sm, vertical = 6.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -296,7 +297,7 @@ private fun TerminalExtraKey(
                 shape = RoundedCornerShape(6.dp),
             )
             .clickable(onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 8.dp),
+            .padding(horizontal = Spacing.md, vertical = Spacing.sm),
         style = MaterialTheme.typography.labelMedium,
         color = if (selected) {
             MaterialTheme.colorScheme.onPrimary

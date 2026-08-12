@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,11 +30,11 @@ fun FormItem(
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
             modifier = modifier.weight(1f)
         ) {
             ProvideTextStyle(
@@ -47,7 +48,7 @@ fun FormItem(
                 )
             ) {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs),
                 ) {
                     description?.invoke()
                 }
@@ -78,6 +79,6 @@ private fun FormItemPreview() {
                 onCheckedChange = {}
             )
         },
-        modifier = Modifier.padding(4.dp),
+        modifier = Modifier.padding(Spacing.xs),
     )
 }

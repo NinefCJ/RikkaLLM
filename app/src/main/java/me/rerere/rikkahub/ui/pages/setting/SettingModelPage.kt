@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -103,8 +104,8 @@ fun SettingModelPage(vm: SettingVM = koinViewModel()) {
 private fun ModelSettingsPage(settings: Settings, vm: SettingVM, contentPadding: PaddingValues) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = contentPadding + PaddingValues(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = contentPadding + PaddingValues(horizontal = Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
     ) {
         item {
             ModelSettingItem(
@@ -202,7 +203,7 @@ private fun SuggestionModelSettingItem(
                     trailingContent = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                         ) {
                             Text(
                                 text = state.currentModel?.displayName
@@ -223,7 +224,7 @@ private fun SuggestionModelSettingItem(
                                 Icon(
                                     HugeIcons.ArrowRight01,
                                     contentDescription = null,
-                                    modifier = Modifier.size(16.dp),
+                                    modifier = Modifier.size(Spacing.lg),
                                 )
                             }
                         }
@@ -235,7 +236,7 @@ private fun SuggestionModelSettingItem(
             text = stringResource(R.string.setting_model_page_suggestion_model_desc),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+            modifier = Modifier.padding(horizontal = Spacing.xs, vertical = Spacing.xs),
         )
     }
 
@@ -265,7 +266,7 @@ private fun ModelSettingItem(
                 trailingContent = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                     ) {
                         Text(
                             text = state.currentModel?.displayName
@@ -283,7 +284,7 @@ private fun ModelSettingItem(
                             Icon(
                                 HugeIcons.ArrowRight01,
                                 contentDescription = null,
-                                modifier = Modifier.size(16.dp),
+                                modifier = Modifier.size(Spacing.lg),
                             )
                         }
                     }
@@ -294,7 +295,7 @@ private fun ModelSettingItem(
             text = description,
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+            modifier = Modifier.padding(horizontal = Spacing.xs, vertical = Spacing.xs),
         )
     }
 

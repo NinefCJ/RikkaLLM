@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -51,22 +52,22 @@ fun Switch(
         SwitchSize.Small -> SwitchDimensions(
             trackWidth = 36.dp,
             trackHeight = 20.dp,
-            thumbSize = 16.dp,
-            thumbPadding = 2.dp
+            thumbSize = Spacing.lg,
+            thumbPadding = Spacing.xxs
         )
 
         SwitchSize.Medium -> SwitchDimensions(
             trackWidth = 44.dp,
-            trackHeight = 24.dp,
+            trackHeight = Spacing.xl,
             thumbSize = 20.dp,
-            thumbPadding = 2.dp
+            thumbPadding = Spacing.xxs
         )
 
         SwitchSize.Large -> SwitchDimensions(
             trackWidth = 52.dp,
             trackHeight = 28.dp,
-            thumbSize = 24.dp,
-            thumbPadding = 2.dp
+            thumbSize = Spacing.xl,
+            thumbPadding = Spacing.xxs
         )
     }
 
@@ -112,7 +113,7 @@ fun Switch(
                 .offset(x = thumbOffset)
                 .size(dimensions.thumbSize)
                 .shadow(
-                    elevation = if (enabled) 2.dp else 0.dp,
+                    elevation = if (enabled) Spacing.xxs else 0.dp,
                     shape = CircleShape
                 )
                 .clip(CircleShape)
@@ -132,8 +133,8 @@ private data class SwitchDimensions(
 @Preview(showBackground = true)
 private fun SwitchPreview() {
     Column(
-        modifier = Modifier.padding(32.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier.padding(Spacing.xxl),
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         var checkedSmall by remember { mutableStateOf(true) }

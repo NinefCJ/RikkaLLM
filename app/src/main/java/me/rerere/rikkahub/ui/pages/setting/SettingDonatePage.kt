@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -67,9 +68,9 @@ fun SettingDonatePage() {
         Column(
             modifier = Modifier
                 .padding(paddings)
-                .padding(16.dp)
+                .padding(Spacing.lg)
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             DonateMethodsCardGroup()
 
@@ -140,14 +141,14 @@ private fun Sponsors(modifier: Modifier = Modifier) {
         sponsors.onSuccess { value ->
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 48.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(value) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         AsyncImage(
                             model = it.avatar,

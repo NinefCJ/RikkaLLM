@@ -1,5 +1,7 @@
 package me.rerere.rikkahub.ui.pages.setting.components
 
+import me.rerere.rikkahub.ui.theme.Spacing
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -52,7 +54,7 @@ fun ProviderConfigure(
     onEdit: (provider: ProviderSetting) -> Unit
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         modifier = modifier
     ) {
         if (!provider.builtIn) {
@@ -63,7 +65,7 @@ fun ProviderConfigure(
                             index = index,
                             count = ProviderSetting.Types.size
                         ),
-                        label = { Text(type.simpleName ?: "") },
+                        label = { Text(providerTypeLabel(type)) },
                         selected = provider::class == type,
                         onClick = { onEdit(provider.convertTo(type)) }
                     )
@@ -75,9 +77,17 @@ fun ProviderConfigure(
             is ProviderSetting.OpenAI -> ProviderConfigureOpenAI(provider, onEdit)
             is ProviderSetting.Google -> ProviderConfigureGoogle(provider, onEdit)
             is ProviderSetting.Claude -> ProviderConfigureClaude(provider, onEdit)
+            is ProviderSetting.LocalServer -> ProviderConfigureLocalServer(provider, onEdit)
         }
     }
 }
+
+/**
+ * 分段按钮使用的友好类型标签。本地服务类型默认 simpleName 为 "LocalServer"，
+ * 这里统一显示为更可读的 "Local Server"。
+ */
+private fun providerTypeLabel(type: KClass<out ProviderSetting>): String =
+    if (type == ProviderSetting.LocalServer::class) "Local Server" else (type.simpleName ?: "")
 
 fun ProviderSetting.convertTo(type: KClass<out ProviderSetting>): ProviderSetting {
     if (this::class == type) return this
@@ -86,16 +96,19 @@ fun ProviderSetting.convertTo(type: KClass<out ProviderSetting>): ProviderSettin
         is ProviderSetting.OpenAI -> this.apiKey
         is ProviderSetting.Google -> this.apiKey
         is ProviderSetting.Claude -> this.apiKey
+        is ProviderSetting.LocalServer -> this.apiKey
     }
     val sourceBaseUrl = when (this) {
         is ProviderSetting.OpenAI -> this.baseUrl
         is ProviderSetting.Google -> this.baseUrl
         is ProviderSetting.Claude -> this.baseUrl
+        is ProviderSetting.LocalServer -> this.baseUrl
     }
     val targetDefaultBaseUrl = when (type) {
         ProviderSetting.OpenAI::class -> ProviderSetting.OpenAI().baseUrl
         ProviderSetting.Google::class -> ProviderSetting.Google().baseUrl
         ProviderSetting.Claude::class -> ProviderSetting.Claude().baseUrl
+        ProviderSetting.LocalServer::class -> ProviderSetting.LocalServer().baseUrl
         else -> error("Unsupported provider type: $type")
     }
     val convertedBaseUrl = sourceBaseUrl.convertToTargetBaseUrl(targetDefaultBaseUrl)
@@ -119,6 +132,12 @@ fun ProviderSetting.convertTo(type: KClass<out ProviderSetting>): ProviderSettin
             description = this.description, shortDescription = this.shortDescription,
             apiKey = apiKey, baseUrl = convertedBaseUrl
         )
+        ProviderSetting.LocalServer::class -> ProviderSetting.LocalServer(
+            id = this.id, enabled = this.enabled, name = this.name, models = this.models,
+            balanceOption = this.balanceOption, builtIn = this.builtIn,
+            description = this.description, shortDescription = this.shortDescription,
+            apiKey = apiKey, baseUrl = convertedBaseUrl
+        )
         else -> error("Unsupported provider type: $type")
     }
 }
@@ -130,12 +149,14 @@ internal fun ProviderSetting.defaultBaseUrlForReset(): String {
             is ProviderSetting.OpenAI -> if (defaultProvider is ProviderSetting.OpenAI) return defaultProvider.baseUrl
             is ProviderSetting.Google -> if (defaultProvider is ProviderSetting.Google) return defaultProvider.baseUrl
             is ProviderSetting.Claude -> if (defaultProvider is ProviderSetting.Claude) return defaultProvider.baseUrl
+            is ProviderSetting.LocalServer -> if (defaultProvider is ProviderSetting.LocalServer) return defaultProvider.baseUrl
         }
     }
     return when (this) {
         is ProviderSetting.OpenAI -> ProviderSetting.OpenAI().baseUrl
         is ProviderSetting.Google -> ProviderSetting.Google().baseUrl
         is ProviderSetting.Claude -> ProviderSetting.Claude().baseUrl
+        is ProviderSetting.LocalServer -> ProviderSetting.LocalServer().baseUrl
     }
 }
 
@@ -145,6 +166,7 @@ internal fun ProviderSetting.resetBaseUrlToDefault(): ProviderSetting {
         is ProviderSetting.OpenAI -> this.copy(baseUrl = defaultBaseUrl)
         is ProviderSetting.Google -> this.copy(baseUrl = defaultBaseUrl)
         is ProviderSetting.Claude -> this.copy(baseUrl = defaultBaseUrl)
+        is ProviderSetting.LocalServer -> this.copy(baseUrl = defaultBaseUrl)
     }
 }
 
@@ -153,6 +175,7 @@ internal fun ProviderSetting.isUsingDefaultBaseUrl(): Boolean {
         is ProviderSetting.OpenAI -> this.baseUrl
         is ProviderSetting.Google -> this.baseUrl
         is ProviderSetting.Claude -> this.baseUrl
+        is ProviderSetting.LocalServer -> this.baseUrl
     }
     return baseUrl == defaultBaseUrlForReset()
 }
@@ -274,6 +297,86 @@ private fun ProviderConfigureOpenAI(
                     toaster.show(message = responseAPIWarning, type = ToastType.Warning)
                 }
             }
+        )
+    }
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(stringResource(R.string.setting_provider_page_include_history_reasoning))
+        Switch(
+            checked = provider.includeHistoryReasoning,
+            onCheckedChange = { onEdit(provider.copy(includeHistoryReasoning = it)) }
+        )
+    }
+}
+
+@Composable
+private fun ProviderConfigureLocalServer(
+    provider: ProviderSetting.LocalServer,
+    onEdit: (provider: ProviderSetting.LocalServer) -> Unit
+) {
+    provider.description()
+
+    Text(
+        text = stringResource(R.string.local_server_provider_hint),
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+
+    OutlinedTextField(
+        value = provider.name,
+        onValueChange = { onEdit(provider.copy(name = it.trim())) },
+        label = { Text(stringResource(R.string.setting_provider_page_name)) },
+        modifier = Modifier.fillMaxWidth(),
+    )
+
+    var keyVisible by remember { mutableStateOf(false) }
+    OutlinedTextField(
+        value = provider.apiKey,
+        onValueChange = { onEdit(provider.copy(apiKey = it.trim())) },
+        label = { Text(stringResource(R.string.setting_provider_page_api_key)) },
+        modifier = Modifier.fillMaxWidth(),
+        maxLines = 3,
+        visualTransformation = if (keyVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        trailingIcon = {
+            IconButton(onClick = { keyVisible = !keyVisible }) {
+                Icon(if (keyVisible) HugeIcons.ViewOff else HugeIcons.View, contentDescription = null)
+            }
+        },
+        supportingText = { Text(stringResource(R.string.local_server_provider_api_key_optional)) }
+    )
+
+    OutlinedTextField(
+        value = provider.baseUrl,
+        onValueChange = { onEdit(provider.copy(baseUrl = it.trim())) },
+        label = { Text(stringResource(R.string.setting_provider_page_api_base_url)) },
+        modifier = Modifier.fillMaxWidth(),
+        isError = provider.baseUrl.isNotBlank() && !provider.baseUrl.isValidBaseUrl(),
+        supportingText = { Text(stringResource(R.string.local_server_provider_base_url_hint)) }
+    )
+
+    if (!provider.useResponseApi) {
+        OutlinedTextField(
+            value = provider.chatCompletionsPath,
+            onValueChange = { onEdit(provider.copy(chatCompletionsPath = it.trim())) },
+            label = { Text(stringResource(R.string.setting_provider_page_api_path)) },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = !provider.builtIn,
+        )
+    }
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(stringResource(R.string.setting_provider_page_enable))
+        Switch(
+            checked = provider.enabled,
+            onCheckedChange = { onEdit(provider.copy(enabled = it)) }
         )
     }
 

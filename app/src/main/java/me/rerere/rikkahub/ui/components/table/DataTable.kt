@@ -1,6 +1,7 @@
 @file:Suppress("unused")
 
-package me.rerere.rikkahub.ui.components.table
+package me.rerere.rikkahub.ui.components.table
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -43,7 +44,7 @@ fun DataTable(
     headers: List<@Composable () -> Unit>,
     rows: List<List<@Composable () -> Unit>>,
     modifier: Modifier = Modifier,
-    cellPadding: Dp = 4.dp,
+    cellPadding: Dp = Spacing.xs,
     cellBorder: BorderStroke? = BorderStroke(0.5.dp, MaterialTheme.colorScheme.outlineVariant),
     headerBackground: Color = MaterialTheme.colorScheme.surfaceVariant,
     zebraStriping: Boolean = false,

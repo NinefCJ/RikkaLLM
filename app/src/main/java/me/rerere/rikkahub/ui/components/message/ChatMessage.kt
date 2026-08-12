@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.message
+package me.rerere.rikkahub.ui.components.message
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
@@ -134,14 +136,14 @@ fun ChatMessage(
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = if (message.role == MessageRole.USER) Alignment.End else Alignment.Start,
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         if (!message.parts.isEmptyUIMessage()) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
             ) {
                 ChatMessageAssistantAvatar(
                     message = message,
@@ -361,11 +363,11 @@ private fun MessagePartsBlock(
                             if (role == MessageRole.USER) {
                                 Surface(
                                     modifier = Modifier.animateContentSize(),
-                                    shape = RoundedCornerShape(16.dp),
+                                    shape = RoundedCornerShape(Radius.lg),
                                     color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = settings.displaySetting.bubbleOpacity),
                                     onClick = { onUserMessageClick?.invoke() },
                                 ) {
-                                    Column(modifier = Modifier.padding(8.dp)) {
+                                    Column(modifier = Modifier.padding(Spacing.sm)) {
                                         MarkdownBlock(
                                             content = part.text.replaceRegexes(
                                                 assistant = assistant,
@@ -380,10 +382,10 @@ private fun MessagePartsBlock(
                                 if (settings.displaySetting.showAssistantBubble) {
                                     Surface(
                                         modifier = Modifier.animateContentSize(),
-                                        shape = RoundedCornerShape(16.dp),
+                                        shape = RoundedCornerShape(Radius.lg),
                                         color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = settings.displaySetting.bubbleOpacity),
                                     ) {
-                                        Column(modifier = Modifier.padding(8.dp)) {
+                                        Column(modifier = Modifier.padding(Spacing.sm)) {
                                             MarkdownBlock(
                                                 content = part.text.replaceRegexes(
                                                     assistant = assistant,
@@ -424,7 +426,7 @@ private fun MessagePartsBlock(
 
                     is UIMessagePart.Video -> {
                         Surface(
-                            tonalElevation = 2.dp,
+                            tonalElevation = Spacing.xxs,
                             onClick = {
                                 val intent = Intent(Intent.ACTION_VIEW)
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -437,7 +439,7 @@ private fun MessagePartsBlock(
                                 context.startActivity(chooserIndent)
                             },
                             modifier = Modifier,
-                            shape = RoundedCornerShape(8.dp),
+                            shape = RoundedCornerShape(Radius.sm),
                         ) {
                             Box(modifier = Modifier.size(72.dp), contentAlignment = Alignment.Center) {
                                 Icon(HugeIcons.Video01, null)
@@ -447,7 +449,7 @@ private fun MessagePartsBlock(
 
                     is UIMessagePart.Audio -> {
                         Surface(
-                            tonalElevation = 2.dp,
+                            tonalElevation = Spacing.xxs,
                             onClick = {
                                 val intent = Intent(Intent.ACTION_VIEW)
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -465,9 +467,9 @@ private fun MessagePartsBlock(
                         ) {
                             ProvideTextStyle(MaterialTheme.typography.labelSmall) {
                                 Row(
-                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                                    modifier = Modifier.padding(horizontal = Spacing.sm, vertical = Spacing.xs),
                                     verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                                 ) {
                                     Icon(
                                         imageVector = HugeIcons.MusicNote03,
@@ -503,7 +505,7 @@ private fun MessagePartsBlock(
 
                     is UIMessagePart.Document -> {
                         Surface(
-                            tonalElevation = 2.dp,
+                            tonalElevation = Spacing.xxs,
                             onClick = {
                                 val intent = Intent(Intent.ACTION_VIEW)
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -521,9 +523,9 @@ private fun MessagePartsBlock(
                         ) {
                             ProvideTextStyle(MaterialTheme.typography.labelSmall) {
                                 Row(
-                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                                    modifier = Modifier.padding(horizontal = Spacing.sm, vertical = Spacing.xs),
                                     verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                                 ) {
                                     when (part.mime) {
                                         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" -> {
@@ -591,15 +593,15 @@ private fun MessagePartsBlock(
                                     size = Size(width = 10f, height = size.height),
                                 )
                             }
-                            .padding(start = 16.dp)
-                            .padding(4.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                            .padding(start = Spacing.lg)
+                            .padding(Spacing.xs),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         annotations.fastForEachIndexed { index, annotation ->
                             when (annotation) {
                                 is UIMessageAnnotation.UrlCitation -> {
                                     Row(
-                                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                                     ) {
                                         Favicon(annotation.url, modifier = Modifier.size(20.dp))
                                         Text(

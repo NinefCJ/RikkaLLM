@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.extensions.skills
+package me.rerere.rikkahub.ui.pages.extensions.skills
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -114,12 +115,12 @@ fun SkillsPage() {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = innerPadding + PaddingValues(
-                start = 16.dp,
-                end = 16.dp,
-                top = 16.dp,
-                bottom = 16.dp + 72.dp,
+                start = Spacing.lg,
+                end = Spacing.lg,
+                top = Spacing.lg,
+                bottom = Spacing.lg + 72.dp,
             ),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.md),
         ) {
             if (skills.isEmpty()) {
                 item {
@@ -128,7 +129,7 @@ fun SkillsPage() {
                             .fillMaxWidth()
                             .padding(vertical = 48.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.md),
                     ) {
                         Icon(
                             imageVector = HugeIcons.Puzzle,
@@ -246,7 +247,7 @@ private fun SkillCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, top = 12.dp, bottom = 12.dp, end = 4.dp),
+                .padding(start = Spacing.lg, top = Spacing.md, bottom = Spacing.md, end = Spacing.xs),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
@@ -258,8 +259,8 @@ private fun SkillCard(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(2.dp),
+                    .padding(start = Spacing.md),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
             ) {
                 Text(
                     text = skill.name,
@@ -324,13 +325,13 @@ private fun SkillImportSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(start = Spacing.lg, end = Spacing.lg, bottom = Spacing.xl),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             Text(
                 text = stringResource(R.string.skills_page_add_title),
                 style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.padding(horizontal = Spacing.lg, vertical = Spacing.sm),
             )
             SkillImportSheetItem(
                 icon = { Icon(HugeIcons.Add01, contentDescription = null) },
@@ -433,7 +434,7 @@ private fun ImportSkillDialog(
         onDismissRequest = { if (!loading) onDismiss() },
         title = { Text(stringResource(R.string.skills_page_import_from_github)) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 Text(
                     text = stringResource(R.string.skills_page_import_description),
                     style = MaterialTheme.typography.bodySmall,
@@ -452,10 +453,10 @@ private fun ImportSkillDialog(
                 )
                 if (loading) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                        CircularProgressIndicator(modifier = Modifier.size(Spacing.lg), strokeWidth = Spacing.xxs)
                         Text(
                             stringResource(R.string.skills_page_downloading),
                             style = MaterialTheme.typography.bodySmall

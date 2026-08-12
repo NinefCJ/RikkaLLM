@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -51,8 +52,8 @@ fun TagsInput(
 
     FlowRow(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
         itemVerticalAlignment = Alignment.CenterVertically
     ) {
         // 显示已选择的tags
@@ -64,7 +65,7 @@ fun TagsInput(
                     imageVector = HugeIcons.Cancel01,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(16.dp)
+                        .size(Spacing.lg)
                         .clickable {
                             onValueChange(
                                 value.filter { it != tag.id }, tags
@@ -78,7 +79,7 @@ fun TagsInput(
         // 添加按钮
         Surface(
             shape = CircleShape,
-            tonalElevation = 2.dp,
+            tonalElevation = Spacing.xxs,
             modifier = Modifier
                 .clip(CircleShape)
                 .clickable { showAddDialog = true }) {
@@ -87,7 +88,7 @@ fun TagsInput(
                 contentDescription = stringResource(R.string.add),
                 modifier = Modifier
                     .padding(6.dp)
-                    .size(16.dp),
+                    .size(Spacing.lg),
                 tint = MaterialTheme.colorScheme.primary
             )
         }
@@ -117,11 +118,11 @@ fun TagsInput(
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(Spacing.sm))
 
                     FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         unselectedTags.forEach { tag ->
@@ -136,7 +137,7 @@ fun TagsInput(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(Spacing.lg))
 
                     Text(
                         text = stringResource(R.string.tag_input_dialog_create_new),
@@ -144,7 +145,7 @@ fun TagsInput(
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(Spacing.sm))
                 }
 
                 // 输入新标签名称
@@ -163,7 +164,7 @@ fun TagsInput(
 
                 // 显示错误信息
                 if (showError) {
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(Spacing.xs))
                     Text(
                         text = stringResource(R.string.tag_input_dialog_tag_exists),
                         color = MaterialTheme.colorScheme.error,

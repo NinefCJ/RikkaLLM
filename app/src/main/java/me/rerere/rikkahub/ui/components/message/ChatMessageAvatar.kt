@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.message
+package me.rerere.rikkahub.ui.components.message
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -33,7 +34,7 @@ fun ChatMessageUserAvatar(
     if (message.role == MessageRole.USER && !message.parts.isEmptyUIMessage() && settings.displaySetting.showUserAvatar) {
         Row(
             modifier = modifier,
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
@@ -64,7 +65,7 @@ fun ChatMessageAssistantAvatar(
     val useAssistantAvatar = assistant?.useAssistantAvatar == true
     if (message.role == MessageRole.ASSISTANT && (model != null || useAssistantAvatar)) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
         ) {

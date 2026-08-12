@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.webview
+package me.rerere.rikkahub.ui.pages.webview
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.ArrowRight01
@@ -159,12 +160,12 @@ fun WebViewPage(url: String, contentId: String) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(Spacing.lg)
             ) {
                 Text(
                     text = "Console Logs",
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = Spacing.lg)
                 )
 
                 SelectionContainer {
@@ -177,7 +178,7 @@ fun WebViewPage(url: String, contentId: String) {
                                 fontFamily = JetbrainsMono,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(vertical = 4.dp),
+                                    .padding(vertical = Spacing.xs),
                                 color = when (message.messageLevel().name) {
                                     "ERROR" -> MaterialTheme.colorScheme.error
                                     "WARNING" -> MaterialTheme.colorScheme.secondary
@@ -193,7 +194,7 @@ fun WebViewPage(url: String, contentId: String) {
                         text = "No console messages",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(Spacing.lg)
                     )
                 }
             }

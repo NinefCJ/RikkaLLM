@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.extensions.skills
+package me.rerere.rikkahub.ui.pages.extensions.skills
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -115,7 +116,7 @@ fun SkillDetailPage(skillName: String) {
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(innerPadding + PaddingValues(8.dp)),
+                .padding(innerPadding + PaddingValues(Spacing.sm)),
         ) {
             FileTree(
                 nodes = tree,
@@ -211,13 +212,13 @@ private fun FileItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = (16 + depth * 20).dp, end = 4.dp, top = 2.dp, bottom = 2.dp),
+                .padding(start = (16 + depth * 20).dp, end = Spacing.xs, top = Spacing.xxs, bottom = Spacing.xxs),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 imageVector = Lucide.FileText,
                 contentDescription = null,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(Spacing.lg),
                 tint = MaterialTheme.colorScheme.primary,
             )
             Text(
@@ -226,7 +227,7 @@ private fun FileItem(
                 fontFamily = FontFamily.Monospace,
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 8.dp),
+                    .padding(start = Spacing.sm),
             )
             Text(
                 text = "${skillFile.file.length()} B",
@@ -237,7 +238,7 @@ private fun FileItem(
                 Icon(
                     imageVector = Lucide.FilePen,
                     contentDescription = stringResource(R.string.edit),
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(Spacing.lg),
                 )
             }
             if (skillFile.relativePath != "SKILL.md") {
@@ -245,7 +246,7 @@ private fun FileItem(
                     Icon(
                         imageVector = Lucide.Trash2,
                         contentDescription = stringResource(R.string.delete),
-                        modifier = Modifier.size(16.dp),
+                        modifier = Modifier.size(Spacing.lg),
                         tint = MaterialTheme.colorScheme.error,
                     )
                 }
@@ -272,9 +273,9 @@ private fun DirItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { expanded = !expanded }
-                    .padding(start = (16 + depth * 20).dp, end = 16.dp, top = 4.dp, bottom = 4.dp),
+                    .padding(start = (16 + depth * 20).dp, end = Spacing.lg, top = Spacing.xs, bottom = Spacing.xs),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 Icon(
                     imageVector = if (expanded) Lucide.ChevronDown else Lucide.ChevronRight,
@@ -285,7 +286,7 @@ private fun DirItem(
                 Icon(
                     imageVector = if (expanded) Lucide.FolderOpen else Lucide.Folder,
                     contentDescription = null,
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(Spacing.lg),
                     tint = MaterialTheme.colorScheme.tertiary,
                 )
                 Text(
@@ -355,7 +356,7 @@ private fun AddFileDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.skill_detail_page_new_file)) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 OutlinedTextField(
                     value = fileName,
                     onValueChange = { fileName = it },

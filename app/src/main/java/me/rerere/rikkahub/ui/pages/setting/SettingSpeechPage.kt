@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Tick01
@@ -151,7 +152,7 @@ fun SettingSpeechPage(vm: SettingVM = koinViewModel()) {
                     onSpeedChange = {
                         vm.updateSettings(settings.copy(defaultTTSPlaybackSpeed = it))
                     },
-                    modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
+                    modifier = Modifier.padding(start = Spacing.lg, top = Spacing.lg, end = Spacing.lg, bottom = Spacing.sm),
                 )
                 TTSProviderList(
                     settings = settings,
@@ -187,9 +188,9 @@ fun SettingSpeechPage(vm: SettingVM = koinViewModel()) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(Spacing.lg)
                     .fillMaxHeight(0.8f),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 Text(
                     text = stringResource(R.string.setting_tts_page_edit_provider),
@@ -206,7 +207,7 @@ fun SettingSpeechPage(vm: SettingVM = koinViewModel()) {
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     TextButton(
                         onClick = {
@@ -250,9 +251,9 @@ fun SettingSpeechPage(vm: SettingVM = koinViewModel()) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(Spacing.lg)
                     .fillMaxHeight(0.8f),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 Text(
                     text = stringResource(R.string.setting_asr_page_edit_provider),
@@ -269,7 +270,7 @@ fun SettingSpeechPage(vm: SettingVM = koinViewModel()) {
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     TextButton(
                         onClick = {
@@ -317,8 +318,8 @@ private fun TTSProviderList(
         modifier = modifier
             .fillMaxSize()
             .imePadding(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         state = lazyListState
     ) {
         items(settings.ttsProviders, key = { it.id }) { provider ->
@@ -390,7 +391,7 @@ private fun TTSPlaybackSpeedSetting(
         ),
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+            modifier = Modifier.padding(horizontal = Spacing.lg, vertical = Spacing.md),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -441,8 +442,8 @@ private fun ASRProviderList(
         modifier = modifier
             .fillMaxSize()
             .imePadding(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         state = lazyListState
     ) {
         items(settings.asrProviders, key = { it.id }) { provider ->
@@ -531,9 +532,9 @@ private fun AddTTSProviderButton(onAdd: (TTSProviderSetting) -> Unit) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(Spacing.lg)
                     .fillMaxHeight(0.8f),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 Text(
                     text = stringResource(R.string.setting_tts_page_add_provider),
@@ -550,7 +551,7 @@ private fun AddTTSProviderButton(onAdd: (TTSProviderSetting) -> Unit) {
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     TextButton(
                         onClick = {
@@ -649,9 +650,9 @@ private fun AddASRProviderButton(onAdd: (ASRProviderSetting) -> Unit) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(Spacing.lg)
                     .fillMaxHeight(0.8f),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 Text(
                     text = stringResource(R.string.setting_asr_page_add_provider),
@@ -668,7 +669,7 @@ private fun AddASRProviderButton(onAdd: (ASRProviderSetting) -> Unit) {
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     TextButton(
                         onClick = {
@@ -720,16 +721,16 @@ private fun TTSProviderItem(
         )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 AutoAIIcon(
                     name = provider.name.ifEmpty { stringResource(R.string.setting_tts_page_default_name) },
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier.size(Spacing.xxl)
                 )
 
                 Column(
@@ -773,7 +774,7 @@ private fun TTSProviderItem(
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // 状态标签
@@ -867,16 +868,16 @@ private fun ASRProviderItem(
         )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 AutoAIIcon(
                     name = provider.name.ifEmpty { stringResource(R.string.setting_asr_page_default_name) },
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier.size(Spacing.xxl)
                 )
 
                 Column(
@@ -914,7 +915,7 @@ private fun ASRProviderItem(
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (isSelected) {

@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.extensions
+package me.rerere.rikkahub.ui.pages.extensions
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -79,8 +80,8 @@ fun QuickMessagesPage(vm: QuickMessagesVM = koinViewModel()) {
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding + PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = innerPadding + PaddingValues(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.md),
         ) {
             if (settings.quickMessages.isEmpty()) {
                 item {
@@ -89,7 +90,7 @@ fun QuickMessagesPage(vm: QuickMessagesVM = koinViewModel()) {
                             .fillMaxWidth()
                             .padding(vertical = 48.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.md),
                     ) {
                         Icon(
                             imageVector = HugeIcons.Zap,
@@ -180,7 +181,7 @@ private fun QuickMessageCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, top = 12.dp, bottom = 12.dp, end = 4.dp),
+                .padding(start = Spacing.lg, top = Spacing.md, bottom = Spacing.md, end = Spacing.xs),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
@@ -192,8 +193,8 @@ private fun QuickMessageCard(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(2.dp),
+                    .padding(start = Spacing.md),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
             ) {
                 Text(
                     text = quickMessage.title.ifBlank { stringResource(R.string.quick_messages_page_untitled) },
@@ -271,7 +272,7 @@ private fun EditQuickMessageDialog(
         onDismissRequest = onDismiss,
         title = { Text(title) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 OutlinedTextField(
                     value = quickMessageTitle,
                     onValueChange = { quickMessageTitle = it },

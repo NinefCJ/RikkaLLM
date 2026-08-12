@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.message.tools
+package me.rerere.rikkahub.ui.components.message.tools
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -189,7 +191,7 @@ object SearchWebToolUI : ToolUIRenderer {
         if (items.isNotEmpty()) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 FaviconRow(
                     urls = items.mapNotNull { it.getStringContent("url") },
@@ -310,7 +312,7 @@ object TextToSpeechToolUI : ToolUIRenderer {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
         ) {
             Text(
                 text = text,
@@ -452,12 +454,12 @@ object GetScreenTimeToolUI : ToolUIRenderer {
         val totalMinutes = context.content?.jsonObjectOrNull?.get("total_minutes")
             ?.jsonPrimitiveOrNull?.longOrNull ?: 0
         Column(
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
             modifier = Modifier.shimmer(isLoading = context.loading),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 Text(
                     text = stringResource(R.string.tool_ui_screen_time_total),
@@ -474,7 +476,7 @@ object GetScreenTimeToolUI : ToolUIRenderer {
             apps.take(SUMMARY_MAX_APPS).forEach { app ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                 ) {
                     Text(
                         text = app.getStringContent("app_name")
@@ -525,7 +527,7 @@ object CalendarQueryToolUI : ToolUIRenderer {
         val events = events(context)
         if (events.isEmpty()) return
         Column(
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
             modifier = Modifier.shimmer(isLoading = context.loading),
         ) {
             Text(
@@ -567,15 +569,15 @@ private fun ScreenTimePreview(content: JsonElement, apps: List<JsonElement>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight(0.8f)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+            .padding(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         item {
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     Text(
                         text = stringResource(R.string.tool_ui_screen_time_total),
@@ -602,10 +604,10 @@ private fun ScreenTimePreview(content: JsonElement, apps: List<JsonElement>) {
         items(apps) { app ->
             val name = app.getStringContent("app_name")
                 ?: app.getStringContent("package") ?: return@items
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     Text(
                         text = name,
@@ -682,8 +684,8 @@ private fun SearchWebPreview(
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight(0.8f)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         item {
             Text(stringResource(R.string.chat_message_tool_search_prefix, query))
@@ -699,7 +701,7 @@ private fun SearchWebPreview(
                     MarkdownBlock(
                         content = answer,
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(Spacing.lg)
                             .fillMaxWidth(),
                         style = MaterialTheme.typography.bodySmall
                     )
@@ -710,7 +712,7 @@ private fun SearchWebPreview(
         if (images.isNotEmpty()) {
             item {
                 LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     items(images) { imageUrl ->
@@ -721,7 +723,7 @@ private fun SearchWebPreview(
                             modifier = Modifier
                                 .height(120.dp)
                                 .width(160.dp)
-                                .clip(RoundedCornerShape(12.dp))
+                                .clip(RoundedCornerShape(Radius.md))
                                 .clickable { context.openUrl(imageUrl) },
                         )
                     }
@@ -744,13 +746,13 @@ private fun SearchWebPreview(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp, horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            .padding(vertical = Spacing.sm, horizontal = Spacing.lg),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Favicon(
                             url = url,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(Spacing.xl)
                         )
                         Column {
                             Text(text = title, maxLines = 1)
@@ -789,8 +791,8 @@ private fun ScrapeWebPreview(content: JsonElement) {
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight(0.8f)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         item {
             Text(
@@ -805,7 +807,7 @@ private fun ScrapeWebPreview(content: JsonElement) {
             val urlObject = url.jsonObject
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 Text(
                     text = urlObject["url"]?.jsonPrimitive?.content ?: "",
@@ -818,7 +820,7 @@ private fun ScrapeWebPreview(content: JsonElement) {
                         content = urlObject["content"]?.jsonPrimitive?.content ?: "",
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(8.dp)
+                            .padding(Spacing.sm)
                     )
                 }
             }

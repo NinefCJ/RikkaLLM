@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -72,12 +73,12 @@ fun ReasoningButton(
         modifier = modifier,
     ) {
         Row(
-            modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp),
+            modifier = Modifier.padding(vertical = Spacing.sm, horizontal = Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             Box(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(Spacing.xl),
                 contentAlignment = Alignment.Center
             ) {
                 ReasoningIcon(reasoningLevel)
@@ -107,15 +108,15 @@ fun ReasoningPicker(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-                .padding(bottom = 32.dp),
+                .padding(horizontal = Spacing.xl)
+                .padding(bottom = Spacing.xxl),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         ) {
             // 标题
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 Text(
                     text = stringResource(R.string.reasoning_picker_title),
@@ -132,7 +133,7 @@ fun ReasoningPicker(
             // 当前等级展示
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 val iconColor by animateColorAsState(
                     if (reasoningLevel.isEnabled) MaterialTheme.colorScheme.primary
@@ -148,7 +149,7 @@ fun ReasoningPicker(
                         ReasoningLevel.XHIGH -> ReasoningHigh
                     },
                     contentDescription = null,
-                    modifier = Modifier.size(32.dp),
+                    modifier = Modifier.size(Spacing.xxl),
                     tint = iconColor,
                 )
                 Text(
@@ -159,7 +160,7 @@ fun ReasoningPicker(
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.md),
             ) {
                 Slider(
                     value = sliderValue,
@@ -175,7 +176,7 @@ fun ReasoningPicker(
                     thumb = {
                         Box(
                             modifier = Modifier
-                                .size(24.dp)
+                                .size(Spacing.xl)
                                 .clip(CircleShape)
                                 .background(MaterialTheme.colorScheme.primary),
                             contentAlignment = Alignment.Center,
@@ -232,7 +233,7 @@ private fun ReasoningScale(
             Column(
                 modifier = Modifier.weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 ToggleSurface(
                     checked = selected,
@@ -241,15 +242,15 @@ private fun ReasoningScale(
                 ) {
                     Column(
                         modifier = Modifier
-                            .padding(horizontal = 8.dp, vertical = 10.dp)
+                            .padding(horizontal = Spacing.sm, vertical = 10.dp)
                             .fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                     ) {
                         Box(
                             modifier = Modifier
-                                .width(if (selected) 20.dp else 16.dp)
-                                .height(if (selected) 6.dp else 4.dp)
+                                .width(if (selected) 20.dp else Spacing.lg)
+                                .height(if (selected) 6.dp else Spacing.xs)
                                 .clip(RoundedCornerShape(999.dp))
                                 .background(tickColor)
                         )

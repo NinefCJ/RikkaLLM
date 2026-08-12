@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.backup.tabs
+package me.rerere.rikkahub.ui.pages.backup.tabs
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.File01
@@ -170,8 +171,8 @@ fun ImportExportTab(
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(16.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
+        contentPadding = PaddingValues(Spacing.lg)
     ) {
         stickyHeader {
             StickyHeader {
@@ -201,7 +202,7 @@ fun ImportExportTab(
                     },
                     leadingContent = {
                         if (isExporting) {
-                            CircularWavyProgressIndicator(modifier = Modifier.size(24.dp))
+                            CircularWavyProgressIndicator(modifier = Modifier.size(Spacing.xl))
                         } else {
                             Icon(HugeIcons.File01, null)
                         }
@@ -227,7 +228,7 @@ fun ImportExportTab(
                     },
                     leadingContent = {
                         if (isRestoring) {
-                            CircularWavyProgressIndicator(modifier = Modifier.size(24.dp))
+                            CircularWavyProgressIndicator(modifier = Modifier.size(Spacing.xl))
                         } else {
                             Icon(HugeIcons.FileImport, null)
                         }
@@ -255,7 +256,7 @@ fun ImportExportTab(
                     supportingContent = { Text(stringResource(R.string.backup_page_import_chatbox_desc)) },
                     leadingContent = {
                         if (isRestoring && importType == "chatbox") {
-                            CircularWavyProgressIndicator(modifier = Modifier.size(24.dp))
+                            CircularWavyProgressIndicator(modifier = Modifier.size(Spacing.xl))
                         } else {
                             Icon(HugeIcons.FileImport, null)
                         }
@@ -273,7 +274,7 @@ fun ImportExportTab(
                     supportingContent = { Text(stringResource(R.string.backup_page_import_cherry_studio_desc)) },
                     leadingContent = {
                         if (isRestoring && importType == "cherry") {
-                            CircularWavyProgressIndicator(modifier = Modifier.size(24.dp))
+                            CircularWavyProgressIndicator(modifier = Modifier.size(Spacing.xl))
                         } else {
                             Icon(HugeIcons.FileImport, null)
                         }

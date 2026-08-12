@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.share.handler
+package me.rerere.rikkahub.ui.pages.share.handler
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -52,15 +53,15 @@ fun ShareHandlerPage(text: String, image: String?) {
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = it + PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = it + PaddingValues(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             item {
                 Card {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .padding(Spacing.lg)
                     ) {
                         Text(
                             text = vm.shareText,
@@ -92,7 +93,7 @@ fun ShareHandlerPage(text: String, image: String?) {
                             )
                         }
                     },
-                    tonalElevation = 4.dp,
+                    tonalElevation = Spacing.xs,
                     shape = MaterialTheme.shapes.medium
                 ) {
                     ListItem(

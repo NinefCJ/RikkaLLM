@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.assistant.detail
+package me.rerere.rikkahub.ui.pages.assistant.detail
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.Context
 import android.net.Uri
@@ -52,7 +53,7 @@ fun AssistantImporter(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         modifier = modifier,
     ) {
         SillyTavernImporter(onImport = onUpdate)
@@ -122,7 +123,7 @@ private fun SillyTavernImporter(
     }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         OutlinedButton(
             onClick = {
@@ -130,7 +131,7 @@ private fun SillyTavernImporter(
             },
             enabled = !isLoading
         ) {
-            AutoAIIcon(name = "tavern", modifier = Modifier.padding(end = 8.dp))
+            AutoAIIcon(name = "tavern", modifier = Modifier.padding(end = Spacing.sm))
             Text(text = if (isLoading) stringResource(R.string.assistant_importer_importing) else stringResource(R.string.assistant_importer_import_tavern_png))
         }
 
@@ -140,7 +141,7 @@ private fun SillyTavernImporter(
             },
             enabled = !isLoading
         ) {
-            AutoAIIcon(name = "tavern", modifier = Modifier.padding(end = 8.dp))
+            AutoAIIcon(name = "tavern", modifier = Modifier.padding(end = Spacing.sm))
             Text(text = if (isLoading) stringResource(R.string.assistant_importer_importing) else stringResource(R.string.assistant_importer_import_tavern_json))
         }
     }

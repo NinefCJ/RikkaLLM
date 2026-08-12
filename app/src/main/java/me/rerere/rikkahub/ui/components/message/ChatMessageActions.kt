@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.message
+package me.rerere.rikkahub.ui.components.message
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
@@ -90,7 +91,7 @@ fun ColumnScope.ChatMessageActionButtons(
     }
 
     FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         itemVerticalAlignment = Alignment.CenterVertically,
     ) {
         val actionIconColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -101,8 +102,8 @@ fun ColumnScope.ChatMessageActionButtons(
             modifier = Modifier
                 .clip(CircleShape)
                 .clickable { context.copyMessageToClipboard(message) }
-                .padding(8.dp)
-                .size(16.dp),
+                .padding(Spacing.sm)
+                .size(Spacing.lg),
             tint = actionIconColor
         )
 
@@ -118,8 +119,8 @@ fun ColumnScope.ChatMessageActionButtons(
                         onRegenerate()
                     }
                 }
-                .padding(8.dp)
-                .size(16.dp),
+                .padding(Spacing.sm)
+                .size(Spacing.lg),
             tint = actionIconColor
         )
 
@@ -152,8 +153,8 @@ fun ColumnScope.ChatMessageActionButtons(
                             }
                         }
                     )
-                    .padding(8.dp)
-                    .size(16.dp),
+                    .padding(Spacing.sm)
+                    .size(Spacing.lg),
                 tint = if (isAvailable) actionIconColor else actionIconColor.copy(alpha = 0.38f)
             )
 
@@ -171,8 +172,8 @@ fun ColumnScope.ChatMessageActionButtons(
                                 showTranslateDialog = true
                             }
                         )
-                        .padding(8.dp)
-                        .size(16.dp),
+                        .padding(Spacing.sm)
+                        .size(Spacing.lg),
                     tint = actionIconColor
                 )
             }
@@ -190,8 +191,8 @@ fun ColumnScope.ChatMessageActionButtons(
                         onOpenActionSheet()
                     }
                 )
-                .padding(8.dp)
-                .size(16.dp),
+                .padding(Spacing.sm)
+                .size(Spacing.lg),
             tint = actionIconColor
         )
 
@@ -263,8 +264,8 @@ fun ChatMessageActionsSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             // Select and Copy
@@ -277,15 +278,15 @@ fun ChatMessageActionsSheet(
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(Spacing.lg)
                         .fillMaxWidth()
                 ) {
                     Icon(
                         imageVector = HugeIcons.TextSelection,
                         contentDescription = null,
-                        modifier = Modifier.padding(4.dp)
+                        modifier = Modifier.padding(Spacing.xs)
                     )
                     Text(
                         text = stringResource(R.string.select_and_copy),
@@ -308,15 +309,15 @@ fun ChatMessageActionsSheet(
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(Spacing.lg)
                             .fillMaxWidth()
                     ) {
                         Icon(
                             imageVector = HugeIcons.WebDesign01,
                             contentDescription = null,
-                            modifier = Modifier.padding(4.dp)
+                            modifier = Modifier.padding(Spacing.xs)
                         )
                         Text(
                             text = stringResource(R.string.render_with_webview),
@@ -336,15 +337,15 @@ fun ChatMessageActionsSheet(
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(Spacing.lg)
                         .fillMaxWidth()
                 ) {
                     Icon(
                         imageVector = HugeIcons.Edit01,
                         contentDescription = null,
-                        modifier = Modifier.padding(4.dp)
+                        modifier = Modifier.padding(Spacing.xs)
                     )
                     Text(
                         text = stringResource(R.string.edit),
@@ -363,15 +364,15 @@ fun ChatMessageActionsSheet(
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(Spacing.lg)
                         .fillMaxWidth()
                 ) {
                     Icon(
                         imageVector = HugeIcons.Share04,
                         contentDescription = null,
-                        modifier = Modifier.padding(4.dp)
+                        modifier = Modifier.padding(Spacing.xs)
                     )
                     Text(
                         text = stringResource(R.string.share),
@@ -390,15 +391,15 @@ fun ChatMessageActionsSheet(
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(Spacing.lg)
                         .fillMaxWidth()
                 ) {
                     Icon(
                         imageVector = HugeIcons.GitFork,
                         contentDescription = null,
-                        modifier = Modifier.padding(4.dp)
+                        modifier = Modifier.padding(Spacing.xs)
                     )
                     Text(
                         text = stringResource(R.string.create_fork),
@@ -417,15 +418,15 @@ fun ChatMessageActionsSheet(
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(Spacing.lg)
                             .fillMaxWidth()
                     ) {
                         Icon(
                             imageVector = HugeIcons.FavouriteCircle,
                             contentDescription = null,
-                            modifier = Modifier.padding(4.dp)
+                            modifier = Modifier.padding(Spacing.xs)
                         )
                         Text(
                             text = stringResource(
@@ -451,15 +452,15 @@ fun ChatMessageActionsSheet(
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(Spacing.lg)
                         .fillMaxWidth()
                 ) {
                     Icon(
                         imageVector = HugeIcons.Delete01,
                         contentDescription = null,
-                        modifier = Modifier.padding(4.dp)
+                        modifier = Modifier.padding(Spacing.xs)
                     )
                     Text(
                         text = stringResource(R.string.delete),

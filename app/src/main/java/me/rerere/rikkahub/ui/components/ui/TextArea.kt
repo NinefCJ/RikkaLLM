@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -112,14 +114,14 @@ fun TextArea(
 
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         // Header with label, fullscreen and import button
         if (label.isNotEmpty()) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = Spacing.sm),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -127,7 +129,7 @@ fun TextArea(
                     style = MaterialTheme.typography.labelLarge
                 )
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.End),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.md, Alignment.End),
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)
                 ) {
@@ -139,7 +141,7 @@ fun TextArea(
                                 .onClick(onClick = {
                                     isFullScreen = true
                                 })
-                                .size(24.dp)
+                                .size(Spacing.xl)
                         )
                     }
 
@@ -150,7 +152,7 @@ fun TextArea(
                             .onClick(onClick = {
                                 filePickerLauncher.launch(supportedFileTypes)
                             })
-                            .size(24.dp)
+                            .size(Spacing.xl)
                     )
                 }
             }
@@ -209,14 +211,14 @@ private fun FullScreenTextEditor(
                 modifier = Modifier
                     .widthIn(max = 800.dp)
                     .fillMaxHeight(0.9f),
-                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                shape = RoundedCornerShape(topStart = Spacing.lg, topEnd = Spacing.lg)
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(Spacing.sm)
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.End,
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     Row {
                         TextButton(
@@ -234,7 +236,7 @@ private fun FullScreenTextEditor(
                         modifier = Modifier
                             .imePadding()
                             .fillMaxSize(),
-                        shape = RoundedCornerShape(16.dp),
+                        shape = RoundedCornerShape(Radius.lg),
                         placeholder = if (placeholder.isNotEmpty()) {
                             { Text(placeholder) }
                         } else if (label.isNotEmpty()) {

@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.content.ClipData
 import androidx.compose.animation.AnimatedVisibility
@@ -56,24 +58,24 @@ fun ErrorCardsDisplay(
 ) {
     AnimatedVisibility(
         visible = errors.isNotEmpty(),
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier = modifier.padding(horizontal = Spacing.lg, vertical = Spacing.sm),
         enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
         exit = slideOutVertically(targetOffsetY = { it }) + fadeOut(),
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             horizontalAlignment = Alignment.End,
         ) {
             // 清除全部按钮（当有多个错误时显示）
             if (errors.size > 1) {
                 Surface(
                     onClick = onClearAllErrors,
-                    shape = RoundedCornerShape(8.dp),
+                    shape = RoundedCornerShape(Radius.sm),
                     color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.8f),
                 ) {
                     Row(
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        modifier = Modifier.padding(horizontal = Spacing.md, vertical = 6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
@@ -122,20 +124,20 @@ fun ErrorCard(
 
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Radius.md),
         color = MaterialTheme.colorScheme.errorContainer,
-        shadowElevation = 4.dp,
+        shadowElevation = Spacing.xs,
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                .padding(Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 if (error.title != null) {
                     Text(
@@ -188,7 +190,7 @@ fun ErrorCard(
                         )
                     }
                 },
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(Spacing.xxl),
             ) {
                 Icon(
                     imageVector = HugeIcons.Copy01,
@@ -199,7 +201,7 @@ fun ErrorCard(
             }
             IconButton(
                 onClick = onDismiss,
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(Spacing.xxl),
             ) {
                 Icon(
                     imageVector = HugeIcons.Cancel01,

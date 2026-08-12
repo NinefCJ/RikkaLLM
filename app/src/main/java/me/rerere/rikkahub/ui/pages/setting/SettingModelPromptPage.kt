@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,8 +42,8 @@ import me.rerere.rikkahub.utils.plus
 internal fun PromptSettingsPage(settings: Settings, vm: SettingVM, contentPadding: PaddingValues) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = contentPadding + PaddingValues(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = contentPadding + PaddingValues(horizontal = Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
     ) {
         item {
             PromptSettingItem(
@@ -114,7 +115,7 @@ private fun PromptSettingItem(
                 Icon(
                     HugeIcons.ArrowRight01,
                     contentDescription = null,
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(Spacing.lg),
                 )
             },
         )
@@ -137,10 +138,10 @@ private fun PromptSettingItem(
         ) {
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp)
+                    .padding(horizontal = Spacing.lg)
+                    .padding(bottom = Spacing.lg)
                     .imePadding(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 Text(
                     text = title,

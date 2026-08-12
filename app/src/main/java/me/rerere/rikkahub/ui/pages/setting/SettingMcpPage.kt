@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
@@ -191,12 +192,12 @@ fun SettingMcpPage(vm: SettingVM = koinViewModel()) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 contentPadding = PaddingValues(
-                    start = innerPadding.calculateStartPadding(layoutDirection) + 16.dp,
-                    top = innerPadding.calculateTopPadding() + 16.dp,
-                    end = innerPadding.calculateEndPadding(layoutDirection) + 16.dp,
-                    bottom = innerPadding.calculateBottomPadding() + 16.dp,
+                    start = innerPadding.calculateStartPadding(layoutDirection) + Spacing.lg,
+                    top = innerPadding.calculateTopPadding() + Spacing.lg,
+                    end = innerPadding.calculateEndPadding(layoutDirection) + Spacing.lg,
+                    bottom = innerPadding.calculateBottomPadding() + Spacing.lg,
                 )
             ) {
                 items(mcpConfigs, key = { it.id }) { mcpConfig ->
@@ -220,7 +221,7 @@ fun SettingMcpPage(vm: SettingVM = koinViewModel()) {
             if (mcpConfigs.isEmpty()) {
                 Column(
                     modifier = Modifier.align(Alignment.Center),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(text = stringResource(R.string.setting_mcp_page_no_mcp_servers_found))
@@ -300,7 +301,7 @@ private fun McpServerItem(
             Row(
                 modifier = Modifier.fillMaxSize(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
             ) {
                 FilledTonalIconButton(
                     onClick = {
@@ -330,36 +331,36 @@ private fun McpServerItem(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    .padding(Spacing.lg),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 when (status) {
                     McpStatus.Idle -> Icon(HugeIcons.MessageBlocked, null)
                     McpStatus.Connecting -> CircularProgressIndicator(
                         modifier = Modifier.size(
-                            24.dp
+                            Spacing.xl
                         )
                     )
 
                     McpStatus.Connected -> Icon(HugeIcons.McpServer, null)
                     is McpStatus.Reconnecting -> CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(Spacing.xl)
                     )
                     is McpStatus.Error -> Icon(HugeIcons.AlertCircle, null)
                     McpStatus.NeedsAuthorization -> Icon(HugeIcons.AlertCircle, null)
                     McpStatus.Authorizing -> CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(Spacing.xl)
                     )
                 }
 
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         Text(
                             text = item.commonOptions.name,
@@ -369,7 +370,7 @@ private fun McpServerItem(
                             if (item.commonOptions.enable) MaterialTheme.extendColors.green6 else MaterialTheme.extendColors.red6
                         Box(
                             modifier = Modifier
-                                .size(8.dp)
+                                .size(Spacing.sm)
                                 .drawWithContent {
                                     drawCircle(
                                         color = dotColor
@@ -379,7 +380,7 @@ private fun McpServerItem(
                     }
 
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     ) {
                         Tag(type = TagType.SUCCESS) {
                             when (item) {
@@ -408,7 +409,7 @@ private fun McpServerItem(
                         )
                         Button(
                             onClick = { mcpManager.startAuthorization(item, context) },
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
+                            contentPadding = PaddingValues(horizontal = Spacing.lg, vertical = Spacing.xs),
                         ) {
                             Text("OAuth 授权")
                         }
@@ -420,7 +421,7 @@ private fun McpServerItem(
                         )
                         TextButton(
                             onClick = { mcpManager.cancelAuthorization(item) },
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
+                            contentPadding = PaddingValues(horizontal = Spacing.lg, vertical = Spacing.xs),
                         ) {
                             Text("取消授权")
                         }
@@ -454,8 +455,8 @@ private fun McpServerConfigModal(state: EditState<McpServerConfig>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.9f)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                    .padding(Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 SecondaryTabRow(
                     selectedTabIndex = pagerState.currentPage,
@@ -508,7 +509,7 @@ private fun McpServerConfigModal(state: EditState<McpServerConfig>) {
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End)
                 ) {
                     TextButton(
                         onClick = {
@@ -533,10 +534,10 @@ private fun McpCommonOptionsConfigure(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(Spacing.lg)
             .verticalScroll(rememberScrollState())
             .imePadding(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         // 启用/禁用开关
         FormItem(
@@ -549,7 +550,7 @@ private fun McpCommonOptionsConfigure(
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(stringResource(R.string.setting_mcp_page_enable))
@@ -724,7 +725,7 @@ private fun McpCommonOptionsConfigure(
             }
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 config.commonOptions.headers.forEachIndexed { index, header ->
                     var headerName by remember(header.first) { mutableStateOf(header.first) }
@@ -733,7 +734,7 @@ private fun McpCommonOptionsConfigure(
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
                             OutlinedTextField(
@@ -760,7 +761,7 @@ private fun McpCommonOptionsConfigure(
                                 modifier = Modifier.fillMaxWidth(),
                                 placeholder = { Text(stringResource(R.string.setting_mcp_page_header_name_placeholder)) }
                             )
-                            Spacer(Modifier.height(8.dp))
+                            Spacer(Modifier.height(Spacing.sm))
                             OutlinedTextField(
                                 value = headerValue,
                                 onValueChange = {
@@ -839,7 +840,7 @@ private fun McpCommonOptionsConfigure(
                         HugeIcons.Add01,
                         contentDescription = stringResource(R.string.setting_mcp_page_add_header)
                     )
-                    Spacer(Modifier.width(4.dp))
+                    Spacer(Modifier.width(Spacing.xs))
                     Text(stringResource(R.string.setting_mcp_page_add_header))
                 }
             }
@@ -855,7 +856,7 @@ private fun McpToolsConfigure(
     val mcpManager = koinInject<McpManager>()
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (mcpManager.getClient(config) == null) {
@@ -917,13 +918,13 @@ private fun McpToolCard(
             modifier = Modifier
                 .animateContentSize()
                 .fillMaxWidth()
-                .padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+                .padding(Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
         ) {
             // 第一行：工具名字和3个按钮
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -936,7 +937,7 @@ private fun McpToolCard(
                 // 需要审批开关
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                 ) {
                     Text(
                         text = stringResource(R.string.setting_mcp_page_needs_approval),
@@ -951,7 +952,7 @@ private fun McpToolCard(
                 // 启用开关
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                 ) {
                     Text(
                         text = "启用",
@@ -966,12 +967,12 @@ private fun McpToolCard(
                 // 展开/收起按钮
                 IconButton(
                     onClick = { expanded = !expanded },
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier.size(Spacing.xxl)
                 ) {
                     Icon(
                         if (expanded) HugeIcons.ArrowUp01 else HugeIcons.ArrowDown01,
                         contentDescription = null,
-                        modifier = Modifier.size(16.dp)
+                        modifier = Modifier.size(Spacing.lg)
                     )
                 }
             }
@@ -989,8 +990,8 @@ private fun McpToolCard(
                 tool.inputSchema?.let { it as? InputSchema.Obj }?.let { schema ->
                     if (schema.properties.isNotEmpty()) {
                         FlowRow(
-                            horizontalArrangement = Arrangement.spacedBy(4.dp),
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+                            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
                         ) {
                             schema.properties.forEach { (key, _) ->
                                 Tag(
@@ -1050,9 +1051,9 @@ private fun McpImportModal(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.7f)
-                .padding(16.dp)
+                .padding(Spacing.lg)
                 .imePadding(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.md)
         ) {
             Text(stringResource(R.string.setting_mcp_page_import_title), style = MaterialTheme.typography.titleLarge)
             Text(
@@ -1075,7 +1076,7 @@ private fun McpImportModal(
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End)
             ) {
                 TextButton(onClick = onDismiss) {
                     Text(stringResource(R.string.cancel))

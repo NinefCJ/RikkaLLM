@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ai
+package me.rerere.rikkahub.ui.components.ai
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -78,9 +79,9 @@ fun WorkspaceCwdPickerSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(horizontal = Spacing.lg)
+                .padding(bottom = Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ) {
             Text(
                 text = stringResource(R.string.workspace_cwd_select_directory),
@@ -95,7 +96,7 @@ fun WorkspaceCwdPickerSheet(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 IconButton(
                     enabled = browsePath.isNotBlank(),
@@ -151,7 +152,7 @@ fun WorkspaceCwdPickerSheet(
                     item {
                         Text(
                             text = stringResource(R.string.workspace_cwd_no_subdirectories),
-                            modifier = Modifier.padding(16.dp),
+                            modifier = Modifier.padding(Spacing.lg),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -163,7 +164,7 @@ fun WorkspaceCwdPickerSheet(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 if (currentCwd != null) {

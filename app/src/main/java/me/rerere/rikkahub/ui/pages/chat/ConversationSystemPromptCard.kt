@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.chat
+package me.rerere.rikkahub.ui.pages.chat
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -48,7 +49,7 @@ fun ConversationSystemPromptButton(
                 contentDescription = null,
                 modifier = Modifier.size(14.dp),
             )
-            Spacer(Modifier.size(4.dp))
+            Spacer(Modifier.size(Spacing.xs))
             Text(
                 text = if (!customSystemPrompt.isNullOrBlank()) {
                     stringResource(R.string.chat_page_conversation_system_prompt) + " ✎"
@@ -63,8 +64,8 @@ fun ConversationSystemPromptButton(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                    .padding(horizontal = Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 OutlinedTextField(
                     value = editText,
@@ -75,7 +76,7 @@ fun ConversationSystemPromptButton(
                     maxLines = 8,
                 )
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     modifier = Modifier.align(Alignment.End),
                 ) {
                     if (!customSystemPrompt.isNullOrBlank()) {

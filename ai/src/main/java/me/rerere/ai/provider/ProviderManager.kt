@@ -3,6 +3,7 @@ package me.rerere.ai.provider
 import android.content.Context
 import me.rerere.ai.provider.providers.ClaudeProvider
 import me.rerere.ai.provider.providers.GoogleProvider
+import me.rerere.ai.provider.providers.LocalServerProvider
 import me.rerere.ai.provider.providers.OpenAIProvider
 import okhttp3.OkHttpClient
 
@@ -18,6 +19,7 @@ class ProviderManager(client: OkHttpClient, context: Context) {
         registerProvider("openai", OpenAIProvider(client, context))
         registerProvider("google", GoogleProvider(client, context))
         registerProvider("claude", ClaudeProvider(client, context))
+        registerProvider("localServer", LocalServerProvider(client, context))
     }
 
     /**
@@ -52,6 +54,7 @@ class ProviderManager(client: OkHttpClient, context: Context) {
             is ProviderSetting.OpenAI -> getProvider("openai")
             is ProviderSetting.Google -> getProvider("google")
             is ProviderSetting.Claude -> getProvider("claude")
+            is ProviderSetting.LocalServer -> getProvider("localServer")
         } as Provider<T>
     }
 }

@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Code
@@ -90,16 +91,16 @@ fun SettingAboutPage() {
         ) { onBurst ->
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = innerPadding + PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = innerPadding + PaddingValues(Spacing.sm),
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg),
             ) {
                 item {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(8.dp),
+                            .padding(Spacing.sm),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         AsyncImage(
                             model = R.mipmap.ic_launcher,
@@ -129,7 +130,7 @@ fun SettingAboutPage() {
 
                 item {
                     CardGroup(
-                        modifier = Modifier.padding(horizontal = 8.dp),
+                        modifier = Modifier.padding(horizontal = Spacing.sm),
                     ) {
                         item(
                             modifier = Modifier.combinedClickable(
@@ -154,7 +155,7 @@ fun SettingAboutPage() {
 
                 item {
                     CardGroup(
-                        modifier = Modifier.padding(horizontal = 8.dp),
+                        modifier = Modifier.padding(horizontal = Spacing.sm),
                     ) {
                         item(
                             onClick = { context.openUrl("https://rikka-ai.com/") },

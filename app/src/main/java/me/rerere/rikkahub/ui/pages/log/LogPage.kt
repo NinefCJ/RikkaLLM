@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.log
+package me.rerere.rikkahub.ui.pages.log
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Delete01
@@ -106,8 +107,8 @@ private fun UnifiedLogList(
 
     LazyColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(16.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+        contentPadding = PaddingValues(Spacing.lg)
     ) {
         item {
             RequestLoggingSwitchCard(
@@ -153,7 +154,7 @@ private fun RequestLoggingSwitchCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(Spacing.md),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(modifier = Modifier.weight(1f)) {
@@ -187,8 +188,8 @@ private fun RequestLogCard(log: LogEntry.RequestLog, onClick: () -> Unit) {
         colors = CustomColors.cardColorsOnSurfaceContainer,
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            modifier = Modifier.padding(Spacing.md),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -215,7 +216,7 @@ private fun RequestLogCard(log: LogEntry.RequestLog, onClick: () -> Unit) {
             )
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 log.responseCode?.let { code ->
                     Text(
@@ -255,8 +256,8 @@ private fun RequestLogDetail(log: LogEntry.RequestLog) {
     SelectionContainer {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            contentPadding = PaddingValues(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.md)
         ) {
             item {
                 Text(
@@ -303,7 +304,7 @@ private fun RequestLogDetail(log: LogEntry.RequestLog) {
                         text = "Request Headers",
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier.padding(top = Spacing.sm)
                     )
                 }
                 log.requestHeaders.forEach { (key, value) ->
@@ -320,7 +321,7 @@ private fun RequestLogDetail(log: LogEntry.RequestLog) {
                         text = "Request Body",
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier.padding(top = Spacing.sm)
                     )
                     val jsonElement = remember(body) {
                         runCatching { JsonInstantPretty.parseToJsonElement(body) }.getOrNull()
@@ -328,14 +329,14 @@ private fun RequestLogDetail(log: LogEntry.RequestLog) {
                     if (jsonElement != null) {
                         JsonTree(
                             json = jsonElement,
-                            modifier = Modifier.padding(top = 4.dp),
+                            modifier = Modifier.padding(top = Spacing.xs),
                             initialExpandLevel = 2
                         )
                     } else {
                         Text(
                             text = body,
                             fontFamily = JetbrainsMono,
-                            modifier = Modifier.padding(top = 4.dp)
+                            modifier = Modifier.padding(top = Spacing.xs)
                         )
                     }
                 }
@@ -348,7 +349,7 @@ private fun RequestLogDetail(log: LogEntry.RequestLog) {
                         text = "Response Headers",
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier.padding(top = Spacing.sm)
                     )
                 }
                 log.responseHeaders.forEach { (key, value) ->
@@ -379,7 +380,7 @@ private fun DetailSection(label: String, value: String) {
 
 @Composable
 private fun HeaderItem(key: String, value: String) {
-    Column(modifier = Modifier.padding(vertical = 2.dp)) {
+    Column(modifier = Modifier.padding(vertical = Spacing.xxs)) {
         Text(
             text = key,
             style = MaterialTheme.typography.labelSmall,
@@ -402,7 +403,7 @@ private fun TextLogCard(log: LogEntry.TextLog) {
         colors = CustomColors.cardColorsOnSurfaceContainer,
     ) {
         SelectionContainer {
-            Column(modifier = Modifier.padding(12.dp)) {
+            Column(modifier = Modifier.padding(Spacing.md)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween

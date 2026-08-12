@@ -1,96 +1,161 @@
 <div align="center">
-  <img src="docs/icon.png" alt="App 圖標" width="100" />
-  <h1>RikkaHub</h1>
+  <img src="docs/icon.png" alt="應用程式圖示" width="100" />
+  <h1>RikkaLLM</h1>
 
-一個原生Android LLM 聊天客戶端，支持切換不同的供應商進行聊天 🤖💬
+一個原生 Android LLM 聊天客戶端，支援在雲端供應商與**裝置端本地引擎**之間切換，實現完全離線的對話 🤖💬
 
-點擊加入我們的Discord伺服器 👉 [【RikkaHub】](https://discord.gg/9weBqxe5c4)
-
-[English](README.md) | 繁體中文 | [简体中文](README_ZH_CN.md)
-
+[English](README.md) | [简体中文](README_ZH_CN.md) | 繁體中文
 </div>
 
 <div align="center">
-  <img src="docs/img/chat.png" alt="Chat Interface" width="150" />
-  <img src="docs/img/desktop.png" alt="Models Picker" width="450" />
+  <img src="docs/img/chat.png" alt="聊天介面" width="150" />
+  <img src="docs/img/desktop.png" alt="模型選擇" width="450" />
 </div>
+
+> [!NOTE]
+> **關於本倉庫**
+> 本倉庫是 [RikkaHub](https://github.com/rikkahub/rikkahub) 的一個功能分支（feature fork）。在原客戶端基礎上新增：
+> - **本地 MNN 引擎**：模型可完全在裝置端執行（無需聯網），並透過一個 OpenAI 相容的本地服務對外暴露；
+> - **類 ChatGPT 的長期記憶**層（自動抽取、定期整合與 RAG 檢索）；
+> - **M3 Expressive** 主題預設。
 
 ## 🚀 下載
 
 🔗 [前往官網下載](https://rikka-ai.com/download)（推薦）
+
 🔗 [前往 Google Play 下載](https://play.google.com/store/apps/details?id=me.rerere.rikkahub)
 
 > [!WARNING]
-> RikkaHub 存在許多 fork 版本，fork 版本出現問題與 RikkaHub 無關，請謹慎使用 fork 版本，避免隱私洩露或者過度索要權限問題。
-
-## 💖 贊助商
-
-|                                         贊助商                                         | 介紹                                                                                                                                              |
-|:-----------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------|
-| <img src="docs/sponsors/aihubmix.png" alt="Aihubmix" width="50" /><br /><b>Aihubmix</b> | 感謝 <a href="https://aihubmix.com?aff=pG7r">aihubmix.com</a> 的資金支持。我們推薦使用 aihubmix 作為全球主流模型的一站式服務平台。（OpenAI、Claude、Google Gemini、DeepSeek、Qwen 以及數百種其他模型）。 |
-| <img src="docs/sponsors/suixiang.jpg" alt="隨想AI網關" width="50" /><br /><b>隨想AI網關</b> | 感謝隨想AI網關對本項目的贊助！隨想AI網關 是一家可靠高效的 API 中繼服務提供商，提供 Claude、Codex、Gemini 等的中繼服務。注重隱私的中轉站·無數據倒賣·無模型摻水，隱私，透明，極速售後。新帳戶註冊每日簽到就送 0.5 元測試額度，儲值額度 1:1，無需訂閱，按量付費。多線路冗餘、跨區域容災、自動故障切換，長鏈路 SSE 不中斷。99.9% 可用性，關鍵呼叫從不掉隊。 |
+> RikkaHub 存在許多 fork 版本。fork 版本出現的問題與 RikkaHub 無關，請謹慎使用 fork 版本，避免隱私洩露或過度索取權限。
 
 ## ✨ 功能特色
 
-- 🎨 現代化安卓APP設計（Material You / 預測性返回）和 🌙 暗色模式
-- 📦 工作區：基於 proot 的 Linux 智能體環境
-- 🖥️ Web多端訪問支持
-- 🛠️ MCP 支持
-- 🔄 多種類型的供應商支持，自定義 API / URL / 模型（目前支持 OpenAI、Google、Anthropic）
-- 🖼️ 多模態輸入支持
-- 📝 Markdown 渲染（支持代碼高亮、數學公式、表格、Mermaid）
-- 🔍 搜尋功能（Exa、Tavily、Zhipu、LinkUp、Brave、Perplexity、..）
-- 🧩 Prompt 變量（模型名稱、時間等）
-- 🤳 二維碼導出和導入提供商
-- 🤖 智能體自定義
-- 🧠 類ChatGPT記憶功能
-- 📝 AI翻譯
-- 🌐 自定義HTTP請求頭和請求體
+核心功能（來自上游 RikkaHub）：
+
+- 🎨 Material You 設計語言與 🌙 暗色模式
+- 📦 工作區：基於 proot 的 Linux 智慧體環境
+- 🔄 多供應商支援：自訂 API / URL / 模型（相容 OpenAI、Google、Anthropic 的全部介面）
+- 🖼️ 多模態輸入（圖片、文字文件、PDF、Docx）
+- 🖥️ Web 多端存取支援
+- 🛠️ MCP 支援
+- 📝 Markdown 渲染（程式碼高亮、LaTeX 公式、表格、Mermaid）
+- 🪾 訊息分支
+- 🔍 搜尋能力（Exa、Tavily、Zhipu、LinkUp、Brave、Perplexity 等）
+- 🧩 提示詞變數（模型名稱、時間等）
+- 🤳 供應商 QR Code 匯出 / 匯入
+- 🤖 智慧體自訂
+- 🌐 自訂 HTTP 請求標頭與請求主體
+- 💌 SillyTavern 角色卡匯入
+
+本分支新增：
+
+- 📴 **本地 MNN 引擎** —— 透過 `:mnn` 模組在裝置端完整執行 LLM。本地 OpenAI 相容 HTTP 服務（預設連接埠 `8090`）讓現有聊天介面在零雲端依賴下與已下載模型對話。
+- 🧠 **類 ChatGPT 記憶** —— 助手作用域的長期記憶，包含自動抽取、定期整合與 RAG 檢索，可在助手設定頁中開啟。
+- 🎭 **M3 Expressive 主題** —— 高飽和、富有情緒表現力的 Material 3 預設，可在主題選擇器中選用（非預設）。
+
+## 🛠️ 從原始碼建置
+
+### 前置條件
+
+| 工具 | 版本 / 說明 |
+| --- | --- |
+| JDK | 17 |
+| Android SDK | 需包含 **CMake** 與 **NDK 25.x** |
+| Gradle | 使用 wrapper（`./gradlew`），無需手動安裝 |
+| `pnpm` | 僅因為 `web` 模組在 `preBuild` 階段會建置 `web-ui/` |
+
+> 本分支已移除 Firebase，因此建置**無需 `google-services.json`**。
+
+### 1. 準備 MNN 原生依賴
+
+`:mnn` 模組硬依賴兩個被 gitignore 的產物。全新克隆後**必須**先準備，否則 Gradle 設定階段會直接報錯（fail fast）：
+
+- `vendor/MNN` —— alibaba/MNN 原始碼樹，固定 commit `1d535d7`（標頭檔 + CMake 工程）
+- `mnn-prebuilt/arm64-v8a/libMNN.so` —— 預先建置的執行期函式庫（連結並打包進 APK）
+
+執行對應平台的冪等 setup 腳本（淺克隆固定 commit 並建置執行期函式庫）：
+
+```powershell
+# Windows —— 內部複用 scripts/build-mnn-android.ps1
+powershell -File scripts/setup-mnn.ps1
+```
+
+```bash
+# Linux / macOS（CI 的 daily-build 也使用）
+./scripts/setup-mnn.sh
+```
+
+### 2. 建置 / 測試
+
+```bash
+./gradlew assembleDebug                 # 建置 Debug APK
+./gradlew test                          # 執行全部 JVM 單元測試
+./gradlew connectedDebugAndroidTest     # 裝置 / 模擬器上的儀器化測試
+./gradlew lint                          # 執行 Android Lint
+```
+
+在 Android Studio 中開啟本專案並執行 `app` 模組，或安裝產生的 APK。
+
+## 📖 使用說明
+
+### 雲端供應商（上游行為）
+
+1. 啟動應用程式並開啟 **設定 → 供應商**。
+2. 輸入 base URL、API Key 與模型清單新增一個供應商（任何相容 OpenAI / Google / Anthropic 的端點皆可）。
+3. 開始對話並選擇你設定的助手 / 模型。
+
+### 本地引擎（本分支）
+
+1. 開啟 **設定 → 本地引擎**。
+2. 下載相容的 MNN 模型並設定其**模型目錄**。
+3. 啟動本地服務（預設連接埠 `8090`）。應用程式透過 OpenAI 相容 API 與其通訊，因此聊天可**完全離線**進行。
+4. 在助手設定中開啟 **記憶**，啟用基於 RAG 的長期記憶。
+
+### 主題
+
+在 **設定 → 主題** 中選擇 **Expressive**（或任意其它預設）。
+
+## 🧩 技術堆疊
+
+- [Kotlin](https://kotlinlang.org/) —— 開發語言
+- [Koin](https://insert-koin.io/) —— 依賴注入
+- [Jetpack Compose](https://developer.android.com/jetpack/compose) —— UI 框架
+- [DataStore](https://developer.android.com/topic/libraries/architecture/datastore) —— 偏好儲存
+- [Room](https://developer.android.com/training/data-storage/room) —— 資料庫（記憶實體、FTS）
+- [Coil](https://coil-kt.github.io/coil/) —— 圖片載入
+- [Material You (M3)](https://m3.material.io/) —— UI 設計
+- [Navigation 3](https://developer.android.com/guide/navigation/navigation-3) —— 導覽
+- [OkHttp](https://square.github.io/okhttp/) —— HTTP 用戶端
+- [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) —— JSON 序列化
+- [MNN](https://github.com/alibaba/MNN) —— 裝置端推論引擎（`:mnn` 模組）
+- [Ktor](https://ktor.io/) —— 本地 OpenAI 相容服務與 `web` 模組
+
+## 📐 模組結構
+
+- **app** —— 主應用程式（UI、ViewModels、核心邏輯、本地引擎設定、記憶 UI）
+- **ai** —— 面向供應商的 AI SDK 抽象層（OpenAI、Google、Anthropic）
+- **mnn** —— 本地 MNN 引擎：OpenAI 相容路由、模型註冊表、引擎介面卡、統計
+- **common** —— 共享工具與擴充
+- **document** —— PDF / DOCX / PPTX / EPUB 解析
+- **highlight** —— 程式碼語法高亮
+- **material3** —— Material 顏色工具
+- **search** —— 聯網搜尋 SDK（Exa、Tavily、Zhipu、Bing、Brave、SearXNG 等）
+- **speech** —— TTS / ASR
+- **web** —— 內嵌 Ktor 服務 + 託管的 `web-ui/` 靜態建置產物
+- **workspace** —— 以沙箱方式向 AI 暴露的每工作區檔案系統與 shell 環境
 
 ## ✨ 貢獻
 
-本項目使用[Android Studio](https://developer.android.com/studio)開發，歡迎提交PR
+本專案使用 [Android Studio](https://developer.android.com/studio) 開發，歡迎提交 PR！
 
-技術棧文檔:
+> [!IMPORTANT]
+> 以下 PR 將被拒絕：
+> 1. 與翻譯相關的改動，例如新增語言或更新已有翻譯
+> 2. 新增功能，本專案有明確取向，不接受新功能類 PR
+> 3. 大規模重構以及由 AI 生成的改動
 
-- [Kotlin](https://kotlinlang.org/) (開發語言)
-- [Koin](https://insert-koin.io/) (依賴注入)
-- [Jetpack Compose](https://developer.android.com/jetpack/compose) (UI 框架)
-- [DataStore](https://developer.android.com/topic/libraries/architecture/datastore?hl=zh-cn#preferences-datastore) (
-  偏好數據存儲)
-- [Room](https://developer.android.com/training/data-storage/room) (數據庫)
-- [Coil](https://coil-kt.github.io/coil/) (圖片加載)
-- [Material You](https://m3.material.io/) (UI 設計)
-- [Navigation 3](https://developer.android.com/guide/navigation/navigation-3) (導航)
-- [Okhttp](https://square.github.io/okhttp/) (HTTP 客戶端)
-- [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) (Json序列化)
+## 📄 授權
 
-> [!TIP]
-> 你需要在 `app` 資料夾下添加 `google-services.json` 檔案才能構建應用。
+本專案基於 [GNU Affero General Public License v3.0](LICENSE)（AGPL-3.0）開源。
 
-> [!IMPORTANT]  
-> 以下PR將被拒絕：
-> 1. 添加新語言，因為添加新語言會增加後續本地化的工作量
-> 2. 添加新功能，這個項目是有態度的
-> 3. AI生成的大規模重構和更改
-
-## 💰 捐贈
-
-* [Patreon](https://patreon.com/rikkahub)
-* [愛發電](https://afdian.com/a/reovo)
-
-## ⭐ Star History
-
-如果喜歡這個項目，請給個Star ⭐
-
-<a href="https://www.star-history.com/?type=date&repos=re-ovo%2Frikkahub">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=re-ovo/rikkahub&type=date&theme=dark&legend=top-left&sealed_token=qSytWeq7LkzQQViTjK0MYlvvA_qkfuwjOxOqgbRpLUZZwok5rO6LXhpVL7Mq-q3o89BfKpzE7g66BCy18H6eiqTsD8czD0J-HejLqmHy-npcvCTHu11wZw" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=re-ovo/rikkahub&type=date&legend=top-left&sealed_token=qSytWeq7LkzQQViTjK0MYlvvA_qkfuwjOxOqgbRpLUZZwok5rO6LXhpVL7Mq-q3o89BfKpzE7g66BCy18H6eiqTsD8czD0J-HejLqmHy-npcvCTHu11wZw" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=re-ovo/rikkahub&type=date&legend=top-left&sealed_token=qSytWeq7LkzQQViTjK0MYlvvA_qkfuwjOxOqgbRpLUZZwok5rO6LXhpVL7Mq-q3o89BfKpzE7g66BCy18H6eiqTsD8czD0J-HejLqmHy-npcvCTHu11wZw" />
- </picture>
-</a>
-
-## 📄 許可證
-
-本項目基於 [GNU Affero General Public License v3.0](LICENSE) (AGPL-3.0) 開源。
+`:mnn` 模組整合了源自 MNN 的程式碼與一個預先建置的 `libMNN.so`；其授權（Apache-2.0）與 NOTICE 位於 `mnn/` 目錄下。

@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.ui
+package me.rerere.rikkahub.ui.components.ui
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -72,7 +73,7 @@ fun JsonTree(
                 modifier = Modifier
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
-                    .padding(16.dp),
+                    .padding(Spacing.lg),
                 style = MaterialTheme.typography.bodySmall
             )
         }
@@ -110,7 +111,7 @@ private fun JsonObjectNode(
         Row(
             modifier = Modifier
                 .clickable { expanded = !expanded }
-                .padding(vertical = 2.dp),
+                .padding(vertical = Spacing.xxs),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -173,7 +174,7 @@ private fun JsonArrayNode(
         Row(
             modifier = Modifier
                 .clickable { expanded = !expanded }
-                .padding(vertical = 2.dp),
+                .padding(vertical = Spacing.xxs),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -230,7 +231,7 @@ private fun JsonPrimitiveNode(
     onStringClick: (String) -> Unit
 ) {
     Row(
-        modifier = Modifier.padding(start = (depth * 16 + 14).dp, top = 2.dp, bottom = 2.dp),
+        modifier = Modifier.padding(start = (depth * 16 + 14).dp, top = Spacing.xxs, bottom = Spacing.xxs),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (key != null) {
@@ -252,7 +253,7 @@ private fun JsonNullNode(
     depth: Int
 ) {
     Row(
-        modifier = Modifier.padding(start = (depth * 16 + 14).dp, top = 2.dp, bottom = 2.dp),
+        modifier = Modifier.padding(start = (depth * 16 + 14).dp, top = Spacing.xxs, bottom = Spacing.xxs),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (key != null) {

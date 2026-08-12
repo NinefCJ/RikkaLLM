@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
@@ -142,7 +143,7 @@ fun SettingLocalEnginePage() {
                 icon = {
                     if (state.starting) {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier.size(Spacing.xl),
                             strokeWidth = 3.dp,
                         )
                     } else {
@@ -167,14 +168,14 @@ fun SettingLocalEnginePage() {
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding + PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = innerPadding + PaddingValues(Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg),
         ) {
             item {
                 CardGroup(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = Spacing.sm),
                     title = { Text("服务状态") },
                 ) {
                     item(
@@ -253,7 +254,7 @@ fun SettingLocalEnginePage() {
                 CardGroup(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = Spacing.sm),
                     title = { Text("引擎设置") },
                 ) {
                     item(
@@ -292,7 +293,7 @@ fun SettingLocalEnginePage() {
                 CardGroup(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = Spacing.sm),
                     title = { Text("手动加载模型（高级）") },
                 ) {
                     item(
@@ -353,7 +354,7 @@ fun SettingLocalEnginePage() {
                 CardGroup(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = Spacing.sm),
                     title = { Text("已安装模型") },
                 ) {
                     if (installed.isEmpty()) {
@@ -426,7 +427,7 @@ fun SettingLocalEnginePage() {
                 CardGroup(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = Spacing.sm),
                     title = { Text("模型市场（下载 / 更新）") },
                 ) {
                     val ds = downloadState
@@ -455,7 +456,7 @@ fun SettingLocalEnginePage() {
                                     )
                                     if (progress != null) {
                                         val p = progress
-                                        Spacer(Modifier.height(8.dp))
+                                        Spacer(Modifier.height(Spacing.sm))
                                         if (p.overallTotal > 0) {
                                             val frac = (p.overallBytes.toFloat() / p.overallTotal)
                                                 .coerceIn(0f, 1f)

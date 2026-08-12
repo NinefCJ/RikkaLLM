@@ -1,4 +1,6 @@
-package me.rerere.rikkahub.ui.pages.favorite
+package me.rerere.rikkahub.ui.pages.favorite
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Delete01
@@ -95,8 +97,8 @@ fun FavoritePage(vm: FavoriteVM = koinViewModel()) {
         }
 
         LazyColumn(
-            contentPadding = innerPadding + PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = innerPadding + PaddingValues(Spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             modifier = Modifier.fillMaxSize(),
         ) {
             items(favorites, key = { it.id }) { item ->
@@ -119,7 +121,7 @@ fun FavoritePage(vm: FavoriteVM = koinViewModel()) {
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
+                        .padding(horizontal = Spacing.sm)
                         .animateItem(),
                 )
             }
@@ -156,7 +158,7 @@ private fun SwipeableFavoriteCard(
                     .fillMaxSize()
                     .background(
                         MaterialTheme.colorScheme.errorContainer,
-                        RoundedCornerShape(12.dp)
+                        RoundedCornerShape(Radius.md)
                     )
                     .padding(horizontal = 20.dp),
                 contentAlignment = Alignment.CenterEnd,
@@ -191,8 +193,8 @@ private fun FavoriteCard(
     ) {
         SelectionContainer {
             Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier.padding(Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 Text(
                     text = item.conversationTitle.ifBlank { stringResource(R.string.favorite_page_untitled_conversation) },

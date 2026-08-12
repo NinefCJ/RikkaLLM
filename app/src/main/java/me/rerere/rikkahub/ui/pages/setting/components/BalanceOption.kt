@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting.components
+package me.rerere.rikkahub.ui.pages.setting.components
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.ArrowDown01
@@ -45,12 +46,12 @@ fun SettingProviderBalanceOption(
 ) {
     var expand by remember { mutableStateOf(false) }
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         modifier = modifier
     ) {
         Row(
             modifier = Modifier,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
@@ -81,7 +82,7 @@ fun SettingProviderBalanceOption(
         }
         AnimatedVisibility(visible = expand) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 OutlinedTextField(
                     value = balanceOption.apiPath,

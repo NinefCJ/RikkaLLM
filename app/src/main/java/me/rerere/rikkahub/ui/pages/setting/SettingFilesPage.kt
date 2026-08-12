@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.pages.setting
+package me.rerere.rikkahub.ui.pages.setting
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.Image02
@@ -190,13 +191,13 @@ fun SettingFilesPage(
                 LazyVerticalStaggeredGrid(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(
-                        start = 16.dp,
-                        top = 16.dp,
-                        end = 16.dp,
-                        bottom = innerPadding.calculateBottomPadding() + 16.dp,
+                        start = Spacing.lg,
+                        top = Spacing.lg,
+                        end = Spacing.lg,
+                        bottom = innerPadding.calculateBottomPadding() + Spacing.lg,
                     ),
-                    verticalItemSpacing = 8.dp,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalItemSpacing = Spacing.sm,
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     state = gridState,
                     columns = StaggeredGridCells.Fixed(2)
                 ) {
@@ -222,9 +223,9 @@ private fun FolderRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = Spacing.lg, vertical = Spacing.sm)
             .horizontalScroll(rememberScrollState()),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         folders.forEach { folder ->
             FilterChip(
@@ -294,7 +295,7 @@ private fun FileItem(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(12.dp)
+                    .padding(Spacing.md)
             ) {
                 Text(
                     text = file.displayName,

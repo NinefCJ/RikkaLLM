@@ -1,4 +1,5 @@
-package me.rerere.rikkahub.ui.components.message
+package me.rerere.rikkahub.ui.components.message
+import me.rerere.rikkahub.ui.theme.Spacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -113,7 +114,7 @@ fun ChainOfThoughtScope.ChatMessageToolStep(
                 Icon(
                     imageVector = renderer.icon(context),
                     contentDescription = null,
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(Spacing.lg),
                     tint = LocalContentColor.current.copy(alpha = 0.7f)
                 )
             }
@@ -131,7 +132,7 @@ fun ChainOfThoughtScope.ChatMessageToolStep(
         extra = if (isPending && onToolApproval != null) {
             {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     FilledTonalIconButton(
                         onClick = { showDenyDialog = true },
@@ -165,11 +166,11 @@ fun ChainOfThoughtScope.ChatMessageToolStep(
         },
         content = if (hasExtraContent) {
             {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                     renderer.Summary(context)
                     if (images.isNotEmpty()) {
                         LazyRow(
-                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                             modifier = Modifier.wrapContentWidth(),
                         ) {
                             items(images) { image ->
@@ -271,7 +272,7 @@ private fun ChainOfThoughtScope.AskUserToolStep(
                 Icon(
                     imageVector = HugeIcons.BubbleChatQuestion,
                     contentDescription = null,
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(Spacing.lg),
                     tint = LocalContentColor.current.copy(alpha = 0.7f)
                 )
             }
@@ -291,11 +292,11 @@ private fun ChainOfThoughtScope.AskUserToolStep(
         },
         content = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.md),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 questions.forEach { q ->
-                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                         Text(
                             text = q.question,
                             style = MaterialTheme.typography.bodySmall,
@@ -309,7 +310,7 @@ private fun ChainOfThoughtScope.AskUserToolStep(
                                     if (q.options.isNotEmpty()) {
                                         FlowRow(
                                             horizontalArrangement = Arrangement.spacedBy(6.dp),
-                                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                                            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
                                         ) {
                                             q.options.forEach { option ->
                                                 FilterChip(
@@ -331,7 +332,7 @@ private fun ChainOfThoughtScope.AskUserToolStep(
                                     if (q.options.isNotEmpty()) {
                                         FlowRow(
                                             horizontalArrangement = Arrangement.spacedBy(6.dp),
-                                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                                            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
                                         ) {
                                             q.options.forEach { option ->
                                                 val selectedSet = multiAnswers[q.id] ?: emptySet()
@@ -359,7 +360,7 @@ private fun ChainOfThoughtScope.AskUserToolStep(
                                     if (q.options.isNotEmpty()) {
                                         FlowRow(
                                             horizontalArrangement = Arrangement.spacedBy(6.dp),
-                                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                                            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
                                         ) {
                                             q.options.forEach { option ->
                                                 FilterChip(
@@ -433,11 +434,11 @@ private fun ChainOfThoughtScope.AskUserToolStep(
                         Icon(
                             imageVector = HugeIcons.Tick01,
                             contentDescription = null,
-                            modifier = Modifier.size(16.dp)
+                            modifier = Modifier.size(Spacing.lg)
                         )
                         Text(
                             text = stringResource(R.string.chat_message_tool_submit),
-                            modifier = Modifier.padding(start = 4.dp),
+                            modifier = Modifier.padding(start = Spacing.xs),
                         )
                     }
                 }

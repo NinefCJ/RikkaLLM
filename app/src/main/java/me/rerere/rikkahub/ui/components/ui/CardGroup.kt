@@ -32,10 +32,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEachIndexed
 import me.rerere.rikkahub.ui.theme.CustomColors
+import me.rerere.rikkahub.ui.theme.Radius
+import me.rerere.rikkahub.ui.theme.Spacing
 
-private val CardGroupCorner = 20.dp
-private val CardGroupItemSpacing = 2.dp
-private val CardGroupInnerCorner = 4.dp
+private val CardGroupCorner = Radius.xl
+private val CardGroupItemSpacing = Spacing.xs
+private val CardGroupInnerCorner = Radius.sm
 
 private data class CardGroupItem(
     val onClick: (() -> Unit)?,
@@ -156,7 +158,7 @@ fun CardGroup(
         if (title != null) {
             CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.primary) {
                 ProvideTextStyle(MaterialTheme.typography.titleSmallEmphasized) {
-                    Box(modifier = Modifier.padding(start = 4.dp, top = 8.dp, bottom = 8.dp)) {
+                    Box(modifier = Modifier.padding(start = Spacing.sm, top = Spacing.lg, bottom = Spacing.sm)) {
                         title()
                     }
                 }
@@ -192,7 +194,7 @@ private fun CardGroupPreview() {
                 .fillMaxSize()
         ) {
             CardGroup(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = Spacing.lg),
                 title = { Text("About") },
             ) {
                 item(
