@@ -1,4 +1,5 @@
-package com.ninef.rikkallm.ui.pages.chat
+package com.ninef.rikkallm.ui.pages.chat
+
 import com.ninef.rikkallm.ui.theme.Spacing
 
 import androidx.activity.ComponentActivity
@@ -690,7 +691,7 @@ private fun DrawerActions(navController: Navigator) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Spacing.sm, vertical = 10.dp),
+                    .padding(horizontal = Spacing.sm, vertical = Spacing.sm),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Spacing.md),
             ) {
@@ -720,7 +721,7 @@ private fun DrawerActions(navController: Navigator) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Spacing.sm, vertical = 10.dp),
+                    .padding(horizontal = Spacing.sm, vertical = Spacing.sm),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Spacing.md),
             ) {
@@ -750,7 +751,7 @@ private fun DrawerAction(
     Surface(
         onClick = onClick,
         modifier = modifier,
-        color = MaterialTheme.colorScheme.primaryContainer,
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
         shape = CircleShape,
         contentColor = MaterialTheme.colorScheme.onSurface,
     ) {
@@ -862,7 +863,7 @@ private fun FolderChip(
             )
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = Spacing.md, vertical = 6.dp),
+            modifier = Modifier.padding(horizontal = Spacing.md, vertical = Spacing.xs),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
         ) {
