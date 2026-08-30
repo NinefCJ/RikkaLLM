@@ -238,7 +238,7 @@ private fun HtmlBlockElement(
 
         "hr" -> HorizontalDivider(
             modifier = Modifier.padding(vertical = Spacing.lg),
-            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
             thickness = 0.5.dp,
         )
 
@@ -554,7 +554,7 @@ private fun HtmlBlockquote(element: Element, onClickCitation: (String) -> Unit) 
                 .drawWithContent {
                     drawContent()
                     drawRect(color = bgColor, size = size)
-                    drawRect(color = borderColor, size = Size(10f, size.height))
+                    drawRect(color = borderColor, size = Size(4f, size.height))
                 }
                 .padding(Spacing.sm),
         ) {
