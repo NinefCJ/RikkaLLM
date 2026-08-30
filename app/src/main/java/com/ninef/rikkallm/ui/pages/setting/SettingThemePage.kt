@@ -1,4 +1,5 @@
-package com.ninef.rikkallm.ui.pages.setting
+package com.ninef.rikkallm.ui.pages.setting
+
 import com.ninef.rikkallm.ui.theme.Radius
 import com.ninef.rikkallm.ui.theme.Spacing
 
@@ -155,7 +156,7 @@ fun SettingThemePage(vm: SettingVM = koinViewModel()) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clip(RoundedCornerShape(20.dp))
+                                .clip(RoundedCornerShape(Radius.lg))
                                 .background(MaterialTheme.colorScheme.surfaceBright)
                         ) {
                             PresetThemeButtonGroup(
