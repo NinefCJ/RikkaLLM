@@ -1,4 +1,5 @@
-package com.ninef.rikkallm.ui.components.ui
+package com.ninef.rikkallm.ui.components.ui
+
 import com.ninef.rikkallm.ui.theme.Spacing
 
 import androidx.compose.foundation.background
@@ -61,7 +62,7 @@ fun Tag(
                         it
                     }
                 }
-                .padding(horizontal = 6.dp, vertical = 1.dp),
+                .padding(horizontal = Spacing.sm, vertical = Spacing.xxs),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             children()

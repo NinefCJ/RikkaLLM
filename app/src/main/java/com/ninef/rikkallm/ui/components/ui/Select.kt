@@ -1,4 +1,6 @@
-package com.ninef.rikkallm.ui.components.ui
+package com.ninef.rikkallm.ui.components.ui
+
+
 import com.ninef.rikkallm.ui.theme.Radius
 import com.ninef.rikkallm.ui.theme.Spacing
 
@@ -59,7 +61,7 @@ fun <T> Select(
     ) {
         Surface(
             tonalElevation = Spacing.xs,
-            shape = RoundedCornerShape(50),
+            shape = RoundedCornerShape(Radius.lg),
             modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
         ) {
             Row(
@@ -68,7 +70,7 @@ fun <T> Select(
                     .clip(RoundedCornerShape(Radius.sm))
                     .clickable { expanded = true }
                     .padding(vertical = Spacing.sm, horizontal = Spacing.lg),
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 leading()

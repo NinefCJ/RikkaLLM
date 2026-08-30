@@ -43,7 +43,10 @@ fun RikkaCard(
     else MaterialTheme.colorScheme.surfaceContainerLow,
     contentColor: Color = if (filled) MaterialTheme.colorScheme.onPrimaryContainer
     else MaterialTheme.colorScheme.onSurface,
-    border: BorderStroke? = null,
+    border: BorderStroke? = if (filled) null else BorderStroke(
+        1.dp,
+        MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+    ),
     contentPadding: PaddingValues = PaddingValues(Spacing.cardPadding),
     contentAlignment: Alignment = Alignment.TopStart,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,

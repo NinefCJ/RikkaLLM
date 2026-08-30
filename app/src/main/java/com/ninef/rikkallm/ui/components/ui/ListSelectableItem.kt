@@ -20,7 +20,7 @@ fun ListSelectableItem(
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(6.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         if (enabled) {
             Checkbox(
