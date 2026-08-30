@@ -1084,7 +1084,7 @@ function ConversationsPageInner() {
           <div className="mb-4 text-center">
             <div className="mb-3 flex justify-center">
               <div className="[&>svg]:size-16">
-                <Logo className="size-16 text-primary" />
+                <Logo className="size-16 text-primary animate-brand-float" />
               </div>
             </div>
             <p className="text-lg text-muted-foreground">{t("conversations.welcome_prompt")}</p>
@@ -1156,7 +1156,7 @@ function ConversationsPageInner() {
         onMoveToFolder={handleMoveConversationToFolder}
       />
       <SidebarInset className="flex min-h-svh flex-col overflow-hidden">
-        <div className="flex items-center gap-2 border-b px-4 py-3">
+        <div className="sticky top-0 z-10 flex items-center gap-2 border-b border-border/60 bg-background/80 px-4 py-3 backdrop-blur-md">
           <SidebarTrigger />
           <div className="min-w-0 flex-1">
             <div className="truncate text-sm text-muted-foreground">

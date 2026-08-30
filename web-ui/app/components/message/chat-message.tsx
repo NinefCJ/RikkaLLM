@@ -557,8 +557,10 @@ export const ChatMessage = React.memo(({
           <div
             data-message-bubble
             className={cn(
-              "flex flex-col gap-2 text-sm",
-              isUser ? "max-w-[85%] rounded-lg bg-muted px-4 py-3" : "w-full",
+              "flex flex-col gap-2 text-sm leading-relaxed",
+              isUser
+                ? "max-w-[82%] rounded-2xl rounded-tr-md bg-primary/[0.06] px-4 py-3 ring-1 ring-primary/10"
+                : "w-full",
             )}
           >
             <MessageParts

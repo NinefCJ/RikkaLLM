@@ -502,7 +502,7 @@ function ChatInputInner({
       <div className="mx-auto w-full max-w-3xl px-4 py-4">
         <div
           className={cn(
-            "relative flex flex-col gap-2 rounded-lg border bg-muted/50 p-2 shadow-sm transition-shadow focus-within:shadow-md focus-within:ring-1 focus-within:ring-ring",
+            "relative flex flex-col gap-2 rounded-2xl border bg-card/80 p-2 shadow-sm backdrop-blur transition-all focus-within:border-primary/30 focus-within:shadow-md focus-within:ring-2 focus-within:ring-primary/20",
             dragActive &&
               "border-primary/40 bg-primary/5 ring-2 ring-primary/30",
           )}
@@ -542,7 +542,7 @@ function ChatInputInner({
                   type="button"
                   disabled={!canUseQuickMessage}
                   className={cn(
-                    "shrink-0 rounded-lg border bg-background px-3 py-1 text-xs text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50",
+                    "shrink-0 rounded-full border bg-background px-3 py-1 text-xs text-foreground transition-colors hover:border-primary/30 hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50",
                   )}
                   onClick={() => {
                     handleSuggestionSelect(suggestion);
