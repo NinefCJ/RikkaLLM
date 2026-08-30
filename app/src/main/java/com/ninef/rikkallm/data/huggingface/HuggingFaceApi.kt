@@ -1,5 +1,6 @@
 package com.ninef.rikkallm.data.huggingface
 
+import java.io.IOException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -38,16 +39,20 @@ class HuggingFaceApi(
             query.license?.let { append("&filter=license:${enc(it)}") }
             query.author?.let { append("&author=${enc(it)}") }
         }
-        runCatching {
-            val resp = client.newCall(
-                Request.Builder().url(url).header("Accept", "application/json").build(),
-            ).execute()
-            if (resp.isSuccessful) {
-                resp.body?.string()?.let { lenientJson.decodeFromString<List<HfModel>>(it) }.orEmpty()
-            } else {
-                emptyList()
-            }
-        }.getOrDefault(emptyList())
+        // 不再吞掉异常：网络 / HTTP 失败应让上层把错误展示给用户，
+        // 否则市场会表现为“空白且无法使用”而无法诊断。
+        val resp = client.newCall(
+            Request.Builder().url(url).header("Accept", "application/json").build(),
+        ).execute()
+        if (!resp.isSuccessful) {
+            resp.close()
+            throw IOException("Hugging Face 模型市场请求失败 (HTTP ${resp.code})")
+        }
+        resp.use {
+            val text = it.body?.string().orEmpty()
+            if (text.isBlank()) throw IOException("Hugging Face 返回了空响应")
+            lenientJson.decodeFromString<List<HfModel>>(text)
+        }
     }
 
     /** 拉取单个模型详情 */

@@ -1,5 +1,6 @@
 package com.ninef.rikkallm.data.huggingface
 
+import java.io.IOException
 import java.net.URLEncoder
 import kotlin.text.Charsets.UTF_8
 import kotlinx.serialization.json.Json
@@ -32,16 +33,21 @@ class ModelScopeApi(private val client: OkHttpClient) : ModelMarketApi {
     override suspend fun getModels(query: HfQuery): List<HfModel> {
         val pageSize = query.limit.coerceIn(1, 100)
         val url = listUrl(query, pageSize, 1)
-        val resp = runCatching {
-            client.newCall(Request.Builder().url(url).header("Accept", "application/json").get().build())
-                .execute()
-        }.getOrNull() ?: return emptyList()
-        if (!resp.isSuccessful) { resp.close(); return emptyList() }
-        val body = resp.body.string().also { resp.close() }
-        return runCatching {
+        // 不再吞掉异常：网络 / HTTP 失败应让上层把错误展示给用户，
+        // 否则市场会表现为“空白且无法使用”而无法诊断。
+        val resp = client.newCall(
+            Request.Builder().url(url).header("Accept", "application/json").get().build()
+        ).execute()
+        if (!resp.isSuccessful) {
+            resp.close()
+            throw IOException("ModelScope 模型市场请求失败 (HTTP ${resp.code})")
+        }
+        resp.use {
+            val body = it.body?.string().orEmpty()
+            if (body.isBlank()) throw IOException("ModelScope 返回了空响应")
             val parsed = json.decodeFromString<MsListResponse>(body)
-            parsed.data?.models?.map { it.toHfModel() } ?: emptyList()
-        }.getOrDefault(emptyList())
+            parsed.data?.models?.map { m -> m.toHfModel() } ?: emptyList()
+        }
     }
 
     override suspend fun getModel(id: String): HfModel? {
