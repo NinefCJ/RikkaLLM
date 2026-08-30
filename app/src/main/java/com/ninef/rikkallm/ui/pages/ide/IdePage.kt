@@ -149,7 +149,10 @@ fun IdePage(workspaceId: String?) {
         }
     }
 
-    LaunchedEffect(Unit) {
+    // 重新运行以响应设置中「默认工作区目录」的变化：设置流是异步加载的，
+    // 首帧时 ideWorkspaceUri 可能仍为空（回退到内置工作区），之后配置生效后
+    // 必须重新读取并切换编辑器根目录，否则在设置里配置的工作区不会在 IDE 中生效。
+    LaunchedEffect(workspaceId, settings.ideWorkspaceUri) {
         if (workspaceId != null) {
             // 从"编程模式"进入时, 把对应工作区的 files 目录作为编辑器根, 而非默认配置目录
             val ws = runCatching { workspaceRepository.getById(workspaceId) }.getOrNull()
