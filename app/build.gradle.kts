@@ -13,15 +13,15 @@ plugins {
 }
 
 android {
-    namespace = "me.rerere.rikkahub"
+    namespace = "com.ninef.rikkallm"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "me.rerere.rikkallm"
+        applicationId = "com.ninef.rikkallm"
         minSdk = 26
         targetSdk = 37
-        versionCode = 172
-        versionName = "2.4.5"
+        versionCode = 2
+        versionName = "alpha-1.2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -41,6 +41,13 @@ android {
             isUniversalApk = true
         }
     }
+
+    // IDE 运行时（真 VS Code）多架构资产说明：
+    // code-server + Ubuntu Noble rootfs 体积大（arm64+x86_64 双套约 360MB+），
+    // 按 `assets/ide-runtime/<abi>/`（ubuntu.tar.xz + code-server.tar.gz）分目录存放，
+    // 由 IdeRuntimeInstaller 依据 Build.SUPPORTED_ABIS 在首启时释放到工作区。
+    // 本地 universal 调试 APK 会同时含两套资产；发布用 AAB 时配合上方 splits.abi
+    // 与 defaultConfig.ndk.abiFilters 生成各 ABI 独立产物，体积仅含本架构资产。
 
     signingConfigs {
         create("release") {
@@ -72,6 +79,8 @@ android {
             signingConfig = signingConfigs.getByName("release")
             optimization {
                 enable = true
+                // 资源收缩在 AGP 9 中已由 R8 集成（android.r8.integratedResourceShrinking 强制启用），
+                // 开启 R8 后自动移除未使用的资源，无需单独声明 shrinkResources
             }
             buildConfigField("String", "VERSION_NAME", "\"${android.defaultConfig.versionName}\"")
             buildConfigField("String", "VERSION_CODE", "\"${android.defaultConfig.versionCode}\"")
@@ -98,8 +107,22 @@ android {
     }
     packaging {
         jniLibs {
+            // true keeps the .so files *compressed* inside the APK (they are ~42 MB unpacked).
+            // Flipping this to false (the AGP default) stores them uncompressed and page-aligned
+            // for direct mmap — which measured ~16 MB LARGER for the arm64 APK (93.9 -> 110.2 MB)
+            // because the 4 KB alignment padding outweighs the compression saving. Keep it true:
+            // smaller download is worth the one-time extraction at install time.
             useLegacyPackaging = true
             pickFirsts += "lib/*/libtermux.so"
+            // kotlinllamacpp (llama.cpp) bundles six near-identical arm64 CPU-dispatch
+            // variants of librnllama (~5.6 MB each, ~34 MB total). The generic
+            // `librnllama.so` is a complete build that runs on every arm64 CPU (the loader
+            // falls back to it), so we keep it plus the two most common optimized variants
+            // (dotprod, dotprod+i8mm — covering 2020+ devices) and drop the three least-used
+            // ones, cutting ~17 MB from the APK with no loss of functionality.
+            excludes += "lib/arm64-v8a/librnllama_v8.so"
+            excludes += "lib/arm64-v8a/librnllama_v8_2.so"
+            excludes += "lib/arm64-v8a/librnllama_v8_2_i8mm.so"
         }
     }
     tasks.withType<KotlinCompile>().configureEach {
@@ -140,6 +163,7 @@ kotlin {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation("androidx.documentfile:documentfile:1.0.1")
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.work.runtime.ktx)

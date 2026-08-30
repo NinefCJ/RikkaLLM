@@ -380,6 +380,7 @@ fun List<UIMessagePart>.toSortedMessageParts(): List<UIMessagePart> {
             is UIMessagePart.Video -> 1
             is UIMessagePart.Audio -> 1
             is UIMessagePart.Document -> 1
+            is UIMessagePart.GenerativeCard -> 0
         }
     }
 }

@@ -40,9 +40,15 @@ class EngineBusyException : Exception("The local model engine is busy with anoth
 /** Thrown when a generation is requested but no model is loaded. */
 class ModelNotLoadedException : Exception("No local model is loaded")
 
-interface MnnEngine {
+interface LocalLlmEngine {
     /** Human readable identifier of the loaded model, or null when nothing is loaded. */
     val loadedModel: String?
+
+    /** Loads a model from a directory. Blocking; call on a worker thread. Returns false when the directory is not usable. */
+    fun load(modelDirectory: String): Boolean
+
+    /** Releases the loaded model and frees native resources. */
+    fun unload()
 
     /** Best-effort application of OpenAI sampling parameters before a generation. */
     fun applySampling(temperature: Float?, topP: Float?, maxTokens: Int?)
@@ -50,8 +56,26 @@ interface MnnEngine {
     /**
      * Runs a blocking generation over (role, content) message pairs.
      *
+     * [images] carries image references for multimodal (mmproj) models — either absolute
+     * paths, `file://` URIs or `data:` base64 URLs. Engines that cannot process images
+     * ignore it; most backends only accept a single image, so callers should pass the
+     * most relevant one first.
+     *
      * [onToken] receives each decoded piece of text and returns true to abort the
      * generation early (e.g. the HTTP client disconnected).
      */
-    fun generate(messages: List<Pair<String, String>>, onToken: (String) -> Boolean): GenerationStats
+    fun generate(
+        messages: List<Pair<String, String>>,
+        images: List<String>,
+        onToken: (String) -> Boolean,
+    ): GenerationStats
 }
+
+/** Text-only convenience overload, forwarding to [LocalLlmEngine.generate] with no images. */
+fun LocalLlmEngine.generate(
+    messages: List<Pair<String, String>>,
+    onToken: (String) -> Boolean,
+): GenerationStats = generate(messages, emptyList(), onToken)
+
+/** Backward-compatible alias for [LocalLlmEngine]; kept so the existing adapter + tests compile. */
+typealias MnnEngine = LocalLlmEngine

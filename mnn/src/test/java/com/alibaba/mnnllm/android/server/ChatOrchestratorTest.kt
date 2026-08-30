@@ -14,13 +14,23 @@ private class FakeEngine(
     override val loadedModel: String? get() = model
     var sampling: Triple<Float?, Float?, Int?>? = null
     var receivedMessages: List<Pair<String, String>>? = null
+    var receivedImages: List<String>? = null
+
+    override fun load(modelDirectory: String): Boolean = true
+
+    override fun unload() = Unit
 
     override fun applySampling(temperature: Float?, topP: Float?, maxTokens: Int?) {
         sampling = Triple(temperature, topP, maxTokens)
     }
 
-    override fun generate(messages: List<Pair<String, String>>, onToken: (String) -> Boolean): GenerationStats {
+    override fun generate(
+        messages: List<Pair<String, String>>,
+        images: List<String>,
+        onToken: (String) -> Boolean,
+    ): GenerationStats {
         receivedMessages = messages
+        receivedImages = images
         for (token in output) {
             if (onToken(token)) break
         }
@@ -80,6 +90,31 @@ class ChatOrchestratorTest {
         assertTrue(events.first() is ToolStreamEvent.Text)
         assertTrue(events.any { it is ToolStreamEvent.ToolCall })
         assertTrue(events.last() is ToolStreamEvent.Finish.ToolCalls)
+    }
+
+    @Test
+    fun `image from the newest message reaches the engine`() {
+        val request = RequestTranslator.parse(
+            JsonParser.parseString(
+                """
+                {"messages":[
+                  {"role":"user","content":[{"type":"text","text":"first"},{"type":"image_url","image_url":{"url":"data:image/png;base64,OLD"}}]},
+                  {"role":"user","content":[{"type":"text","text":"second"},{"type":"image_url","image_url":{"url":"data:image/png;base64,NEW"}}]}
+                ]}
+                """.trimIndent()
+            ).asJsonObject
+        )
+        val engine = FakeEngine(output = listOf("ok"))
+        ChatOrchestrator(engine).complete(request)
+        // Vision backends take a single image: the most recent one wins.
+        assertEquals(listOf("data:image/png;base64,NEW"), engine.receivedImages)
+    }
+
+    @Test
+    fun `text-only requests forward an empty image list`() {
+        val engine = FakeEngine(output = listOf("ok"))
+        ChatOrchestrator(engine).complete(simpleRequest())
+        assertEquals(emptyList<String>(), engine.receivedImages)
     }
 
     @Test(expected = ModelNotLoadedException::class)

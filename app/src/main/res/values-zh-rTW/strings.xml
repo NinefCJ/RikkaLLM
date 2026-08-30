@@ -379,6 +379,7 @@
   <string name="history_page_search">搜尋</string>
   <string name="history_page_search_messages">搜尋訊息</string>
   <string name="history_page_title">聊天歷史</string>
+  <string name="history_page_unassigned_workspace">未分配工作區</string>
   <string name="history_page_undo">撤銷</string>
   <string name="history_page_unpin">取消置頂</string>
   <string name="imggen_page_aspect_ratio">圖片比例</string>
@@ -1180,6 +1181,16 @@
   <string name="workspace_select">選擇工作區</string>
   <string name="workspace_no_binding">無綁定</string>
   <string name="workspace_manage">管理工作區</string>
+  <!-- 助手工作区绑定 -->
+  <string name="workspace_create_new">新建工作區</string>
+  <string name="workspace_import_from_folder">從資料夾匯入</string>
+  <string name="workspace_import_default_name">匯入的工作區</string>
+  <string name="workspace_import_success">已建立工作區：%1$s</string>
+  <string name="workspace_import_failed">匯入資料夾失敗</string>
+  <string name="workspace_create_default_name">新建工作區</string>
+  <string name="workspace_create_success">已建立工作區：%1$s</string>
+  <string name="workspace_create_failed">建立工作區失敗</string>
+  <string name="workspace_name_hint">工作區名稱</string>
   <string name="workspace_detail">工作區詳細資訊</string>
   <string name="workspace_terminal">工作區終端</string>
   <string name="workspace_cwd_select_directory">選擇工作目錄</string>

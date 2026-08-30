@@ -38,7 +38,7 @@ data class MnnServerState(
     val error: String? = null,
 )
 
-class LocalMnnManager(private val context: Context) : MnnServerBackend {
+class LocalMnnManager(private val context: Context) : LocalLlmServerBackend {
 
     companion object {
         // 8090 (not 8080): the app's own WebServerService defaults to 8080 and the
@@ -65,7 +65,7 @@ class LocalMnnManager(private val context: Context) : MnnServerBackend {
     private val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private val adapter = MnnEngineAdapter()
+    private var adapter: LocalLlmEngine = MnnEngineAdapter()
 
     private val _state = MutableStateFlow(
         MnnServerState(
@@ -86,7 +86,7 @@ class LocalMnnManager(private val context: Context) : MnnServerBackend {
     // MnnServerBackend (consumed by the Ktor routes)
     // ------------------------------------------------------------------
 
-    override val engine: MnnEngine get() = adapter
+    override val engine: LocalLlmEngine get() = adapter
 
     override val modelId: String get() = MODEL_ID
 
@@ -170,6 +170,19 @@ class LocalMnnManager(private val context: Context) : MnnServerBackend {
                 withContext(Dispatchers.IO) {
                     if (generationLock.get()) {
                         throw IllegalStateException("Cannot swap the model while a generation is running")
+                    }
+                    // Pick the backend that can run this directory (GGUF -> llama.cpp, else MNN)
+                    // and swap engines when the model type changes.
+                    val required = detectBackend(dir)
+                    val current = adapter
+                    if ((required == LocalLlmBackend.LLAMA && current !is LlamaEngine) ||
+                        (required == LocalLlmBackend.MNN && current !is MnnEngineAdapter)
+                    ) {
+                        current.unload()
+                        adapter = when (required) {
+                            LocalLlmBackend.LLAMA -> LlamaEngine(context.contentResolver, context.cacheDir)
+                            LocalLlmBackend.MNN -> MnnEngineAdapter()
+                        }
                     }
                     adapter.load(dir)
                 }

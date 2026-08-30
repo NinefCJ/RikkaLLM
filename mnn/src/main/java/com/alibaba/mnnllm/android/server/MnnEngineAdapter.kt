@@ -37,7 +37,7 @@ class MnnEngineAdapter : MnnEngine {
      * worker thread. Throws on failure.
      */
     @Synchronized
-    fun load(modelDirectory: String) {
+    override fun load(modelDirectory: String): Boolean {
         unload()
         val dir = File(modelDirectory)
         val configFile = File(dir, "config.json")
@@ -65,10 +65,11 @@ class MnnEngineAdapter : MnnEngine {
         } else {
             throw IllegalStateException("Engine reported the model is not loaded after load()")
         }
+        return true
     }
 
     @Synchronized
-    fun unload() {
+    override fun unload() {
         val current = session ?: return
         session = null
         label = null
@@ -88,7 +89,16 @@ class MnnEngineAdapter : MnnEngine {
         }
     }
 
-    override fun generate(messages: List<Pair<String, String>>, onToken: (String) -> Boolean): GenerationStats {
+    override fun generate(
+        messages: List<Pair<String, String>>,
+        images: List<String>,
+        onToken: (String) -> Boolean,
+    ): GenerationStats {
+        // MNN's LlmSession.submitFullHistory() is text-only: it has no image channel, so
+        // multimodal requests simply run as text on this backend.
+        if (images.isNotEmpty()) {
+            Log.w(TAG, "Ignoring ${images.size} image(s): the MNN backend does not support vision input")
+        }
         val current = session ?: throw ModelNotLoadedException()
         if (!current.isModelLoaded()) throw ModelNotLoadedException()
 

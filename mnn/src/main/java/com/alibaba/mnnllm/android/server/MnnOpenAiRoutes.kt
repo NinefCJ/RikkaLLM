@@ -33,14 +33,14 @@ import kotlinx.coroutines.withContext
 private const val TAG = "MnnOpenAiRoutes"
 
 /** Everything the HTTP layer needs from the host app / engine manager. */
-interface MnnServerBackend {
+interface LocalLlmServerBackend {
     /** Bearer token required on every request. */
     val token: String
 
     /** Model id exposed through the API, e.g. "mnn-local". */
     val modelId: String
 
-    val engine: MnnEngine
+    val engine: LocalLlmEngine
 
     /** Single-generation mutex: returns false when another request is in flight. */
     fun tryAcquireGeneration(): Boolean
@@ -48,7 +48,10 @@ interface MnnServerBackend {
     fun releaseGeneration()
 }
 
-fun Application.mnnOpenAiRoutes(backend: MnnServerBackend) {
+/** Backward-compatible alias for [LocalLlmServerBackend]; kept so the existing manager + tests compile. */
+typealias MnnServerBackend = LocalLlmServerBackend
+
+fun Application.mnnOpenAiRoutes(backend: LocalLlmServerBackend) {
     val orchestrator = ChatOrchestrator(backend.engine)
 
     routing {
@@ -100,7 +103,7 @@ fun Application.mnnOpenAiRoutes(backend: MnnServerBackend) {
 
 private suspend fun io.ktor.server.routing.RoutingContext.handleFull(
     orchestrator: ChatOrchestrator,
-    backend: MnnServerBackend,
+    backend: LocalLlmServerBackend,
     request: ChatCompletionRequest,
 ) {
     // Engine exceptions must surface as an OpenAI error envelope, never as a bare
@@ -145,7 +148,7 @@ private sealed class StreamSignal {
 
 private suspend fun io.ktor.server.routing.RoutingContext.handleStream(
     orchestrator: ChatOrchestrator,
-    backend: MnnServerBackend,
+    backend: LocalLlmServerBackend,
     request: ChatCompletionRequest,
 ) {
     val completionId = OpenAiResponses.completionId()
@@ -229,7 +232,7 @@ private suspend fun io.ktor.server.routing.RoutingContext.handleStream(
     }
 }
 
-private fun io.ktor.server.application.ApplicationCall.isAuthorized(backend: MnnServerBackend): Boolean {
+private fun io.ktor.server.application.ApplicationCall.isAuthorized(backend: LocalLlmServerBackend): Boolean {
     val header = request.header(HttpHeaders.Authorization) ?: return false
     // RFC 7235: auth-schemes are case-insensitive ("bearer <token>" must work too).
     if (!header.startsWith("Bearer ", ignoreCase = true)) return false

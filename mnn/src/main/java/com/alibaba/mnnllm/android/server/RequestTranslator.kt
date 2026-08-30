@@ -64,7 +64,32 @@ object RequestTranslator {
             name = obj["name"]?.takeIf { it.isJsonPrimitive }?.asString,
             toolCallId = obj["tool_call_id"]?.takeIf { it.isJsonPrimitive }?.asString,
             toolCalls = obj["tool_calls"]?.takeIf { it.isJsonArray }?.asJsonArray?.mapNotNull { parseToolCall(it) },
+            images = extractImages(obj["content"]),
         )
+    }
+
+    /**
+     * Collects `image_url` parts from a content array. Both the OpenAI object form
+     * (`{"type":"image_url","image_url":{"url":...}}`) and a bare `{"type":"image_url","url":...}`
+     * are accepted; the previous implementation silently dropped these parts.
+     */
+    private fun extractImages(element: JsonElement?): List<String> {
+        if (element == null || !element.isJsonArray) return emptyList()
+        return element.asJsonArray.mapNotNull { part ->
+            if (!part.isJsonObject) return@mapNotNull null
+            val obj = part.asJsonObject
+            if (obj["type"]?.takeIf { it.isJsonPrimitive }?.asString != "image_url") return@mapNotNull null
+            val url = obj["image_url"]?.let { imageUrl ->
+                when {
+                    imageUrl.isJsonPrimitive -> imageUrl.asString
+                    imageUrl.isJsonObject -> imageUrl.asJsonObject["url"]
+                        ?.takeIf { it.isJsonPrimitive }?.asString
+
+                    else -> null
+                }
+            } ?: obj["url"]?.takeIf { it.isJsonPrimitive }?.asString
+            url?.takeIf { it.isNotBlank() }
+        }
     }
 
     /** content may be a string or an array of typed parts; text parts are joined. */

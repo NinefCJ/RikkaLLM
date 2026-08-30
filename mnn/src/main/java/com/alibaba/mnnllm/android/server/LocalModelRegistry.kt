@@ -12,7 +12,7 @@ import java.io.File
  * sub-directory that carries a `config.json`, and reports a stable [InstalledModel]
  * entry with human-readable name, size, and version/install timestamp. The remote half
  * (a catalog of downloadable models + a downloader) lives in the app module
- * (`me.rerere.rikkahub.data.mnn`), keeping this class portable and unit-testable
+ * (`com.ninef.rikkallm.data.mnn`), keeping this class portable and unit-testable
  * without an Android context or network access.
  */
 object LocalModelRegistry {
@@ -24,12 +24,15 @@ object LocalModelRegistry {
      *
      * @param id model id in the engine's scheme — `local/<absoluteDir>` so it can be
      *           passed straight to [com.alibaba.mnnllm.android.llm.LlmSession].
-     * @param name display name (from config.json `model_name`, else the directory name).
-     * @param dir absolute directory holding `config.json`.
+     * @param name display name (from GGUF `general.name` / config.json `model_name`, else
+     *             the directory name).
+     * @param dir absolute directory holding the model.
      * @param sizeBytes total size of the model directory (weights + assets).
      * @param version semantic version string recorded by the downloader, or null if the
      *                model was added manually (no `.mnnversion` marker).
      * @param installedAt epoch millis when the version marker was written, or null.
+     * @param format the detected on-disk format (GGUF / MNN / HuggingFace / UNKNOWN).
+     * @param metadata best-effort metadata parsed from the model header/config.
      */
     data class InstalledModel(
         val id: String,
@@ -38,38 +41,40 @@ object LocalModelRegistry {
         val sizeBytes: Long,
         val version: String?,
         val installedAt: Long?,
+        val format: ModelFormat,
+        val metadata: ModelMetadata?,
     )
 
     /** Marker file written next to `config.json` by downloads to record the version. */
     const val VERSION_FILE = ".mnnversion"
 
     /**
-     * Lists every model found under [root]. A directory qualifies when it (or one level
-     * down) contains a `config.json`, matching both the `builtin/<name>/config.json`
-     * layout and the `local/<dir>/config.json` layout.
+     * Lists every model found under [root]. Detection is delegated to [ModelDiscovery],
+     * so a directory qualifies when it carries GGUF weights, an MNN layout
+     * (`config.json` + `*.mnn`), or a HuggingFace layout — not just `config.json`.
+     * This is what lets GGUF models (which have no `config.json`) appear in the manager.
      */
     fun list(root: File): List<InstalledModel> {
         if (!root.isDirectory) return emptyList()
         val models = mutableListOf<InstalledModel>()
         root.listFiles()?.forEach { top ->
             if (!top.isDirectory) return@forEach
-            val config = File(top, "config.json")
-            if (config.isFile) {
-                models.add(readModel(top, config))
-                return@forEach
+            var layout = ModelDiscovery.discover(top)
+            // Support the `builtin/<name>/` one-level-nested layout: if the top-level
+            // directory is not itself a model, check each of its direct children.
+            if (layout.format == ModelFormat.UNKNOWN) {
+                top.listFiles()?.firstOrNull { child ->
+                    child.isDirectory && ModelDiscovery.discover(child).format != ModelFormat.UNKNOWN
+                }?.let { layout = ModelDiscovery.discover(it) }
             }
-            // One level deeper (e.g. builtin/<name>/config.json).
-            top.listFiles()?.forEach { nested ->
-                if (!nested.isDirectory) return@forEach
-                val nestedConfig = File(nested, "config.json")
-                if (nestedConfig.isFile) models.add(readModel(nested, nestedConfig))
-            }
+            if (layout.format == ModelFormat.UNKNOWN) return@forEach
+            models.add(readModel(layout.dir, layout))
         }
         return models.sortedBy { it.name.lowercase() }
     }
 
-    private fun readModel(dir: File, config: File): InstalledModel {
-        val name = readModelName(config) ?: dir.name
+    private fun readModel(dir: File, layout: ModelLayout): InstalledModel {
+        val name = layout.metadata.name ?: dir.name
         val (version, installedAt) = readVersion(File(dir, VERSION_FILE))
         return InstalledModel(
             id = "local/${dir.absolutePath}",
@@ -78,17 +83,9 @@ object LocalModelRegistry {
             sizeBytes = dir.walkTopDown().filter { it.isFile }.map { it.length() }.sum(),
             version = version,
             installedAt = installedAt,
+            format = layout.format,
+            metadata = layout.metadata,
         )
-    }
-
-    private fun readModelName(config: File): String? {
-        return try {
-            val obj = JsonParser.parseString(config.readText()).asJsonObject
-            obj.getAsJsonPrimitive("model_name")?.asString
-                ?: obj.getAsJsonPrimitive("modelId")?.asString
-        } catch (_: Throwable) {
-            null
-        }
     }
 
     /**

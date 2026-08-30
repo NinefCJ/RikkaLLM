@@ -22,7 +22,7 @@ if (!mnnSourceMarker.exists() || !mnnPrebuiltSo.exists()) {
 }
 
 android {
-    namespace = "me.rerere.rikkallm.mnn"
+    namespace = "com.ninef.rikkallm.mnn"
 
     ndkVersion = "25.1.8937393"
 
@@ -66,6 +66,9 @@ dependencies {
     api(libs.ktor.server.core)
     implementation(libs.ktor.server.cio)
     implementation(libs.ktor.server.host.common)
+
+    // llama.cpp Kotlin bindings (GGUF models, llama.cpp backend)
+    implementation(libs.llamacpp.kotlin)
 
     // koin (LocalMnnManager registration / service injection)
     implementation(platform(libs.koin.bom))

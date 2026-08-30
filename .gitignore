@@ -16,3 +16,25 @@ mnn-prebuilt/
 .mnn-cmake-verify/
 mnn-build.log
 mnn-kotlin-build.log
+
+# Build / debug temp logs (not part of source)
+/assemble-debug.err
+/assemble-debug.log
+/build_console.log
+/hs_err_pid*.log
+/ide-runtime-download.err
+/ide-runtime-download.log
+/_dtail.txt
+/compile-ide-settings.log
+/replay_pid*.log
+/robocopy-gradle.log
+/build_debug.log
+/.gradle-alltest.log
+/.gradle-apptest.log
+/.gradle-enttest.log
+/.gradle-hltest.log
+/.gradle-subtest.log
+
+# Signing keystore (private, never commit)
+*.jks
+/release-key.jks

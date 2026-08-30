@@ -14,7 +14,8 @@ class LocalModelRegistryTest {
     private fun writeModel(dir: File, name: String?, configBody: String = """{"model_name":"$name"}"""): File {
         dir.mkdirs()
         File(dir, "config.json").writeText(configBody)
-        File(dir, "weights.bin").writeText("x".repeat(1024))
+        // MNN layout requires config.json + a .mnn weight file for detection.
+        File(dir, "model.mnn").writeText("x".repeat(1024))
         return dir
     }
 

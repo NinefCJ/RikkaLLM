@@ -27,8 +27,8 @@ private const val CHANNEL_ID = "mnn_local_server"
 class MnnServerService : Service() {
 
     companion object {
-        const val ACTION_START = "me.rerere.rikkallm.action.MNN_SERVER_START"
-        const val ACTION_STOP = "me.rerere.rikkallm.action.MNN_SERVER_STOP"
+        const val ACTION_START = "com.ninef.rikkallm.action.MNN_SERVER_START"
+        const val ACTION_STOP = "com.ninef.rikkallm.action.MNN_SERVER_STOP"
         const val EXTRA_PORT = "port"
         const val EXTRA_TOKEN = "token"
         const val NOTIFICATION_ID = 2101
@@ -164,7 +164,7 @@ class MnnServerService : Service() {
         )
         val state = manager.state.value
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(me.rerere.rikkallm.mnn.R.drawable.ic_mnn_server)
+            .setSmallIcon(com.ninef.rikkallm.mnn.R.drawable.ic_mnn_server)
             .setContentTitle("本地模型引擎运行中")
             .setContentText("http://127.0.0.1:${state.port}/v1")
             .setContentIntent(contentIntent)

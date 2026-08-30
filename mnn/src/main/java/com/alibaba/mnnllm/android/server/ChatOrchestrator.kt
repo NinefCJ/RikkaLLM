@@ -32,9 +32,12 @@ class ChatOrchestrator(private val engine: MnnEngine) {
 
         engine.applySampling(request.temperature, request.topP, request.maxTokens)
         val promptItems = ToolsPromptBuilder.toPromptItems(request.messages, request.tools)
+        // Vision backends (llama.cpp mmproj) accept a single image per generation, so pass the
+        // most recent one — scanned newest-message-first.
+        val images = request.messages.asReversed().flatMap { it.images }.take(1)
         val parser = ToolCallStreamParser()
 
-        val stats = engine.generate(promptItems) { token ->
+        val stats = engine.generate(promptItems, images) { token ->
             if (isCancelled()) {
                 true
             } else {

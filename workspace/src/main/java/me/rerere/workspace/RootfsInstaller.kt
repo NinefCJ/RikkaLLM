@@ -46,6 +46,41 @@ class RootfsInstaller(
         }
     }
 
+    /**
+     * 与 [install] 等价, 但归档数据来自 APK assets 的输入流（按 ABI 离线打包进应用）,
+     * 而非网络下载。用于离线分发 IDE 运行时所需的 Ubuntu rootfs。
+     */
+    fun installFromAsset(
+        root: String,
+        assetStream: InputStream,
+        format: ArchiveFormat = ArchiveFormat.TAR_XZ,
+        onProgress: (RootfsInstallProgress) -> Unit = {},
+    ) {
+        manager.ensureWorkspace(root)
+        val tempDir = manager.tempDir(root)
+        val archive = File(tempDir, "ide-rootfs.${format.extension}")
+        val stagingDir = File(tempDir, "ide-rootfs-staging")
+        val linuxDir = manager.linuxDir(root)
+        try {
+            stagingDir.deleteRecursively()
+            stagingDir.mkdirs()
+            archive.parentFile?.mkdirs()
+            assetStream.use { input ->
+                archive.outputStream().use { output -> input.copyTo(output) }
+            }
+            extractTar(archive, stagingDir, format, onProgress)
+            linuxDir.deleteRecursively()
+            require(stagingDir.renameTo(linuxDir)) {
+                "Failed to move IDE rootfs into workspace"
+            }
+            patcher.patch(linuxDir)
+            onProgress(RootfsInstallProgress(stage = RootfsInstallStage.INSTALLED))
+        } finally {
+            archive.delete()
+            stagingDir.deleteRecursively()
+        }
+    }
+
     private fun download(
         url: String,
         target: File,

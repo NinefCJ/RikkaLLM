@@ -64,6 +64,7 @@ sqlite-android = "-SNAPSHOT"
 termux = "0.118.0"
 diffutils = "4.17"
 gson = "2.11.0"
+llamacpp = "0.4.0"
 
 [libraries]
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
@@ -180,6 +181,7 @@ sqlite-android = { module = "com.github.rikkahub:sqlite-android", version.ref = 
 termux-terminal-view = { module = "com.termux.termux-app:terminal-view", version.ref = "termux" }
 guava-listenablefuture = { module = "com.google.guava:listenablefuture", version = "9999.0-empty-to-avoid-conflict-with-guava" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+llamacpp-kotlin = { module = "io.github.ljcamargo:llamacpp-kotlin", version.ref = "llamacpp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

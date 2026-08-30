@@ -379,6 +379,7 @@
   <string name="history_page_search">Поиск</string>
   <string name="history_page_search_messages">Поиск сообщений</string>
   <string name="history_page_title">История чатов</string>
+  <string name="history_page_unassigned_workspace">Без рабочего пространства</string>
   <string name="history_page_undo">Отменить</string>
   <string name="history_page_unpin">Открепить</string>
   <string name="imggen_page_aspect_ratio">Соотношение сторон изображения</string>

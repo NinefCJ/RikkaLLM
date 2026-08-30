@@ -46,6 +46,36 @@ class RequestTranslatorTest {
     }
 
     @Test
+    fun `extracts image_url parts alongside text`() {
+        val body = JsonParser.parseString(
+            """{"messages":[{"role":"user","content":[{"type":"text","text":"what is this?"},{"type":"image_url","image_url":{"url":"data:image/png;base64,AAAABBBB"}}]}]}"""
+        ).asJsonObject
+        val req = RequestTranslator.parse(body)
+        assertEquals("what is this?", req.messages[0].content)
+        assertEquals(listOf("data:image/png;base64,AAAABBBB"), req.messages[0].images)
+    }
+
+    @Test
+    fun `accepts the shorthand image_url form`() {
+        val body = JsonParser.parseString(
+            """{"messages":[{"role":"user","content":[{"type":"image_url","url":"file:///sdcard/a.png"}]}]}"""
+        ).asJsonObject
+        val req = RequestTranslator.parse(body)
+        assertEquals(listOf("file:///sdcard/a.png"), req.messages[0].images)
+        // No text parts at all -> content stays null.
+        assertNull(req.messages[0].content)
+    }
+
+    @Test
+    fun `text-only messages carry no images`() {
+        val body = JsonParser.parseString(
+            """{"messages":[{"role":"user","content":"hi"},{"role":"user","content":[{"type":"text","text":"yo"}]}]}"""
+        ).asJsonObject
+        val req = RequestTranslator.parse(body)
+        assertTrue(req.messages.all { it.images.isEmpty() })
+    }
+
+    @Test
     fun `parses tool calls and tool results`() {
         val body = JsonParser.parseString(
             """

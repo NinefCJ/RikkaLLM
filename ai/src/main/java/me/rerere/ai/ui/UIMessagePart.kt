@@ -166,4 +166,15 @@ sealed class UIMessagePart {
             )
         }
     }
+
+    /**
+     * 生成式 UI 卡片部件（由 [com.ninef.rikkallm.data.ai.generativeui.GenerativeCardTransformer]
+     * 从模型输出的 `:::generative-ui` 围栏 JSON 解析而来，渲染前须经清洗）。
+     */
+    @Serializable
+    @SerialName("generative_card")
+    data class GenerativeCard(
+        val card: GenerativeCardData,
+        override var metadata: JsonObject? = null
+    ) : UIMessagePart()
 }

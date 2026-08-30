@@ -17,6 +17,12 @@ data class ChatMessage(
     val name: String? = null,
     val toolCallId: String? = null,
     val toolCalls: List<ToolCallRef>? = null,
+    /**
+     * Images attached to this message, collected from `image_url` content parts. Kept out of
+     * [content] because the engines need them as separate (non-textual) inputs. Values may be
+     * http(s) URLs, `file://` URIs or `data:` base64 URLs — engines normalise what they accept.
+     */
+    val images: List<String> = emptyList(),
 )
 
 /** A tool call referenced by an assistant message (from request history). */

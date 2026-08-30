@@ -379,6 +379,7 @@
   <string name="history_page_search">검색</string>
   <string name="history_page_search_messages">메시지 검색</string>
   <string name="history_page_title">채팅 기록</string>
+  <string name="history_page_unassigned_workspace">할당되지 않은 작업 공간</string>
   <string name="history_page_undo">실행 취소</string>
   <string name="history_page_unpin">고정 해제</string>
   <string name="imggen_page_aspect_ratio">이미지 비율</string>
