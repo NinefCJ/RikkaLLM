@@ -13,6 +13,8 @@ val AppShapes = Shapes(
     extraSmall = RoundedCornerShape(Radius.xs),
     small = RoundedCornerShape(Radius.sm),
     medium = RoundedCornerShape(Radius.md),
+    // 底部弹层(ModalBottomSheet)顶部圆角取自 `large`
     large = RoundedCornerShape(Radius.lg),
-    extraLarge = RoundedCornerShape(Radius.xl),
+    // 对话框(AlertDialog / RikkaConfirmDialog)圆角与底部弹层、卡片统一为 lg，避免层级间圆角漂移
+    extraLarge = RoundedCornerShape(Radius.lg),
 )
