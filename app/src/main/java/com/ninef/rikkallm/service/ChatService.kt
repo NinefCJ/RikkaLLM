@@ -605,7 +605,17 @@ class ChatService(
         val initialConversation = getConversationFlow(conversationId).value
         val assistant = settings.getAssistantById(initialConversation.assistantId)
             ?: settings.getCurrentAssistant()
-        val model = settings.findModelById(assistant.chatModelId ?: settings.chatModelId) ?: return
+        val model = settings.findModelById(assistant.chatModelId ?: settings.chatModelId)
+            ?: run {
+                // 找不到可用的聊天模型时，静默返回会让用户看到“一直转圈、无回复、无报错”，
+                // 故在此给出明确错误，提示去设置中配置模型。
+                addError(
+                    IllegalStateException("未找到可用的聊天模型，请在设置中配置模型"),
+                    conversationId,
+                    title = context.getString(R.string.error_title_generation),
+                )
+                return
+            }
 
         val senderName = if (assistant.useAssistantAvatar) {
             assistant.name.ifEmpty { context.getString(R.string.assistant_page_default_assistant) }
