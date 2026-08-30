@@ -1,4 +1,6 @@
-package com.ninef.rikkallm.ui.components.ai
+package com.ninef.rikkallm.ui.components.ai
+
+
 import com.ninef.rikkallm.ui.theme.Radius
 import com.ninef.rikkallm.ui.theme.Spacing
 
@@ -606,7 +608,7 @@ private fun CompletionPopup(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(max = 280.dp),
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(Radius.chat),
         tonalElevation = Spacing.xxs,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
         color = MaterialTheme.colorScheme.surfaceContainerHigh,

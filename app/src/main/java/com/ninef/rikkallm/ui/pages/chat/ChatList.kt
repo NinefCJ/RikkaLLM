@@ -1,5 +1,6 @@
 package com.ninef.rikkallm.ui.pages.chat
 
+import com.ninef.rikkallm.ui.theme.Radius
 import com.ninef.rikkallm.ui.theme.Spacing
 
 import me.rerere.hugeicons.HugeIcons
@@ -24,6 +25,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -744,11 +746,12 @@ private fun ChatSuggestionsRow(
         ) { suggestion ->
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(50))
+                    .clip(RoundedCornerShape(Radius.pill))
                     .clickable {
                         onClickSuggestion(suggestion)
                     }
-                    .background(MaterialTheme.colorScheme.surfaceColorAtElevation(Spacing.xxs))
+                    .background(MaterialTheme.colorScheme.surfaceContainerLow)
+                    .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(Radius.pill))
                     .padding(vertical = Spacing.xs, horizontal = Spacing.sm),
             ) {
                 Text(
